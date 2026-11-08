@@ -1,0 +1,471 @@
+<title>CISI Investment Management Cram Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single study column with a sticky tab bar; formulas set like an exam formula card, highlighter-yellow marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:28px 10px}
+h3{font-size:1.1rem;margin-block:18px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px 12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.bar{height:8px;background:var(--accent);border-radius:4px;min-width:4px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.day h3{margin-top:0}
+.day .when{font:500 12px var(--mono);color:var(--accent);letter-spacing:.04em}
+.day ul{margin:6px 0 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.f .eg{color:var(--muted);font-size:12.5px;margin-top:6px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.right{background:var(--good-bg);border-color:var(--good);color:var(--ink)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--ink)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.ex .verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.elstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-block:10px}
+.elstat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.elstat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.trap{padding:10px 0;border-bottom:1px solid var(--line)}
+.trap:last-child{border-bottom:0}
+.small{font-size:13px;color:var(--muted)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+<header class="top wrap">
+  <h1>CISI Investment Management: 3-day cram kit</h1>
+  <p class="lede">Built from the Edition 4 workbook (June 2025, syllabus v4.0, exams 20 Sep 2025 to 19 Sep 2027). Every formula, number and fact below comes from that book.</p>
+  <div class="facts">
+    <span class="chip"><b>80</b> multiple-choice questions</span>
+    <span class="chip"><b>2 hrs</b> (90 sec per question)</span>
+    <span class="chip">Pass mark <b>70%</b> (56 of 80)</span>
+    <span class="chip">Onscreen calculator <b>only</b></span>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#plan">3-day plan</a>
+  <a href="#map">Exam map</a>
+  <a href="#formulas">Formula card</a>
+  <a href="#quiz">Practice quiz</a>
+  <a href="#traps">Traps &amp; facts</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="v-plan" data-view="plan">
+  <h2>How to spend the next 3 days</h2>
+  <p>The book says about 140 hours of study. You have about 30, so skip reading it cover to cover. Spend your time on <mark>the "be able to calculate / analyse" learning objectives</mark>: they are predictable, they come up in every paper, and once you know the method you get them right. Read the "know" objectives quickly using this kit and the book's chapter summaries.</p>
+
+  <div class="day">
+    <div class="when">DAY 1 · ABOUT 10 HOURS</div>
+    <h3>Securities Valuation (21 Qs) + Valuation ratios (14 Qs)</h3>
+    <ul>
+      <li>Ch 4, about 5 hours: bonds (flat yield, GRY, NRY, duration, accrued interest, clean and dirty prices, the yield curve, index-linked lag), equities (EPS, P/E, dividend yield and cover, Gordon), corporate actions (TERP, bonus, consolidation), convertibles, Greeks, VIX, swaps and the quality spread differential, DRs, EIS/SEIS/VCT, money markets.</li>
+      <li>Ch 3, about 4 hours: ROCE, asset turnover, the three margins, equity multiplier, DuPont, EVA, WACC, current and quick ratios, Z-score, cash cycle, gearing, interest cover, NPV and IRR, associates and subsidiaries.</li>
+      <li>Evening: do the Element 3 and 4 questions in the Practice quiz tab, then workbook MCQs 1, 7, 14, 18, 23, 24, 35, 38, 39, 47, 55, 73.</li>
+    </ul>
+  </div>
+  <div class="day">
+    <div class="when">DAY 2 · ABOUT 10 HOURS</div>
+    <h3>Data Analysis (13 Qs) + Investment Management Industry (11 Qs)</h3>
+    <ul>
+      <li>Ch 6, about 5 hours: mean, median, mode, geometric mean, variance and SD (sample vs population), skew and kurtosis, correlation and covariance, regression, HPR, MWRR, TWRR, attribution, Sharpe, Treynor and Jensen (and what Sortino, Calmar, Sterling, Omega and the information ratio measure), GIPS, index weighting, technical analysis (overlays vs oscillators, RSI 70/30).</li>
+      <li>Ch 1, about 4 hours: EMH forms, MPT, CAPM, APT, Fama-French and Carhart, behavioural biases, central banks (QE/QT, lender of last resort, yield curve), leading and lagging indicators, credit ratings, MiFID II research payments, stock lending, MPS/DFM/prime brokers.</li>
+      <li>Evening: Element 1 and 6 questions in the quiz, then workbook MCQs 10, 26, 27, 29, 32, 37, 43, 50, 64, 77, 79.</li>
+    </ul>
+  </div>
+  <div class="day">
+    <div class="when">DAY 3 · ABOUT 10 HOURS</div>
+    <h3>Client Portfolios (11 Qs) + Collectives (10 Qs) + full mock</h3>
+    <ul>
+      <li>Ch 2, about 2.5 hours: stewardship, conflicts and front running, suitability (ATR vs CFL), types of risk (systematic vs systemic vs unsystematic), alpha and beta, immunisation, trading venues (MTF/OTF/SI), VWAP, algo wheel, TCA, FX return calculation, rebalancing.</li>
+      <li>Ch 5, about 2.5 hours: unit trusts, OEICs and investment trusts (NAV, discounts), ETFs/ETCs/ETNs, OCF vs TER, PTR, assessment of value, reporting and non-reporting funds, structured products, ESG bonds, hedge funds, crypto and NFTs, property yields, RICS/IVS/AREF/GRESB, FX, commodities, infrastructure.</li>
+      <li>Afternoon: <mark>sit all 80 workbook MCQs (pages 411 to 446) in 2 hours</mark> with only an onscreen calculator. Mark it and go back to the book section for every wrong answer.</li>
+      <li>Evening: re-read the Formula card and the Traps tab. Then sleep.</li>
+    </ul>
+  </div>
+
+  <h3>Resources worth your time</h3>
+  <ul>
+    <li><b>The workbook's own 80 MCQs and end-of-chapter questions.</b> CISI says they are written to match the exam standard. They are your best mock.</li>
+    <li><b>The CISI ebook</b> that came with your book (cisi.org/ebooks) has interactive end-of-chapter questions.</li>
+    <li><b>CISI mock exam / Revision Express</b> (MyCISI app or cisi.org/mystudy). This is the closest thing to real questions. If you already have access, do its sample exam on day 3 instead of a second pass of the book's MCQs.</li>
+    <li>Real exam questions are confidential and are not published online. Treat any site claiming "real questions" with caution. Third-party practice sites exist (Finance Prep, Mastery Exam Prep, Open Exam Prep), but they are unofficial.</li>
+  </ul>
+</section>
+
+<section id="v-map" data-view="map" hidden>
+  <h2>Where the 80 marks come from</h2>
+  <p>From the workbook's examination specification. Each element can vary by about 2 questions either way from paper to paper.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Element</th><th>Chapter</th><th class="num">Qs</th><th style="width:35%">Share</th></tr></thead>
+    <tbody>
+      <tr><td>4 Securities Valuation</td><td>Ch 4</td><td class="num">21</td><td><div class="bar" style="width:100%"></div></td></tr>
+      <tr><td>3 Valuation (accounts &amp; ratios)</td><td>Ch 3</td><td class="num">14</td><td><div class="bar" style="width:67%"></div></td></tr>
+      <tr><td>6 Data Analysis</td><td>Ch 6</td><td class="num">13</td><td><div class="bar" style="width:62%"></div></td></tr>
+      <tr><td>1 The Investment Management Industry</td><td>Ch 1</td><td class="num">11</td><td><div class="bar" style="width:52%"></div></td></tr>
+      <tr><td>2 Managing Client Portfolios</td><td>Ch 2</td><td class="num">11</td><td><div class="bar" style="width:52%"></div></td></tr>
+      <tr><td>5 Collectives &amp; Other Investments</td><td>Ch 5</td><td class="num">10</td><td><div class="bar" style="width:48%"></div></td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">The chapter openers give slightly different counts (14/10/13/21/11/11). Either way, Chapters 3, 4 and 6 together carry about 48 of the 80 marks.</p>
+
+  <h3>The calculation objectives, which come up in every paper</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Element</th><th>You must be able to calculate</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>CAPM expected return</td></tr>
+      <tr><td>2</td><td>Holding period return including FX, maximum drawdown, VWAP</td></tr>
+      <tr><td>3</td><td>WACC, ROCE, asset turnover, gross/net margin, equity multiplier, EVA, current and quick ratio, NPV and IRR, DuPont, gearing, interest cover, cash cycle</td></tr>
+      <tr><td>4</td><td>EPS, P/E, dividend yield and cover, P/B, Gordon growth, EBIT/EBITDA, TERP, bonus and consolidation prices, flat yield, GRY/NRY, real return (Fisher), duration, accrued interest, conversion premium, delta</td></tr>
+      <tr><td>5</td><td>Gross and net rental yield, investment trust discount or premium</td></tr>
+      <tr><td>6</td><td>Mean, geometric mean, median, mode, range, variance and SD, correlation and covariance, HPR, MWRR, TWRR, attribution, Sharpe, Treynor, Jensen</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="v-formulas" data-view="formulas" hidden>
+  <h2>Formula card</h2>
+  <p>Each one is as the workbook states it, with the chapter section in brackets. Make sure you can do every example on the onscreen calculator.</p>
+
+  <h3>Theory and risk (Ch 1, Ch 2)</h3>
+  <div class="fgroup">
+    <div class="f"><div class="n">CAPM (1 §10.3)</div><code>E(R) = Rf + β × (Rm − Rf)</code><div class="eg">Rf 3%, Rm 9%, β 1.4 → 3 + 1.4×6 = 11.4%</div></div>
+    <div class="f"><div class="n">Return in home currency (2 §12.2)</div><code>Rd = (1 + Rf)(1 + Rfx) − 1</code><div class="eg">Rf = return on the overseas asset, Rfx = currency return</div></div>
+    <div class="f"><div class="n">Maximum drawdown (2 §3.2.3)</div><code>largest peak-to-trough fall ÷ peak</code><div class="eg">100 → 140 → 105: 35/140 = 25%</div></div>
+    <div class="f"><div class="n">VWAP (2 §11.5)</div><code>Σ(price × volume) ÷ Σ volume</code><div class="eg">Best used for intraday trading</div></div>
+  </div>
+
+  <h3>Accounts and ratios (Ch 3)</h3>
+  <div class="fgroup">
+    <div class="f"><div class="n">Capital employed</div><code>Total assets − Current liabilities + Short-term borrowing</code><div class="eg">or Shareholders' funds + Non-current liabilities + ST borrowings</div></div>
+    <div class="f"><div class="n">ROCE</div><code>PBIT ÷ Capital employed</code></div>
+    <div class="f"><div class="n">Asset turnover</div><code>Revenue ÷ Capital employed</code></div>
+    <div class="f"><div class="n">Margins</div><code>Gross = Gross profit ÷ Revenue
+Net = Net profit ÷ Revenue</code></div>
+    <div class="f"><div class="n">Equity multiplier</div><code>Total assets ÷ Shareholders' equity</code></div>
+    <div class="f"><div class="n">DuPont ROE</div><code>Net margin × Asset turnover × Equity multiplier</code></div>
+    <div class="f"><div class="n">EVA</div><code>NOPAT − (Invested capital × WACC)</code><div class="eg">Positive means value created</div></div>
+    <div class="f"><div class="n">WACC</div><code>E/V × Re + D/V × Rd × (1 − Tc)</code><div class="eg">Use market values; debt is tax-adjusted</div></div>
+    <div class="f"><div class="n">Current ratio</div><code>Current assets ÷ Current liabilities</code></div>
+    <div class="f"><div class="n">Quick (acid test)</div><code>(Current assets − Inventory) ÷ Current liabilities</code></div>
+    <div class="f"><div class="n">Z-score</div><code>&gt;3.0 safe · 1.8–3.0 grey · &lt;1.8 distress · negative = insolvency imminent</code><div class="eg">Two-year horizon</div></div>
+    <div class="f"><div class="n">Cash cycle</div><code>Receivable days + Inventory days − Payable days</code><div class="eg">Receivables ÷ Revenue ×365; Inventory ÷ COGS ×365; Payables ÷ Purchases ×365</div></div>
+    <div class="f"><div class="n">Gearing (debt/equity)</div><code>(Interest-bearing debt + Prefs) ÷ Ordinary equity</code></div>
+    <div class="f"><div class="n">Interest cover</div><code>PBIT ÷ Interest payable</code></div>
+    <div class="f"><div class="n">NPV / IRR</div><code>PV = FV ÷ (1 + r)^n
+IRR ≈ r1 + [NPV1 ÷ (NPV1 − NPV2)] × (r2 − r1)</code><div class="eg">IRR is the rate where NPV = 0</div></div>
+    <div class="f"><div class="n">EBIT / EBITDA</div><code>EBIT = Net income + Interest + Tax
+EBITDA = EBIT + Depreciation + Amortisation</code></div>
+  </div>
+
+  <h3>Equities and corporate actions (Ch 4)</h3>
+  <div class="fgroup">
+    <div class="f"><div class="n">EPS</div><code>Profit to ordinary shareholders ÷ No. of shares</code></div>
+    <div class="f"><div class="n">P/E</div><code>Share price ÷ EPS</code><div class="eg">Historic uses last EPS, prospective uses forecast EPS</div></div>
+    <div class="f"><div class="n">Dividend yield / cover</div><code>Yield = DPS ÷ Price
+Cover = EPS ÷ DPS</code></div>
+    <div class="f"><div class="n">Price to book</div><code>Share price ÷ NAV per share</code></div>
+    <div class="f"><div class="n">Gordon growth</div><code>P = D1 ÷ (r − g),  D1 = D0 × (1 + g)</code><div class="eg">D0 10p, g 4%, r 9% → 10.4 ÷ 0.05 = 208p</div></div>
+    <div class="f"><div class="n">TERP (rights)</div><code>(Old shares × price + New × subscription) ÷ Total shares</code><div class="eg">Rights premium = TERP − subscription price</div></div>
+    <div class="f"><div class="n">Bonus / consolidation</div><code>Value before ÷ shares after</code><div class="eg">1-for-4 bonus at 500p → 400p; 1-for-5 consolidation at 20p → 100p</div></div>
+  </div>
+
+  <h3>Bonds and derivatives (Ch 4)</h3>
+  <div class="fgroup">
+    <div class="f"><div class="n">Flat yield</div><code>Coupon ÷ Clean price</code></div>
+    <div class="f"><div class="n">GRY (approx.)</div><code>Flat yield + [(Par − Price) ÷ Years] ÷ Price</code></div>
+    <div class="f"><div class="n">NRY (approx.)</div><code>Flat yield × (1 − tax) + [(Par − Price) ÷ Years] ÷ Price</code></div>
+    <div class="f"><div class="n">Real return</div><code>Simple: Nominal − Inflation
+Fisher: (1 + N) ÷ (1 + I) − 1</code><div class="eg">5% and 2% → 2.94%</div></div>
+    <div class="f"><div class="n">Macaulay duration</div><code>Σ(PV of CF × t) ÷ Σ PV of CF</code><div class="eg">Zero coupon: duration = maturity</div></div>
+    <div class="f"><div class="n">Modified duration</div><code>MD = Macaulay ÷ (1 + GRY)
+%ΔP ≈ −MD × Δyield</code></div>
+    <div class="f"><div class="n">Accrued interest</div><code>Nominal × (Coupon ÷ n) × (Days accrued ÷ Days in period)</code><div class="eg">Dirty = Clean + Accrued (ex-div: accrued is negative)</div></div>
+    <div class="f"><div class="n">Conversion premium</div><code>CB price ÷ (Conversion ratio × Share price) − 1</code></div>
+    <div class="f"><div class="n">Index-linked coupon</div><code>Coupon × (RPI lagged ÷ RPI base)</code><div class="eg">Lag: 8 months before Sept 2005, 3 months after</div></div>
+    <div class="f"><div class="n">Delta</div><code>Δ premium ÷ Δ underlying</code><div class="eg">ATM call +0.5, ATM put −0.5, deep ITM ±1, far OTM 0</div></div>
+    <div class="f"><div class="n">Quality spread differential</div><code>Fixed-rate spread − Floating-rate spread</code><div class="eg">This is the total gain the swap can share</div></div>
+  </div>
+
+  <h3>Statistics and performance (Ch 5, Ch 6)</h3>
+  <div class="fgroup">
+    <div class="f"><div class="n">Rental yield</div><code>Gross = Rent ÷ Value
+Net = (Rent − Costs) ÷ Value</code></div>
+    <div class="f"><div class="n">Trust discount</div><code>(NAV − Price) ÷ NAV</code></div>
+    <div class="f"><div class="n">Geometric mean</div><code>[(1+r1)(1+r2)…(1+rn)]^(1/n) − 1</code><div class="eg">Always ≤ arithmetic mean</div></div>
+    <div class="f"><div class="n">Variance / SD</div><code>Population: Σ(x−μ)² ÷ n
+Sample: Σ(x−x̄)² ÷ (n−1)
+SD = √variance</code></div>
+    <div class="f"><div class="n">Correlation / covariance</div><code>ρ = Cov ÷ (σA × σB)
+Cov = ρ × σA × σB</code></div>
+    <div class="f"><div class="n">Normal distribution</div><code>±1σ 68.26% · ±2σ 95.5% · ±3σ 99.75%</code></div>
+    <div class="f"><div class="n">HPR</div><code>(D + Ve − Vs) ÷ Vs</code></div>
+    <div class="f"><div class="n">MWRR (approx.)</div><code>(V1 − V0 − net inflows) ÷ (V0 + Σ CF × months left ÷ 12)</code><div class="eg">Withdrawals are negative cash flows</div></div>
+    <div class="f"><div class="n">TWRR</div><code>(1+R1)(1+R2)…(1+Rn) − 1</code><div class="eg">Break the period at each cash flow. GIPS requires TWRR</div></div>
+    <div class="f"><div class="n">Sharpe</div><code>(Rp − Rf) ÷ σp</code></div>
+    <div class="f"><div class="n">Treynor</div><code>(Rp − Rf) ÷ βp</code></div>
+    <div class="f"><div class="n">Jensen's alpha</div><code>Rp − [Rf + βp(Rm − Rf)]</code><div class="eg">Positive plots above the SML</div></div>
+    <div class="f"><div class="n">Attribution</div><code>Allocation = (fund weights × benchmark returns) − benchmark return
+Selection = actual return − (fund weights × benchmark returns)</code></div>
+  </div>
+</section>
+
+<section id="v-quiz" data-view="quiz" hidden>
+  <h2>Practice quiz</h2>
+  <p>These questions are written for this kit to match the syllabus objectives and the workbook's style. They are not real CISI exam questions. Each explanation gives the chapter and section to go back to.</p>
+  <div class="controls">
+    <label for="elsel" class="small">Element</label>
+    <select id="elsel">
+      <option value="all">All elements</option>
+      <option value="1">1 Industry &amp; theory</option>
+      <option value="2">2 Client portfolios</option>
+      <option value="3">3 Valuation &amp; accounts</option>
+      <option value="4">4 Securities valuation</option>
+      <option value="5">5 Collectives &amp; other</option>
+      <option value="6">6 Data analysis</option>
+    </select>
+    <select id="mode">
+      <option value="calc">Calculations + concepts</option>
+      <option value="calconly">Calculations only</option>
+    </select>
+    <button id="shuffle" class="primary" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset scores</button>
+    <span class="score" id="score"></span>
+  </div>
+  <div class="elstats" id="elstats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section id="v-traps" data-view="traps" hidden>
+  <h2>Traps and must-know facts</h2>
+  <div class="table-wrap" style="padding:4px 16px">
+    <div class="trap"><b>EMH.</b> Weak form: technical analysis cannot beat the market. Semi-strong: neither technical nor fundamental analysis can. Strong: nobody can, even with inside information. Insider dealing laws make strong form impossible. The best evidence for semi-strong is that few active managers beat the market consistently.</div>
+    <div class="trap"><b>Three different risks.</b> <mark>Systematic</mark> risk is market-wide and cannot be diversified away (beta measures it). <mark>Unsystematic</mark> risk is specific to a company and is removed by diversification. <mark>Systemic</mark> risk is the collapse of the whole financial system through contagion.</div>
+    <div class="trap"><b>APT vs CAPM.</b> APT uses several factors, each with its own beta and risk premium, and needs fewer assumptions. It still assumes the factors are uncorrelated with each other and that investors can short sell. Fama-French adds size and value to CAPM. Carhart adds momentum (MOM).</div>
+    <div class="trap"><b>Behavioural biases.</b> Confirmation (looking for supporting evidence), anchoring (fixing on a reference price), herding, overconfidence, gambler's fallacy ("it's due to go up"), representativeness, naïve diversification (1/n), mental accounting (separate pots), loss aversion, regret aversion, sunk cost fallacy, framing.</div>
+    <div class="trap"><b>Research payments (MiFID II).</b> Third-party research must be paid from the firm's own resources or from a separate research payment account (RPA) funded transparently by client charges.</div>
+    <div class="trap"><b>Stock lending.</b> Collateral protects the lender against both counterparty risk and market risk. The lender receives a fee and a manufactured dividend, but gives up voting while the stock is on loan.</div>
+    <div class="trap"><b>Trading venues.</b> OTFs trade bonds, structured products, emission allowances and derivatives, <mark>never equities</mark>. An SI is a firm dealing on its own account. Dark pools are anonymous, not pre-trade transparent, and suit block trades. OTC trading gives flexibility but more counterparty risk and less transparency.</div>
+    <div class="trap"><b>Ranking in liquidation.</b> Fixed charge holders, then preferential creditors, then floating charge holders, then unsecured creditors, then subordinated debt, then preference shares, then ordinary shares.</div>
+    <div class="trap"><b>Ratios move in opposite directions.</b> If the share price falls, P/E falls and dividend yield rises. A falling bond price raises the yield.</div>
+    <div class="trap"><b>Duration drivers.</b> Higher duration (more price sensitivity) comes with a lower coupon, a longer maturity and a lower yield. The duration of a zero coupon bond equals its maturity.</div>
+    <div class="trap"><b>Yield curves.</b> Normal: upward sloping. Inverted: short rates are above long rates, the market expects rate cuts, and recession is often signalled.</div>
+    <div class="trap"><b>Money markets.</b> UK T-bills are usually 91 days, issued weekly by Bank of England auction. CP runs 8 to 365 days, is unsecured and issued at a discount. CDs are negotiable and can run up to 5 years. Time deposits are not negotiable.</div>
+    <div class="trap"><b>Depositary receipts.</b> ADRs are in US dollars, with the depositary bank as registered holder. DR holders cannot take part in rights issues directly; the depositary sells the rights for them. Sponsored programmes have one depositary appointed by the company. A GDR listing in London needs at least £30m in value and 10% of the GDRs in public hands.</div>
+    <div class="trap"><b>EIS vs SEIS.</b> EIS: gross assets up to £15m before issue and £16m after, fewer than 250 employees, trading less than 7 years. SEIS: assets up to £350k, fewer than 25 employees, less than 3 years trading, under £250k raised. VCTs are listed, need HMRC approval, and pay no corporation tax on their gains.</div>
+    <div class="trap"><b>Greeks.</b> Gamma is highest for ATM options near expiry. Vega is positive for long calls and puts and highest ATM. Theta is negative for long options and accelerates near expiry. The VIX is the 30-day implied volatility of S&amp;P 500 options.</div>
+    <div class="trap"><b>Swaps.</b> A vanilla swap exchanges fixed for floating. A basis swap exchanges floating for floating, using two different reference rates. The FX forward market is used to speculate on the interest rate differential between currencies.</div>
+    <div class="trap"><b>Fund costs.</b> OCF excludes performance fees and TER includes them. Neither includes entry or exit charges. Assessment of value reports are annual. A higher PTR means higher dealing costs.</div>
+    <div class="trap"><b>Fund pricing.</b> Open-ended funds trade at NAV. Investment trusts trade at a premium or discount to NAV. A trust being wound up usually has a small discount, because the price converges to NAV.</div>
+    <div class="trap"><b>Offshore funds.</b> Reporting funds: gains are taxed as capital gains (CGT). Non-reporting funds: income rolls up gross, and gains on disposal are taxed as income.</div>
+    <div class="trap"><b>ESG bonds.</b> Green bonds fund environmental projects, blue bonds fund ocean projects, social bonds fund social outcomes, impact bonds fund prevention and early intervention, and sustainability bonds fund a mix. SASB's materiality map shows which sustainability issues matter for each industry. GRESB is the ESG benchmark for real estate. The RICS Red Book sets valuation standards.</div>
+    <div class="trap"><b>Skew and kurtosis.</b> Positive skew has a long right tail, with mean above median. Negative skew has a long left tail, with mean below median. Mesokurtic (normal) kurtosis is 3, leptokurtic is above 3 (fat tails) and platykurtic is below 3. Note the workbook's wording here: it calls positive skew "leftward" while describing a right tail. Go by the tail and the mean-vs-median relationship.</div>
+    <div class="trap"><b>Technical analysis.</b> It assumes the market discounts everything, prices move in trends, and history repeats. Overlays (moving averages) are drawn on the price chart. Oscillators (RSI over 14 days) show overbought above 70 and oversold below 30. Primary movements last years, secondary movements months, tertiary movements days or weeks.</div>
+    <div class="trap"><b>Other risk ratios.</b> Information ratio = excess return over the benchmark ÷ tracking error. Sortino uses downside deviation only. Calmar = average annual return ÷ maximum drawdown over 3 years. Sterling measures how efficiently risk capital is used (hedge funds). Omega considers the whole return distribution.</div>
+    <div class="trap"><b>Group accounts.</b> Under 20% is a simple investment. 20 to 50%, or significant influence, is an associate (equity method). Over 50% is a subsidiary: fully consolidated, with minority (non-controlling) interests shown.</div>
+  </div>
+</section>
+</main>
+
+<script>
+const Q = [
+// ---------- Element 1 ----------
+{e:1,c:0,q:"Under the weak form of the efficient markets hypothesis, which approach should NOT allow an investor to earn consistent excess returns?",o:["Fundamental analysis","Technical analysis","Trading on inside information","Trading on newly released public information"],a:1,x:"Weak form: prices already reflect all past price and volume data, so studying charts (technical analysis) gives no edge. Fundamental analysis is ruled out only under semi-strong form. (Ch 1 §10.1)"},
+{e:1,c:0,q:"According to the workbook, what is the most conclusive evidence supporting the semi-strong form of the EMH?",o:["Insider dealing laws exist in most markets","Very few active portfolio managers produce excess returns consistently","Stock market bubbles develop and burst","Investors anchor on recent highs and lows"],a:1,x:"Testing strong form is impossible without inside information. Semi-strong form is backed by the fact that so few active managers beat the market consistently. Bubbles and anchoring are shortcomings of the EMH. (Ch 1 §10.1)"},
+{e:1,c:1,q:"The risk-free rate is 3%, the expected market return is 9% and a share has a beta of 1.4. What is its expected return under CAPM?",o:["8.4%","9.0%","11.4%","12.6%"],a:2,x:"E(R) = 3% + 1.4 × (9% − 3%) = 3% + 8.4% = 11.4%. (Ch 1 §10.3)"},
+{e:1,c:0,q:"Which of the following is an assumption of arbitrage pricing theory (APT)?",o:["A single market beta captures all systematic risk","Investors select portfolios purely on mean-variance analysis","Identified factors are uncorrelated with each other","Investors cannot sell securities short"],a:2,x:"APT assumes efficient markets, that investors maximise wealth (not necessarily via mean-variance), that short selling is possible, and that the factors are uncorrelated. A single beta is CAPM. (Ch 1 §10.4.2)"},
+{e:1,c:0,q:"The Carhart four-factor model adds which factor to the Fama-French three-factor model?",o:["Liquidity","Price momentum","Profitability","Low volatility"],a:1,x:"Fama-French: market + size + value. Carhart adds momentum (MOM), the tendency for recent winners to keep winning for a few periods. (Ch 1 §10.4.3)"},
+{e:1,c:0,q:"An investor treats dividend income as money to spend freely but will never touch the capital in the same portfolio. Which behavioural bias is this?",o:["Anchoring","Mental accounting","Representativeness","Regret aversion"],a:1,x:"Mental accounting is keeping money in separate mental 'pots' and treating it differently, even though money is interchangeable. (Ch 1 §11.1.10)"},
+{e:1,c:0,q:"After a share has fallen for six days in a row, an investor buys it, believing a rise is now 'due'. This is an example of:",o:["Gambler's fallacy","Herd behaviour","Overconfidence","Confirmation bias"],a:0,x:"Gambler's fallacy is believing that independent past outcomes change the odds of the next one. (Ch 1 §11.1.6)"},
+{e:1,c:0,q:"Under MiFID II, a UK portfolio manager may receive third-party research only if it is paid for:",o:["Through dealing commissions bundled with execution","By the broker as a minor non-monetary benefit","From the firm's own resources or a research payment account","By the issuer of the securities being researched"],a:2,x:"MiFID II bans inducements except minor non-monetary benefits. Research must come from the firm's own resources or an RPA funded transparently by client charges. (Ch 1 §9.5)"},
+{e:1,c:0,q:"In a stock lending transaction, the lender is protected against both counterparty risk and market risk mainly by:",o:["Retaining voting rights on the loaned stock","Receiving collateral of equal or greater value than the loan","Using a prime broker as agent","Receiving a manufactured dividend"],a:1,x:"Collateral (cash or securities) of at least the loan's value protects against borrower default and price moves. The manufactured dividend compensates for lost income; it is not protection. (Ch 1 §4.5)"},
+{e:1,c:0,q:"Which of the following economic statistics is best described as a lagging indicator?",o:["Purchasing managers' index (PMI)","Consumer confidence","Unemployment rate","New housing starts"],a:2,x:"Unemployment changes after the economy has turned, so it lags. PMIs, confidence surveys and housing starts tend to lead. (Ch 1 §8.4)"},
+{e:1,c:0,q:"What is the main transmission mechanism of quantitative easing (QE)?",o:["The central bank raises its policy rate to curb inflation","The central bank buys assets with newly created reserves, pushing down longer-term yields","The government cuts taxes and increases spending","The central bank sells bonds to drain liquidity from banks"],a:1,x:"QE: the central bank creates reserves to buy government (and other) bonds. This raises bond prices, lowers long-term yields and eases financial conditions. Selling bonds is QT; tax cuts are fiscal stimulus. (Ch 1 §6.2.4)"},
+{e:1,c:0,q:"In a core/satellite approach, the core is typically:",o:["A concentrated high-conviction active portfolio","A low-cost passive index exposure","A hedge fund allocation","A cash buffer for liquidity"],a:1,x:"The core is passive and low cost. The satellites are active positions that aim to add alpha. (Ch 1 §2.4.1)"},
+// ---------- Element 2 ----------
+{e:2,c:0,q:"A client's capacity for loss (CFL) is best described as:",o:["Their emotional willingness to accept falls in value","The extent to which they can absorb a fall in value without materially affecting their standard of living","The maximum drawdown of their existing portfolio","Their investment time horizon"],a:1,x:"ATR is the emotional willingness to take risk. CFL is the financial ability to bear losses. Both feed into suitability. (Ch 2 §2.1.2)"},
+{e:2,c:0,q:"Which risk can be reduced by holding a well-diversified portfolio?",o:["Systematic risk","Systemic risk","Unsystematic (specific) risk","Inflation risk"],a:2,x:"Diversification removes company-specific risk. Systematic (market) risk remains and is measured by beta. Systemic risk is the risk of the whole financial system collapsing. (Ch 2 §4.1)"},
+{e:2,c:1,q:"A portfolio has a beta of 0.8. If the market falls by 10%, the portfolio would be expected to:",o:["Fall by 8%","Fall by 10%","Fall by 12.5%","Rise by 2%"],a:0,x:"Expected move = β × market move = 0.8 × −10% = −8%. (Ch 2 §4.4.4)"},
+{e:2,c:0,q:"Immunisation is a portfolio technique in which a manager:",o:["Buys put options on the whole portfolio","Matches the duration of bond assets to that of the liabilities","Holds only AAA-rated government bonds","Rebalances to the benchmark monthly"],a:1,x:"Immunisation matches asset duration to liability duration, so a change in rates affects both sides equally. It is a liability-driven technique. (Ch 2 §4.4.2)"},
+{e:2,c:1,q:"A UK investor buys a US share at $50 when £1 = $1.25. A year later they sell at $55 when £1 = $1.375. Ignoring costs and dividends, what is their sterling return?",o:["−9.1%","0%","10%","19.1%"],a:1,x:"Cost £40 (50 ÷ 1.25). Proceeds £40 (55 ÷ 1.375). The local return of +10% is wiped out by a currency return of −9.09%: (1.10 × 0.9091) − 1 = 0%. (Ch 2 §12.2)"},
+{e:2,c:1,q:"A fund's value moves 100 → 140 → 105 → 150. What is its maximum drawdown?",o:["5%","25%","35%","50%"],a:1,x:"The largest peak-to-trough fall is from 140 to 105: 35 ÷ 140 = 25%. (Ch 2 §3.2.3)"},
+{e:2,c:1,q:"During a day a stock trades 1,000 shares at £10.00, 3,000 at £10.40 and 1,000 at £10.20. What is the VWAP?",o:["£10.20","£10.24","£10.28","£10.40"],a:2,x:"(10,000 + 31,200 + 10,200) ÷ 5,000 = 51,400 ÷ 5,000 = £10.28. (Ch 2 §11.5)"},
+{e:2,c:0,q:"Which instrument may NOT be traded on an organised trading facility (OTF)?",o:["Corporate bonds","Equity derivatives","Equities","Emission allowances"],a:2,x:"OTFs (introduced by MiFID II) can trade bonds, structured finance products, emission allowances and derivatives, including equity derivatives, but not equities themselves. (Ch 2 §11.2.2)"},
+{e:2,c:0,q:"What is the purpose of an algo wheel?",o:["To guarantee best execution on every trade","To route orders automatically across brokers and algorithms so their performance can be compared objectively","To calculate VWAP in real time","To net off client orders before execution"],a:1,x:"An algo wheel allocates orders across brokers and algos using rules, which reduces trader bias and gives clean data for transaction cost analysis. (Ch 2 §11.4)"},
+{e:2,c:0,q:"Compared with executing on an exchange, executing a trade over the counter (OTC) typically involves:",o:["Lower counterparty risk and more pre-trade transparency","More flexibility to customise terms, but higher counterparty risk and less transparency","Mandatory clearing through a CCP for all instruments","Standardised contract sizes"],a:1,x:"OTC deals are bilateral and tailored. Without an exchange or CCP there is more counterparty risk and less price transparency. (Ch 2 §11.2.2)"},
+{e:2,c:0,q:"A broker who trades for its own account ahead of a large client order it knows about is guilty of:",o:["Churning","Front running","Late trading","Window dressing"],a:1,x:"Front running uses advance knowledge of client orders for one's own benefit. Churning is excessive trading to generate commission. (Ch 2 §1.2)"},
+// ---------- Element 3 ----------
+{e:3,c:1,q:"A company has total assets of £200m, current liabilities of £50m (including £10m of short-term borrowings) and PBIT of £24m. What is its ROCE?",o:["12.0%","13.3%","15.0%","16.0%"],a:2,x:"Capital employed = 200 − 50 + 10 = £160m. ROCE = 24 ÷ 160 = 15%. (Ch 3 §3.3.1)"},
+{e:3,c:1,q:"Current assets are £600k, of which inventory is £200k. Current liabilities are £400k. What is the quick (acid test) ratio?",o:["0.5","1.0","1.5","2.0"],a:1,x:"(600 − 200) ÷ 400 = 1.0. The current ratio would be 1.5. (Ch 3 §3.4.2)"},
+{e:3,c:1,q:"A company has PBIT of £9m and interest payable of £1.5m. What is its interest cover?",o:["0.17×","4.5×","6.0×","7.5×"],a:2,x:"Interest cover = PBIT ÷ interest = 9 ÷ 1.5 = 6×. (Ch 3 §3.7)"},
+{e:3,c:1,q:"A company has interest-bearing debt of £40m, preference shares of £10m and ordinary shareholders' equity of £100m. What is its debt-to-equity ratio?",o:["40%","45.5%","50%","33.3%"],a:2,x:"(40 + 10) ÷ 100 = 50%. Preference shares count as debt in this ratio. (Ch 3 §3.7.1)"},
+{e:3,c:1,q:"A company's net profit margin is 8%, its asset turnover is 1.5 and its equity multiplier is 2.0. What is its ROE under DuPont analysis?",o:["11.5%","12%","16%","24%"],a:3,x:"ROE = 0.08 × 1.5 × 2.0 = 0.24 = 24%. (Ch 3 §3.8)"},
+{e:3,c:1,q:"NOPAT is £12m, invested capital is £100m and WACC is 10%. What is the EVA, and what does it indicate?",o:["£2m, value created","£2m, value destroyed","−£2m, value destroyed","£12m, value created"],a:0,x:"EVA = 12 − (100 × 10%) = +£2m. A positive EVA means the firm earns more than its cost of capital. (Ch 3 §3.3.3)"},
+{e:3,c:1,q:"A firm is financed 60% by equity (cost 10%) and 40% by debt (pre-tax cost 5%). Corporation tax is 25%. What is its WACC?",o:["7.0%","7.5%","8.0%","8.5%"],a:1,x:"WACC = 0.6×10% + 0.4×5%×(1 − 0.25) = 6% + 1.5% = 7.5%. (Ch 3 §3.1)"},
+{e:3,c:1,q:"Receivable days are 45, inventory days 60 and payable days 30. What is the cash cycle?",o:["15 days","45 days","75 days","135 days"],a:2,x:"Cash cycle = 45 + 60 − 30 = 75 days. (Ch 3 §3.5)"},
+{e:3,c:1,q:"A project costs £1,000 today and returns £1,210 in two years. What is its IRR?",o:["9.5%","10%","10.5%","21%"],a:1,x:"1,210 ÷ (1.10)² = 1,000, so NPV = 0 at 10%. The IRR is the rate at which NPV is zero. (Ch 3 §4.1.1)"},
+{e:3,c:0,q:"Company A owns 60% of the voting shares of Company B. How should B be accounted for in A's group accounts?",o:["As a fixed asset investment at cost","Using the equity method","Fully consolidated, with non-controlling (minority) interests shown","As a current asset at market value"],a:2,x:"Over 50% means a subsidiary: full consolidation, with the 40% owned by others shown as minority interests. 20 to 50% or significant influence means an associate (equity method). (Ch 3 §1.5)"},
+{e:3,c:0,q:"A company's Z-score is 1.5. This most likely indicates that:",o:["It is very unlikely to fail within two years","It is in the 'grey area'","Bankruptcy is likely","Insolvency is imminent"],a:2,x:"Above 3.0 is safe, 1.8 to 3.0 is the grey area, below 1.8 means bankruptcy is likely, and a negative score means insolvency is imminent. (Ch 3 §3.4.3)"},
+{e:3,c:0,q:"Which of the following reserves is normally distributable to shareholders as dividends?",o:["Share premium account","Revaluation reserve","Revenue reserves (retained earnings)","Capital redemption reserve"],a:2,x:"Revenue reserves come from accumulated profits and can be distributed. Capital reserves (share premium, revaluation, capital redemption) cannot. (Ch 3 §1.2.3)"},
+{e:3,c:0,q:"What is the main concern with off-balance sheet finance for an analyst?",o:["It overstates revenue","It can understate a company's true gearing and liabilities","It increases the tax charge","It reduces reported cash flow from operations"],a:1,x:"Keeping obligations off the balance sheet hides debt, which flatters gearing ratios. (Ch 3 §1.2.4)"},
+{e:3,c:0,q:"The SASB materiality map is used to:",o:["Rate sovereign ESG risk","Identify which sustainability issues are likely to be financially material for each industry","Calculate carbon footprints of portfolios","Set mandatory EU disclosure templates"],a:1,x:"SASB's map shows, industry by industry, which ESG issues are most likely to affect financial performance. (Ch 3 §2.1.3)"},
+// ---------- Element 4 ----------
+{e:4,c:1,q:"A company has just paid a dividend of 10p. Dividends are expected to grow at 4% a year and the required return is 9%. What is the share's value under Gordon's growth model?",o:["111p","200p","208p","260p"],a:2,x:"D1 = 10 × 1.04 = 10.4p. P = 10.4 ÷ (0.09 − 0.04) = 208p. Using D0 instead of D1 gives 200p, the common mistake. (Ch 3 §3.6.3)"},
+{e:4,c:1,q:"A share priced at 400p has EPS of 30p and pays a dividend of 12p. What are its dividend yield and dividend cover?",o:["3% and 2.5×","3% and 0.4×","7.5% and 2.5×","2.5% and 3×"],a:0,x:"Yield = 12 ÷ 400 = 3%. Cover = EPS ÷ DPS = 30 ÷ 12 = 2.5×. (Ch 3 §3.6)"},
+{e:4,c:1,q:"A share trades at 300p. The company announces a 1-for-3 rights issue at 240p. What is the theoretical ex-rights price?",o:["270p","280p","285p","290p"],a:2,x:"(3 × 300 + 1 × 240) ÷ 4 = 1,140 ÷ 4 = 285p. The value of a right nil-paid = 285 − 240 = 45p. (Ch 4 §10.6.4)"},
+{e:4,c:1,q:"A share trades at 500p before a 1-for-4 bonus issue. What is its theoretical price after the issue?",o:["375p","400p","416p","625p"],a:1,x:"4 shares at 500p = 2,000p, spread over 5 shares = 400p. (Ch 4 §10.6.1)"},
+{e:4,c:1,q:"A bond with a 5% coupon is priced at £125. What is its flat yield?",o:["3.5%","4.0%","5.0%","6.25%"],a:1,x:"Flat yield = 5 ÷ 125 = 4%. (Ch 4 §6.4.1)"},
+{e:4,c:1,q:"A 4% bond priced at 90 has five years to redemption at par. Using the simplified formula, what is its approximate GRY?",o:["4.44%","6.00%","6.22%","6.67%"],a:3,x:"Flat yield = 4 ÷ 90 = 4.44%. Gain to redemption = (100 − 90) ÷ 5 = 2 a year, ÷ 90 = 2.22%. GRY ≈ 4.44% + 2.22% = 6.67%. (Ch 4 §6.4.3)"},
+{e:4,c:1,q:"A bond has a Macaulay duration of 6 years and a GRY of 5%. If yields rise by 1%, the bond's price will fall by approximately:",o:["5.0%","5.71%","6.0%","6.3%"],a:1,x:"Modified duration = 6 ÷ 1.05 = 5.71. %ΔP ≈ −5.71 × 1% = −5.71%. (Ch 4 §6.5.2)"},
+{e:4,c:0,q:"Which bond would be most sensitive to a change in interest rates?",o:["High coupon, short maturity","High coupon, long maturity","Low coupon, short maturity","Low coupon, long maturity"],a:3,x:"A lower coupon and a longer maturity both increase duration. A zero coupon bond's duration equals its maturity. (Ch 4 §6.5.1)"},
+{e:4,c:1,q:"£100,000 nominal of a 4% bond pays coupons semi-annually. 60 days have accrued in a 182-day coupon period. What is the accrued interest?",o:["£329.67","£657.53","£659.34","£1,318.68"],a:2,x:"100,000 × (4% ÷ 2) × (60 ÷ 182) = 2,000 × 0.32967 = £659.34. Dirty price = clean price + accrued. (Ch 4 §6.8.2)"},
+{e:4,c:1,q:"A convertible bond priced at £120 per £100 nominal converts into 20 shares. The share price is £5.50. What is the conversion premium?",o:["8.3%","9.1%","10.0%","20.0%"],a:1,x:"Conversion value = 20 × 5.50 = £110. Premium = 120 ÷ 110 − 1 = 9.09%. (Ch 4 §7.1)"},
+{e:4,c:0,q:"An inverted yield curve most commonly indicates that the market:",o:["Expects interest rates to rise","Expects interest rates to fall, often ahead of a recession","Has a large term premium","Expects inflation to accelerate"],a:1,x:"When short yields are above long yields, investors are pricing future rate cuts, which often comes before an economic slowdown. (Ch 4 §6.4.5)"},
+{e:4,c:0,q:"What is the indexation lag on UK index-linked gilts issued before September 2005?",o:["3 months","6 months","8 months","12 months"],a:2,x:"Gilts issued before September 2005 have an 8-month lag. Later issues use a 3-month lag. (Ch 4 §6.2.1)"},
+{e:4,c:0,q:"Which money market instrument is NOT negotiable?",o:["Treasury bill","Certificate of deposit","Commercial paper","Time deposit"],a:3,x:"Time deposits are fixed-term and cannot be sold before maturity. CDs are negotiable deposits that can run up to 5 years. CP runs 8 to 365 days. (Ch 4 §5.2)"},
+{e:4,c:0,q:"When a company whose shares underlie an ADR programme makes a rights issue, ADR holders typically:",o:["Take up the rights directly in the home market","Receive extra ADRs automatically","Have the rights sold by the depositary bank and receive the proceeds","Lose all entitlement"],a:2,x:"Because of the DR structure, holders cannot take part directly. The depositary sells the rights and passes on the proceeds. (Ch 4 §3.4)"},
+{e:4,c:0,q:"To qualify for the Seed Enterprise Investment Scheme (SEIS), a company must have:",o:["Fewer than 250 employees","Fewer than 25 employees","Gross assets of up to £15m","Been trading for less than seven years"],a:1,x:"SEIS: fewer than 25 employees, gross assets up to £350k, less than 3 years trading, under £250k raised. The other options are EIS limits. (Ch 4 §4.3)"},
+{e:4,c:1,q:"A call option has a delta of 0.6. If the underlying share rises by 50p, the option premium will change by approximately:",o:["+20p","+30p","+50p","−30p"],a:1,x:"Change in premium = delta × change in underlying = 0.6 × 50 = +30p. (Ch 4 §8.4)"},
+{e:4,c:0,q:"Which statement about option Greeks is correct?",o:["Long calls have positive theta","Vega is highest for deep in-the-money options","Gamma is highest for at-the-money options near expiry","Put deltas are positive"],a:2,x:"Gamma peaks ATM close to expiry. Long options have negative theta. Vega is highest ATM. Put deltas are negative. (Ch 4 §8.4.4 to 8.4.6)"},
+{e:4,c:0,q:"The VIX measures:",o:["30-day historic volatility of the Dow Jones","30-day implied volatility of S&P 500 options","Realised volatility of US Treasuries","Implied volatility of FTSE 100 options"],a:1,x:"The Cboe VIX measures the short-term (30-day) implied volatility of S&P 500 options. (Ch 4 §8.5.2)"},
+{e:4,c:1,q:"Company A can borrow fixed at 4.0% or floating at SONIA + 0.2%. Company B can borrow fixed at 5.5% or floating at SONIA + 0.7%. What is the quality spread differential available to share through a swap?",o:["0.5%","1.0%","1.5%","2.0%"],a:1,x:"Fixed spread 1.5% minus floating spread 0.5% = 1.0%. A borrows fixed, B borrows floating, and they swap to share the 1.0%. (Ch 4 §9.1)"},
+{e:4,c:0,q:"A swap in which both legs are floating, referenced to two different benchmark rates, is a:",o:["Vanilla swap","Basis swap","Coupon swap","Swaption"],a:1,x:"Basis swap = floating for floating. Vanilla (coupon) swap = fixed for floating. A swaption is an option to enter a swap. (Ch 4 §9.1)"},
+{e:4,c:0,q:"In a liquidation, which of these ranks highest for repayment?",o:["Floating charge holders","Preferential creditors","Fixed charge holders","Unsecured bondholders"],a:2,x:"Fixed charges come first, then preferential creditors, then floating charges, then unsecured creditors. (Ch 4 §2.2.6 and §6.3.4)"},
+{e:4,c:0,q:"Mezzanine finance is best described as:",o:["Senior secured bank debt","Subordinated debt ranking between senior debt and equity, often with an equity kicker","Short-term commercial paper","Ordinary share capital"],a:1,x:"Mezzanine sits below senior debt and above equity. It pays a higher return and often comes with warrants or conversion rights. (Ch 4 §7.2)"},
+// ---------- Element 5 ----------
+{e:5,c:1,q:"An investment trust has a NAV per share of 250p and a share price of 225p. It trades at:",o:["A 10% premium","An 11.1% discount","A 10% discount","A 25p premium"],a:2,x:"Discount = (250 − 225) ÷ 250 = 10%. Open-ended funds trade at NAV; closed-ended trusts trade on supply and demand. (Ch 5 §2.8.1)"},
+{e:5,c:0,q:"What is the key difference between the OCF and the TER of a fund?",o:["The OCF includes entry charges","The TER includes performance fees and the OCF does not","The OCF includes portfolio transaction costs","There is no difference"],a:1,x:"The TER includes performance fees and the OCF excludes them. Neither includes one-off entry or exit charges. (Ch 5 §2.2.3)"},
+{e:5,c:0,q:"How often must UK authorised fund managers publish an assessment of value report?",o:["Monthly","Quarterly","Annually","Only on launch"],a:2,x:"The assessment of value report is annual and asks whether the fund's charges are justified by the value delivered. (Ch 5 §3.14)"},
+{e:5,c:0,q:"Which risk is specific to a synthetic ETF compared with a physically replicated ETF?",o:["Tracking error","Swap counterparty risk","Currency risk","Market risk"],a:1,x:"A synthetic ETF gets the index return through a swap, so it is exposed to the swap counterparty failing. (Ch 5 §2.4.2)"},
+{e:5,c:0,q:"A UK investor disposes of a holding in an offshore NON-reporting fund at a gain. The gain is generally:",o:["Exempt from tax","Subject to CGT","Taxed as income","Taxed only on remittance"],a:2,x:"Non-reporting funds can roll up income gross, but the gain on disposal is taxed as income. Reporting fund gains are subject to CGT. (Ch 5 §3.13)"},
+{e:5,c:0,q:"Capital protection in a retail structured product depends mainly on:",o:["The FSCS","The creditworthiness of the issuing counterparty","The performance of the underlying index","The fund manager's skill"],a:1,x:"The protection is a promise by the issuer or counterparty. If it fails, the protection fails too (counterparty risk). (Ch 5 §4.2)"},
+{e:5,c:0,q:"The proceeds of a blue bond are used to finance:",o:["Social housing","Ocean and marine projects","Early intervention schemes","Any general corporate purpose"],a:1,x:"Blue bonds are like green bonds but fund ocean and marine projects. Social bonds fund social outcomes. Impact bonds fund prevention and early intervention. (Ch 5 §5.1.1)"},
+{e:5,c:1,q:"A property worth £800,000 earns rent of £48,000 a year and has annual running costs of £8,000. What are its gross and net rental yields?",o:["6% and 5%","6% and 1%","5% and 6%","6.67% and 5%"],a:0,x:"Gross = 48 ÷ 800 = 6%. Net = (48 − 8) ÷ 800 = 5%. (Ch 5 §7.2)"},
+{e:5,c:0,q:"GRESB is best described as:",o:["The RICS global valuation standard","An ESG benchmark for real estate and infrastructure assets and funds","An index of REIT prices","An AREF fund-reporting code"],a:1,x:"GRESB (Global Real Estate Sustainability Benchmark) assesses the ESG performance of real assets. Valuation standards are the RICS Red Book and IVS. (Ch 5 §7.4)"},
+{e:5,c:0,q:"Which is a typical feature of hedge funds?",o:["They target relative returns against a sector average","They are usually authorised retail funds","They may use 'gates' to restrict redemptions in stressed markets","They are highly correlated with equity markets"],a:2,x:"Hedge funds target absolute returns, are usually unauthorised or offshore, charge performance fees, and may gate redemptions. (Ch 5 §6.1)"},
+// ---------- Element 6 ----------
+{e:6,c:1,q:"A fund returns +20% in year 1 and −20% in year 2. What is the geometric mean annual return?",o:["0%","−2.02%","−4.00%","+2.02%"],a:1,x:"√(1.20 × 0.80) − 1 = √0.96 − 1 = −2.02%. The arithmetic mean (0%) overstates the result. (Ch 6 §2.1)"},
+{e:6,c:1,q:"What is the median of this data set: 2, 4, 4, 6, 9, 11?",o:["4","5","6","6.5"],a:1,x:"With an even count, take the average of the two middle values (4 and 6) = 5. The mode is 4 and the mean is 6. (Ch 6 §2.1)"},
+{e:6,c:1,q:"Three monthly returns are 2%, 4% and 6%. Treating them as a sample, what is the standard deviation?",o:["1.63%","2.00%","2.67%","4.00%"],a:1,x:"Mean 4%. Squared deviations 4 + 0 + 4 = 8. Sample variance = 8 ÷ (3 − 1) = 4, so SD = 2%. The population SD would be √(8 ÷ 3) = 1.63%. (Ch 6 §2.3)"},
+{e:6,c:1,q:"Asset A has a standard deviation of 6% and Asset B of 5%. Their covariance is 18. What is their correlation coefficient?",o:["0.36","0.60","1.67","3.00"],a:1,x:"ρ = 18 ÷ (6 × 5) = 0.6. (Ch 6 §3)"},
+{e:6,c:1,q:"Returns are normally distributed with a mean of 8% and a standard deviation of 5%. About 95% of returns should fall between:",o:["3% and 13%","−2% and 18%","−7% and 23%","0% and 16%"],a:1,x:"±2 standard deviations covers about 95.5%: 8% ± 10% = −2% to 18%. (Ch 6 §2.3.5)"},
+{e:6,c:0,q:"A distribution with positive skew will typically have:",o:["A longer left tail and mean below median","A longer right tail and mean above median","Kurtosis below 3","Mean equal to median"],a:1,x:"Positive skew means a long right tail, which pulls the mean above the median. (Ch 6 §2.3.5)"},
+{e:6,c:0,q:"In a regression of a share's returns against market returns, the slope coefficient represents the share's:",o:["Alpha","Beta","R-squared","Standard deviation"],a:1,x:"The slope is beta, the sensitivity to the market. The intercept is alpha. R² is the proportion of the variation explained. (Ch 6 §4)"},
+{e:6,c:1,q:"A portfolio starts at £100k and is worth £110k when £20k is added. It ends the period at £143k. What is the TWRR?",o:["10%","19.2%","21%","23%"],a:2,x:"Sub-period 1: 110 ÷ 100 − 1 = 10%. Sub-period 2: 143 ÷ (110 + 20) − 1 = 10%. TWRR = 1.1 × 1.1 − 1 = 21%. (Ch 6 §7.3)"},
+{e:6,c:1,q:"A portfolio is worth £200,000 at the start of the year and £230,000 at the end. £10,000 was added at the end of June. Using the simplified formula, what is the MWRR?",o:["9.52%","9.76%","10.0%","14.6%"],a:1,x:"(230 − 200 − 10) ÷ (200 + 10 × 6/12) = 20 ÷ 205 = 9.76%. (Ch 6 §7.2)"},
+{e:6,c:1,q:"A fund returned 9% with a standard deviation of 12% and a beta of 1.2. The risk-free rate is 3% and the market returned 8%. What are its Sharpe ratio and Jensen's alpha?",o:["0.5 and 0%","0.75 and 1%","0.5 and 1%","5.0 and 0%"],a:0,x:"Sharpe = (9 − 3) ÷ 12 = 0.5. CAPM return = 3 + 1.2 × (8 − 3) = 9%, so alpha = 9 − 9 = 0%. The Treynor ratio would be 6 ÷ 1.2 = 5. (Ch 6 §9)"},
+{e:6,c:1,q:"The benchmark is 60% equities (returned 10%) and 40% bonds (returned 2%). A fund held 80% equities and 20% bonds. Its equities returned 12% and its bonds 3%. What is the contribution from stock selection?",o:["1.6%","1.8%","3.4%","6.8%"],a:1,x:"Benchmark = 0.6×10 + 0.4×2 = 6.8%. Fund weights × benchmark returns = 0.8×10 + 0.2×2 = 8.4%, so asset allocation added 1.6%. Actual = 0.8×12 + 0.2×3 = 10.2%, so stock selection added 10.2 − 8.4 = 1.8%. Total outperformance is 3.4%. (Ch 6 §8.6.2)"},
+{e:6,c:0,q:"Which method of return calculation do the GIPS standards require?",o:["Money-weighted rate of return","Time-weighted rate of return","Simple holding period return","Arithmetic mean return"],a:1,x:"GIPS require TWRR, which removes the effect of client cash flows. All actual, discretionary, fee-paying portfolios must be in at least one composite. (Ch 6 §8.5)"},
+{e:6,c:0,q:"The Calmar ratio compares the average annual return with:",o:["Standard deviation","Beta","Maximum drawdown over three years","Downside deviation"],a:2,x:"Calmar (the 'drawdown ratio') = average annual return ÷ maximum drawdown over the past three years. Sortino uses downside deviation. (Ch 6 §9.4)"},
+{e:6,c:0,q:"A 14-day RSI reading of 78 suggests the security is:",o:["Oversold","Overbought","In a primary downtrend","At a support level"],a:1,x:"RSI is a momentum oscillator: above 70 is overbought and below 30 is oversold. (Ch 6 §6)"},
+{e:6,c:0,q:"Which index uses price weighting?",o:["FTSE 100","S&P 500","Dow Jones Industrial Average","MSCI World"],a:2,x:"The Dow Jones Industrial Average is the best-known price-weighted index (30 stocks). The others are market-cap weighted. (Ch 6 §8.1)"}
+];
+
+const ELN={1:"Industry",2:"Portfolios",3:"Accounts",4:"Securities",5:"Collectives",6:"Data"};
+let state={};
+try{state=JSON.parse(localStorage.getItem("cisi-im-state")||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem("cisi-im-state",JSON.stringify(state))}catch(e){}}
+let order=Q.map((_,i)=>i);
+
+function filtered(){
+  const el=document.getElementById("elsel").value, m=document.getElementById("mode").value;
+  return order.filter(i=>(el==="all"||String(Q[i].e)===el)&&(m!=="calconly"||Q[i].c===1));
+}
+function stats(){
+  const box=document.getElementById("elstats"); let tot=0,ok=0,html="";
+  for(let e=1;e<=6;e++){
+    let n=0,c=0; Q.forEach((q,i)=>{if(q.e===e&&state[i]!==undefined){n++; if(state[i]===q.a)c++}});
+    tot+=n; ok+=c;
+    const pct=n?Math.round(100*c/n)+"%":"–";
+    html+=`<div class="elstat">${e} ${ELN[e]}<b>${pct}</b><span class="small">${c}/${n} answered</span></div>`;
+  }
+  box.innerHTML=html;
+  document.getElementById("score").textContent=tot?`Overall ${ok}/${tot} (${Math.round(100*ok/tot)}%). The target is 70%+`:`${Q.length} questions. Pick an answer to see the explanation.`;
+}
+function render(){
+  const list=document.getElementById("qlist"); const ids=filtered();
+  list.innerHTML=ids.map((i,k)=>{
+    const q=Q[i], ans=state[i];
+    const opts=q.o.map((t,j)=>{
+      let cls="opt"; if(ans!==undefined){ if(j===q.a)cls+=" right"; else if(j===ans)cls+=" wrong"; }
+      return `<button type="button" class="${cls}" data-q="${i}" data-o="${j}" ${ans!==undefined?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`;
+    }).join("");
+    const ex=ans!==undefined?`<div class="ex"><span class="verdict ${ans===q.a?"ok":"no"}">${ans===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · Element ${q.e} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p><div class="opts">${opts}</div>${ex}</article>`;
+  }).join("");
+  stats();
+}
+document.getElementById("qlist").addEventListener("click",ev=>{
+  const b=ev.target.closest("button.opt"); if(!b||b.disabled)return;
+  state[+b.dataset.q]=+b.dataset.o; save(); render();
+});
+document.getElementById("elsel").addEventListener("change",render);
+document.getElementById("mode").addEventListener("change",render);
+document.getElementById("shuffle").addEventListener("click",()=>{
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+  render();
+});
+document.getElementById("reset").addEventListener("click",()=>{state={};save();render()});
+
+const VIEWS=["plan","map","formulas","quiz","traps"];
+function route(){
+  const h=(location.hash||"#plan").slice(1); const v=VIEWS.includes(h)?h:"plan";
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{ if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+}
+window.addEventListener("hashchange",()=>{route();window.scrollTo(0,0)});
+route(); render();
+</script>
