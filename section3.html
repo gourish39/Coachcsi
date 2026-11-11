@@ -1,0 +1,455 @@
+<title>Section 3 Valuation Module</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one study column, sticky tabs; formula cards set like an exam formula sheet; highlighter marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2; --warn-bg:#fff4d6; --warn:#8a5a00;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:30px 10px}
+h3{font-size:1.1rem;margin-block:20px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.hi{background:var(--accent);color:var(--accent-ink)}
+.pill.md{border:1px solid var(--accent);color:var(--accent)}
+.pill.lo{border:1px solid var(--line);color:var(--muted)}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:14px}
+.topic h3{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.topic .why{color:var(--muted);font-size:13.5px;margin:2px 0 8px}
+.topic ul{margin:6px 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-block:8px}
+.f{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;background:var(--bg)}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px}
+.eg code,.mono{font-family:var(--mono);font-size:13px}
+.warnbox{margin-top:8px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);color:var(--ink);font-size:14px}
+.warnbox b{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.timer{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.q table{font-size:13px;margin-bottom:10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-block:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.stat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 18px;margin-block:12px}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+<header class="top wrap">
+  <h1>Section 3: Valuation (company accounts &amp; ratios)</h1>
+  <p class="lede">A module for Element 3 of the CISI Investment Management exam, built from Chapter 3 of the Edition 4 workbook. It covers only what the book's own questions actually test, plus 50 practice questions.</p>
+  <div class="facts">
+    <span class="chip">About <b>14</b> of 80 exam questions</span>
+    <span class="chip">Roughly <b>2 in 3</b> are calculations</span>
+    <span class="chip"><b>50</b> practice questions</span>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#learn">Learn</a>
+  <a href="#practice">50 questions</a>
+  <a href="#method">How this was built</a>
+</div></nav>
+
+<main class="wrap">
+
+<section data-view="learn">
+  <h2>What gets tested, in priority order</h2>
+  <p>I matched every Element 3 learning objective against the book's 80 practice questions and its end-of-chapter questions. The <span class="pill hi">Tested often</span> topics are the ones those questions return to again and again. Learn them first.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>1. Profitability: ROCE, asset turnover, margins, equity multiplier, DuPont</td><td><span class="pill hi">Tested often</span></td><td>MCQs 1, 18, 23, 47 · Ch-end 5, 6</td></tr>
+      <tr><td>2. Building the income statement</td><td><span class="pill hi">Tested often</span></td><td>MCQs 1, 14</td></tr>
+      <tr><td>3. Liquidity: current, quick, Z-score, cash cycle</td><td><span class="pill hi">Tested often</span></td><td>MCQs 16, 73 · Ch-end 7</td></tr>
+      <tr><td>4. Gearing and interest cover</td><td><span class="pill hi">Tested often</span></td><td>MCQs 35, 59 · Ch-end 9</td></tr>
+      <tr><td>5. Balance sheet items and reserves</td><td><span class="pill md">Regular</span></td><td>MCQs 36, 78 · Ch-end 1, 2, 3</td></tr>
+      <tr><td>6. Group accounts: associates and subsidiaries</td><td><span class="pill md">Regular</span></td><td>MCQ 12 · Ch-end 4</td></tr>
+      <tr><td>7. Cash flow statement</td><td><span class="pill md">Regular</span></td><td>MCQ 72</td></tr>
+      <tr><td>8. WACC, EVA, NPV and IRR</td><td><span class="pill md">Regular</span></td><td>Syllabus "be able to analyse" objectives</td></tr>
+      <tr><td>9. Legal requirements by company size</td><td><span class="pill lo">Occasional</span></td><td>MCQ 46</td></tr>
+      <tr><td>10. Limitations of ratios</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 10</td></tr>
+      <tr><td>11. ESG disclosure: TCFD, GRI, SASB, SFDR/SDR</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 3.2.1</td></tr>
+      <tr><td>12. Economies and diseconomies of scale</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 3.3.9</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>1. Profitability ratios <span class="pill hi">Tested often</span></h3>
+    <p class="why">The most common Section 3 question: work out a ratio from a short extract, or compare four companies in a table.</p>
+    <div class="fgroup">
+      <div class="f"><div class="n">Capital employed (assets side)</div><code>Total assets − Current liabilities + Short-term borrowing</code></div>
+      <div class="f"><div class="n">Capital employed (funding side)</div><code>Share capital + Reserves + Long-term loans + Overdraft</code></div>
+      <div class="f"><div class="n">ROCE</div><code>PBIT ÷ Capital employed</code></div>
+      <div class="f"><div class="n">Asset turnover</div><code>Sales ÷ Capital employed</code></div>
+      <div class="f"><div class="n">Gross margin</div><code>Gross profit ÷ Revenue</code></div>
+      <div class="f"><div class="n">Operating margin</div><code>Operating profit ÷ Revenue</code></div>
+      <div class="f"><div class="n">Net margin</div><code>Net income ÷ Revenue</code></div>
+      <div class="f"><div class="n">Equity multiplier</div><code>Total assets ÷ Shareholders' funds
+(Shareholders' funds = Assets − Liabilities)</code></div>
+      <div class="f"><div class="n">DuPont ROE</div><code>Net margin × Asset turnover × Equity multiplier</code></div>
+      <div class="f"><div class="n">Link</div><code>ROCE = PBIT margin × Asset turnover</code></div>
+    </div>
+    <div class="eg"><b>Worked example (the book's own pattern).</b> Sales £5m, PBIT £1.5m, share capital £1m, reserves £5m, loans £1m, overdraft £0.5m.<br>
+      Capital employed = 1 + 5 + 1 + 0.5 = <span class="mono">£7.5m</span>. ROCE = 1.5 ÷ 7.5 = <span class="mono">20%</span>. Margin = 1.5 ÷ 5 = <span class="mono">30%</span>. Asset turnover = 5 ÷ 7.5 = <span class="mono">0.67×</span>. Check: 30% × 0.67 = 20%.</div>
+    <ul>
+      <li><b>The overdraft counts as capital employed.</b> It is short-term borrowing, so add it back. MCQ 47 hinges on this.</li>
+      <li><b>ROCE is distorted by</b> new finance raised at the year-end, revaluing fixed assets (capital employed goes up and the higher depreciation cuts profit) and buying a subsidiary at the year-end.</li>
+      <li><b>DuPont reading:</b> if ROE rises because of the equity multiplier, that is more debt and more risk, not better operations.</li>
+      <li><b>Extended DuPont</b> has five parts. It splits net margin into operating margin × a tax component × an interest component, then multiplies by asset turnover and the equity multiplier.</li>
+    </ul>
+    <div class="warnbox"><b>Book errors to know about.</b> The DuPont example (section 3.8) prints ROE as "1%" and "2.5%". The correct figures are 0.25 × 1.6 × 2.5 = <b>100%</b> and 0.125 × 2.5 × 8 = <b>250%</b>. The method is right; only the decimals are printed wrong. The book also says net margin "can also be written as PBIT ÷ revenue". Use whichever profit figure the question names.</div>
+  </div>
+
+  <div class="topic">
+    <h3>2. Building the income statement <span class="pill hi">Tested often</span></h3>
+    <p class="why">You get an extract and have to find gross profit, operating profit or the profit for shareholders. Most wrong answers come from adding or subtracting a line at the wrong stage.</p>
+    <div class="table-wrap"><table>
+      <tbody>
+        <tr><td>Revenue</td><td class="small">the "top line"</td></tr>
+        <tr><td>− Cost of sales</td><td class="small">= <b>Gross profit</b></td></tr>
+        <tr><td>− Distribution and administrative costs</td><td class="small">= <b>Operating profit</b> (EBIT)</td></tr>
+        <tr><td>− Exceptional items</td><td class="small">shown separately because they are unusual and material</td></tr>
+        <tr><td>+ Investment income + Interest receivable − Interest payable</td><td class="small">= <b>Profit before tax</b></td></tr>
+        <tr><td>− Tax</td><td class="small">= <b>Net income</b>, the profit attributable to shareholders</td></tr>
+      </tbody>
+    </table></div>
+    <div class="eg"><b>The book's ABC plc example.</b> 9,500 − 7,000 = 2,500 gross. − 110 − 30 = 2,360 operating. − 260 exceptional = 2,100. + 30 + 90 − 230 = 1,990 PBT. − 555 tax = <span class="mono">1,435</span> net income. With 1m shares, EPS = 143.5p.</div>
+    <ul>
+      <li><b>Dividends paid are not an expense.</b> They are an appropriation of profit, so they appear in the statement of changes in equity, not the income statement.</li>
+      <li><b>EPS</b> = (Net income − Preference dividends) ÷ Number of ordinary shares.</li>
+      <li><b>Other comprehensive income</b> is gains and losses not yet realised.</li>
+      <li><b>Depreciation</b> does not apply to freehold land. <b>Amortisation</b> is the equivalent charge for intangibles.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>3. Liquidity, Z-score and cash cycle <span class="pill hi">Tested often</span></h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Current (working capital) ratio</div><code>Current assets ÷ Current liabilities</code><div class="small">1.5 to 2 is usually acceptable</div></div>
+      <div class="f"><div class="n">Quick ratio (acid test)</div><code>(Current assets − Stock) ÷ Current liabilities</code><div class="small">Above 1 is generally OK</div></div>
+      <div class="f"><div class="n">Receivable days</div><code>Trade receivables ÷ Revenue × 365</code></div>
+      <div class="f"><div class="n">Inventory days</div><code>Inventory ÷ Cost of sales × 365</code></div>
+      <div class="f"><div class="n">Payable days</div><code>Trade payables ÷ Purchases × 365</code><div class="small">Use cost of sales if purchases aren't given</div></div>
+      <div class="f"><div class="n">Cash cycle</div><code>Inventory days + Receivable days − Payable days</code><div class="small">Shorter is better</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Z-score</th><th>Meaning (two-year horizon)</th></tr></thead>
+      <tbody>
+        <tr><td class="num">Above 3.0</td><td>Unlikely to go bankrupt</td></tr>
+        <tr><td class="num">1.8 to 3.0</td><td>Grey area: bankruptcy as likely as not</td></tr>
+        <tr><td class="num">Below 1.8</td><td>Bankruptcy likely</td></tr>
+        <tr><td class="num">Negative</td><td><mark>Insolvency imminent</mark></td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>The <b>quick ratio</b> takes out stock because stock may be hard to sell quickly. MCQ 73 asks you to compare quarters on this.</li>
+      <li>A very high current ratio can mean too much inventory or idle cash, not just safety.</li>
+      <li>The Z-score uses factors such as gearing and sales mix. Other danger signals are more use of leased assets and depending on one customer.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>4. Gearing and interest cover <span class="pill hi">Tested often</span></h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Debt-to-equity (financial gearing)</div><code>(Interest-bearing debt + Preference shares) ÷ Ordinary shareholders' equity</code></div>
+      <div class="f"><div class="n">Interest cover</div><code>PBIT ÷ Interest payable</code><div class="small">1.5× or less is a warning sign</div></div>
+    </div>
+    <ul>
+      <li><b>Preference shares count as debt</b> because their dividends must be paid before ordinary dividends (MCQ 59 tests the formula itself).</li>
+      <li><b>If you are only given profit before tax, add the interest back</b> to get PBIT. In MCQ 35, revenue − COGS − expenses − finance costs gives PBT. Adding back finance costs gives PBIT, then divide by finance costs.</li>
+      <li>Net gearing deducts cash held, since cash could repay debt.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>5. Balance sheet items and reserves <span class="pill md">Regular</span></h3>
+    <ul>
+      <li><b>Assets = Liabilities + Equity.</b> Net assets = Shareholders' funds = Share capital + Reserves.</li>
+      <li><b>Current assets</b> (stock, receivables, short-term investments, cash) are listed in order of liquidity and valued at the <mark>lower of cost and net realisable value</mark>.</li>
+      <li><b>Stock valuation when prices are rising:</b> FIFO gives the highest profit. LIFO gives the lowest and is <mark>not allowed under IAS 2</mark>. AVCO is in between.</li>
+      <li><b>Non-current assets:</b> tangible (property, plant and equipment), intangible (patents, brands, licences, purchased goodwill) and investments. Patents written down reduce <mark>intangible</mark> fixed assets (MCQ 36).</li>
+      <li><b>IAS 16:</b> PPE can be held at cost (the cost model) or revalued periodically (the revaluation model).</li>
+      <li><b>Liabilities:</b> payables are known amounts. <mark>Accruals have a known timing but an uncertain amount</mark> (the book's answer to MCQ 78). Provisions are estimates of liabilities from outside normal trading, or reductions in asset value.</li>
+      <li><b>Capital reserves</b> (share premium, revaluation reserve, capital redemption reserve) <mark>cannot be paid as dividends</mark>, but can fund a bonus issue. <b>Revenue reserves</b> (retained earnings) can be paid out.</li>
+      <li><b>Share premium:</b> 100m £1 shares issued at £2.50 adds £100m to share capital and £150m to share premium.</li>
+      <li><b>A proposed final dividend</b> is not a liability at the year-end (IAS 10). It only becomes one once shareholders approve it.</li>
+      <li><b>Off-balance sheet finance</b> (for example through SPVs) keeps debt off the balance sheet, so gearing looks lower than it really is.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>6. Group accounts <span class="pill md">Regular</span></h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Holding</th><th>Status</th><th>Accounting</th></tr></thead>
+      <tbody>
+        <tr><td class="num">Under 20%, no influence</td><td>Simple investment</td><td>Fixed asset at cost less impairment, or current asset at lower of cost and NRV. Dividends go to the income statement.</td></tr>
+        <tr><td class="num">20–50%, or significant influence</td><td>Associate (IAS 28)</td><td><b>Equity method:</b> the holder's share of the associate's post-acquisition profit goes into the income statement, and its share of net assets plus goodwill goes on the balance sheet. Dividends from the associate do <mark>not</mark> enter the consolidated income statement.</td></tr>
+        <tr><td class="num">Over 50%</td><td>Subsidiary</td><td><b>Full consolidation.</b> The part owned by others is shown as <b>minority interests</b>: deducted at the bottom of the income statement and shown separately within equity.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">Trap: influence matters more than the percentage. A 15% stake with significant influence is still treated as an associate (end-of-chapter Q4).</p>
+  </div>
+
+  <div class="topic">
+    <h3>7. Cash flow statement <span class="pill md">Regular</span></h3>
+    <ul>
+      <li><b>Operating:</b> cash from customers, minus cash paid to suppliers and staff, tax and interest paid (in the book's example).</li>
+      <li><b>Investing:</b> buying and selling fixed assets and investments, plus interest and dividends received.</li>
+      <li><b>Financing:</b> dividends paid, borrowing raised or repaid, and shares issued.</li>
+      <li>Non-cash items such as depreciation, amortisation and book losses on disposals are <b>added back</b>. Book profits on disposals are deducted.</li>
+      <li><b>Why investors read it (MCQ 72):</b> to see whether the company depends on <mark>selling fixed assets and borrowing</mark> to fund day-to-day operations. Positive operating cash flow is what matters.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>8. WACC, EVA, NPV and IRR <span class="pill md">Regular</span></h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">WACC</div><code>[E × Re + D × Rd × (1 − Tc)] ÷ (E + D)</code><div class="small">Market values. The cost of debt is reduced for tax.</div></div>
+      <div class="f"><div class="n">EVA</div><code>NOPAT − (Invested capital × WACC)</code><div class="small">Invested capital = equity + long-term debt. Negative means value destroyed.</div></div>
+      <div class="f"><div class="n">Present value</div><code>PV = FV ÷ (1 + r)^n</code><div class="small">NPV = PV of inflows − PV of outflows</div></div>
+      <div class="f"><div class="n">IRR by interpolation</div><code>r1 + [NPV+ ÷ (NPV+ − NPV−)] × (r2 − r1)</code><div class="small">NPV− is negative, so the bottom line is effectively the sum of the two NPVs' sizes</div></div>
+    </div>
+    <div class="eg"><b>EVA example (book).</b> NOPAT $8,000. Equity $50,000 + debt $5,000 = $55,000 invested. WACC 9%. EVA = 8,000 − 4,950 = <span class="mono">+$3,050</span>, so value is created.</div>
+    <ul>
+      <li>The cost of equity is usually higher than the cost of debt: shareholders take more risk and interest is tax-deductible.</li>
+      <li>WACC is the <b>hurdle rate</b> for projects and acquisitions.</li>
+      <li>Rank competing projects by <mark>NPV, not IRR</mark>. IRR is only the break-even rate where NPV = 0.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <h3>9–12. The shorter topics <span class="pill lo">Occasional</span></h3>
+    <ul>
+      <li><b>Company size rules:</b> micro and small companies are usually exempt from audit. <mark>Medium-sized companies must publish a cash flow statement and may need a "special auditors' report"</mark> (an abridged one). Large companies prepare full accounts. Listed plcs also include a statement of changes in equity, an operating and financial review, governance disclosures, and half-yearly (interim) reports, which are not fully audited. A company keeps its size status if it qualifies for two years in a row.</li>
+      <li><b>IFRS vs GAAP:</b> IFRS is principles-based and GAAP is rules-based. The US still uses US GAAP. IFRS 18 applies from 1 January 2027.</li>
+      <li><b>Limitations of ratios:</b> they use historic data, so they don't predict the future, and accounts can be window-dressed. Industries differ in how capital-intensive they are. Companies in the same industry can be at different stages (a young firm with high debt). The same company over time can change its accounting policies or be affected by seasonality. Countries use different accounting standards.</li>
+      <li><b>ESG disclosure:</b> TCFD was set up by the FSB in 2015 and disbanded in 2023, with the IFRS Foundation taking over monitoring. GRI is the most widely adopted standard, focused on a company's impact. <mark>SASB is industry-specific (about 80 industries)</mark> and its Materiality Map shows which issues are financially material in each sector. SFDR is the EU's rule, on a comply-or-explain basis. SDR is the UK's version, with product labels and an <mark>anti-greenwashing rule</mark>. The US has a Climate Disclosure Rule.</li>
+      <li><b>Economies of scale:</b> unit costs fall as output rises, down to the <mark>minimum efficient scale (MES)</mark>. Beyond it, diseconomies of scale set in, such as management bureaucracy. If marginal cost is below average cost, average cost is falling.</li>
+    </ul>
+  </div>
+
+  <h2>Exam technique for Section 3</h2>
+  <ul>
+    <li><b>Write down the formula before you touch the numbers.</b> Most wrong answers among the options come from the wrong denominator: total assets instead of capital employed, PBT instead of PBIT, or revenue instead of cost of sales.</li>
+    <li><b>Four-company tables:</b> calculate all four. Don't guess from the biggest single input. A high margin can be outweighed by low asset turnover.</li>
+    <li><b>Check units:</b> £000 vs £m, and days vs times.</li>
+    <li><b>Budget about 90 seconds a question.</b> If a table question runs over 2 minutes, flag it and come back.</li>
+  </ul>
+</section>
+
+<section data-view="practice" hidden>
+  <h2>50 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <div class="controls">
+    <select id="mode" aria-label="Mode">
+      <option value="practice">Practice: instant feedback</option>
+      <option value="mock">Mock: timed, marked at the end</option>
+    </select>
+    <select id="topic" aria-label="Topic">
+      <option value="all">All topics</option>
+    </select>
+    <button id="shuffle" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset answers</button>
+    <button id="finish" class="primary" type="button" hidden>Finish and mark</button>
+    <span class="timer" id="timer" hidden></span>
+    <span class="score" id="score"></span>
+  </div>
+  <div id="result"></div>
+  <div class="stats" id="stats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section data-view="method" hidden>
+  <h2>How this was built</h2>
+  <ul>
+    <li>I read all of Chapter 3 of the Edition 4 workbook (June 2025) and the Element 3 learning objectives in its syllabus map.</li>
+    <li>I went through the book's 80 practice questions and the Chapter 3 end-of-chapter questions, and recorded which Element 3 objectives each one tests. The priority labels in Learn come from that count.</li>
+    <li>Real CISI exam questions are confidential and are not published, so no one can give you "real" questions. The 50 here are original and follow the book's style: short extracts, four-company tables, and "which statement is correct".</li>
+    <li>Every calculation was worked through by hand. Each explanation names the workbook section so you can check it.</li>
+    <li>EPS, P/E, dividend yield and Gordon growth are taught in Chapter 3, but the syllabus counts them under Element 4. Only EPS appears here, because it is part of building the income statement.</li>
+  </ul>
+</section>
+</main>
+
+<script>
+const T={1:"Profitability",2:"Income statement",3:"Liquidity & cash cycle",4:"Gearing",5:"Balance sheet",6:"Group accounts",7:"Cash flow",8:"WACC, EVA, NPV/IRR",9:"Legal, limits, ESG, scale"};
+const Q=[
+// 2 Income statement
+{t:2,c:1,q:"Analyse this extract (£000) to find operating profit.",tb:[["Revenue","840"],["Cost of sales","(504)"],["Distribution costs","(60)"],["Administrative expenses","(96)"]],o:["£180,000","£240,000","£276,000","£336,000"],a:0,x:"Gross profit = 840 − 504 = 336. Operating profit = 336 − 60 − 96 = 180, so £180,000. £336,000 is gross profit. (Ch 3 §1.3)"},
+{t:2,c:1,q:"Using the same extract, what is the gross profit margin?",tb:[["Revenue","840"],["Cost of sales","(504)"],["Distribution costs","(60)"],["Administrative expenses","(96)"]],o:["21.4%","40%","60%","66.7%"],a:1,x:"Gross margin = 336 ÷ 840 = 40%. 60% is cost of sales as a share of revenue. 21.4% is the operating margin. (Ch 3 §3.3.3)"},
+{t:2,c:1,q:"From the extract below (£000), what is the profit attributable to shareholders?",tb:[["Operating profit","2,000"],["Exceptional loss","(300)"],["Income from fixed asset investments","50"],["Interest receivable","40"],["Interest payable","(190)"],["Tax","(400)"]],o:["£1,200,000","£1,300,000","£1,500,000","£1,600,000"],a:0,x:"PBT = 2,000 − 300 + 50 + 40 − 190 = 1,600. Net income = 1,600 − 400 = 1,200, so £1,200,000. £1,600,000 is profit before tax. (Ch 3 §1.3)"},
+{t:2,c:1,q:"A company's net income is £1.2m. It pays preference dividends of £0.2m and has 5 million ordinary shares in issue. What is its basic EPS?",o:["4p","20p","24p","28p"],a:1,x:"EPS = (1.2m − 0.2m) ÷ 5m = 20p. 24p ignores the preference dividend. (Ch 3 §3.6.1)"},
+{t:2,c:0,q:"Where are ordinary dividends paid during the year reported in a listed company's accounts?",o:["As an expense in the income statement","In the statement of changes in equity","As a current liability","As an investing cash outflow only"],a:1,x:"Dividends are an appropriation of profit, not an expense, so they appear in the statement of changes in equity rather than the income statement. (Ch 3 §1.1)"},
+// 5 Balance sheet
+{t:5,c:1,q:"A company issues 10 million £1 ordinary shares at £3.20 each. How much is credited to the share premium account?",o:["£10m","£22m","£32m","£3.2m"],a:1,x:"Share capital is increased by the nominal value only (£10m). The premium of £2.20 a share × 10m = £22m goes to share premium. (Ch 3 §1.2.3)"},
+{t:5,c:0,q:"Which statement about capital reserves is correct?",o:["They can be paid out as cash dividends","They include retained earnings","They are not distributable but can be used for a bonus issue","They are shown as non-current liabilities"],a:2,x:"Capital reserves (share premium, revaluation, capital redemption) represent unrealised profits and part of the capital base. They cannot be paid as dividends but can be converted into bonus shares. (Ch 3 §1.2.3)"},
+{t:5,c:0,q:"A company knows a routine operating liability will be paid on a set date, but the amount is not yet certain. According to the workbook, this is classed as:",o:["A trade payable","An accrual","A contingent asset","Share capital"],a:1,x:"The workbook defines accruals as liabilities whose timing is generally known but whose amount is uncertain. Payables are known amounts. (Ch 3 §1.2.2)"},
+{t:5,c:0,q:"In a period of rising prices, which stock valuation method gives the highest reported profit?",o:["LIFO","FIFO","AVCO","Replacement cost"],a:1,x:"Under FIFO the oldest (cheapest) stock is charged to cost of sales first, so profit is highest. LIFO gives the lowest profit and is not allowed under IAS 2. (Ch 3 §1.2.1)"},
+{t:5,c:0,q:"How are current assets such as inventory valued on the statement of financial position?",o:["At historic cost always","At the lower of cost and net realisable value","At replacement cost","At fair value through profit or loss"],a:1,x:"Current assets appear at the lower of cost and NRV. If NRV falls below cost (for example through obsolescence), stock is written down. (Ch 3 §1.2.1)"},
+{t:5,c:0,q:"Under IAS 16, a company that revalues its property upwards records the gain in:",o:["Revenue","The revaluation reserve","Retained earnings","Current liabilities"],a:1,x:"IAS 16 allows the revaluation model. Upward revaluations go to the revaluation reserve, which is a non-distributable capital reserve. (Ch 3 §1.2.1, §1.2.3)"},
+{t:5,c:0,q:"At the year-end the directors propose a final dividend that shareholders will vote on next month. How is it treated in the year-end statement of financial position?",o:["As a current liability","As a deduction from share premium","It is not recognised as a liability, but it is disclosed","As a provision"],a:2,x:"Under IAS 10 a proposed dividend is a non-adjusting event after the reporting date. It only becomes a liability once shareholders approve it at a general meeting. (Ch 3 §1.2.2)"},
+{t:5,c:0,q:"What is the main effect of off-balance sheet finance on an analyst's view of a company?",o:["Revenue is overstated","Debt-to-equity and leverage ratios appear lower than they really are","Interest cover falls","Current assets are understated"],a:1,x:"Keeping liabilities off the balance sheet (for example through SPVs) makes gearing look lower and can reduce the cost of borrowing. (Ch 3 §1.2.4)"},
+// 7 Cash flow
+{t:7,c:0,q:"In the cash flow statement, the purchase of new machinery is shown under:",o:["Operating activities","Investing activities","Financing activities","Cash equivalents"],a:1,x:"Buying and selling long-term assets and investments are investing activities. (Ch 3 §1.4)"},
+{t:7,c:0,q:"When moving from operating profit to operating cash flow, depreciation is:",o:["Deducted, because it is an expense","Added back, because it is not a cash flow","Ignored","Moved to financing activities"],a:1,x:"Depreciation reduces profit but no cash leaves the business, so it is added back. Cash flows only happen when the asset is bought or sold. (Ch 3 §1.4)"},
+{t:7,c:0,q:"A company shows negative operating cash flow for three years, covered by selling property and taking out new loans. What does this most likely indicate?",o:["Strong liquidity","It is relying on asset sales and borrowing to fund day-to-day operations","Its dividend cover is high","Its EBITDA margin is improving"],a:1,x:"The cash flow statement shows whether operations generate cash. Without positive operating cash flow, a company becomes reliant on selling fixed assets and borrowing. (Ch 3 §1.4)"},
+// 6 Group accounts
+{t:6,c:0,q:"Company A holds 15% of Company B and exercises significant influence over B's management. How should A account for B?",o:["As a simple investment at cost","As an associate, using the equity method","As a subsidiary, fully consolidated","As a current asset at market value"],a:1,x:"Holding 20% or more, or having significant influence, makes B an associate (IAS 28). Here influence overrides the percentage. (Ch 3 §1.5.1, §1.5.4)"},
+{t:6,c:0,q:"Under the equity method, which of these does NOT enter A's consolidated income statement for a 30% associate?",o:["30% of the associate's post-acquisition operating profit","30% of its interest and tax","Dividends A receives from the associate","30% of its post-acquisition profit after tax"],a:2,x:"A takes its 30% share of the associate's profits, interest and tax. Dividends received from the associate do not enter the consolidated income statement, as that would count the profit twice. (Ch 3 §1.5.4)"},
+{t:6,c:0,q:"A parent owns 75% of a subsidiary. How is the other 25% shown in the group accounts?",o:["It is ignored","As minority interests: deducted at the bottom of the income statement and shown separately within equity","As a non-current liability","Using the equity method"],a:1,x:"More than 50% means full consolidation. The share owned by outsiders is shown as minority (non-controlling) interests in both statements. (Ch 3 §1.5.3)"},
+// 1 Profitability
+{t:1,c:1,q:"A company has share capital of £2m, reserves of £6m, long-term loans of £1.5m and an overdraft of £0.5m. PBIT is £1.5m. What is its ROCE?",o:["15.0%","15.8%","18.75%","25.0%"],a:0,x:"Capital employed = 2 + 6 + 1.5 + 0.5 = £10m. ROCE = 1.5 ÷ 10 = 15%. Leaving out the overdraft gives 15.8%. (Ch 3 §3.3.1)"},
+{t:1,c:1,q:"Total assets are £50m. Current liabilities are £15m, which includes a £3m bank overdraft. PBIT is £6.4m. What is the ROCE?",o:["12.8%","14.5%","16.8%","18.3%"],a:2,x:"Capital employed = 50 − 15 + 3 = £38m. ROCE = 6.4 ÷ 38 = 16.8%. 18.3% forgets to add back the overdraft (6.4 ÷ 35). 12.8% uses total assets. (Ch 3 §3.3.1)"},
+{t:1,c:1,q:"A company has sales of £12m and capital employed of £8m. What is its asset turnover?",o:["0.67×","1.5×","4.0×","20×"],a:1,x:"Asset turnover = Sales ÷ Capital employed = 12 ÷ 8 = 1.5×. (Ch 3 §3.3.2)"},
+{t:1,c:1,q:"A company has a PBIT margin of 12% and an asset turnover of 1.5×. What is its ROCE?",o:["8%","12%","13.5%","18%"],a:3,x:"ROCE = PBIT margin × Asset turnover = 12% × 1.5 = 18%. (Ch 3 §3.3.3)"},
+{t:1,c:0,q:"A company revalues its fixed assets upwards during the year. All else equal, what is the effect on ROCE?",o:["ROCE rises","ROCE falls","No effect","ROCE rises only if the assets are sold"],a:1,x:"Capital employed rises, and the higher depreciation charge reduces profit. Both push ROCE down. (Ch 3 §3.3.1)"},
+{t:1,c:1,q:"Net income is £1.8m on revenue of £24m. What is the net profit margin?",o:["7.5%","13.3%","18%","75%"],a:0,x:"Net margin = 1.8 ÷ 24 = 7.5%. (Ch 3 §3.3.3)"},
+{t:1,c:1,q:"A company has total assets of £500m and total liabilities of £300m. What is its equity multiplier?",o:["0.6","1.67","2.5","1.5"],a:2,x:"Shareholders' funds = 500 − 300 = £200m. Equity multiplier = 500 ÷ 200 = 2.5. 1.67 divides by liabilities instead. (Ch 3 §3.3.3)"},
+{t:1,c:1,q:"Which company has the highest return on equity?",tb:[["","Net margin","Asset turnover","Equity multiplier"],["Company 1","10%","2.0","1.5"],["Company 2","15%","1.2","2.0"],["Company 3","8%","2.5","2.0"],["Company 4","20%","0.8","2.2"]],o:["Company 1","Company 2","Company 3","Company 4"],a:2,x:"ROE = margin × turnover × multiplier: 1 = 30%, 2 = 36%, 3 = 40%, 4 = 35.2%. Company 4 has the best margin but not the best ROE. (Ch 3 §3.8)"},
+{t:1,c:0,q:"DuPont analysis shows a company's ROE has risen, driven almost entirely by a higher equity multiplier. An analyst should conclude that:",o:["Operating efficiency has improved","Asset use is more efficient","The rise comes from more debt, so financial risk is higher","Profit margins have widened"],a:2,x:"A rise in ROE from the equity multiplier means more leverage. If the company was already appropriately geared, it may now be over-leveraged. (Ch 3 §3.8)"},
+{t:1,c:0,q:"How does extended DuPont analysis differ from basic DuPont analysis?",o:["It replaces the equity multiplier with gearing","It splits net margin into operating margin, a tax component and an interest component, giving five factors","It uses ROCE instead of ROE","It removes asset turnover"],a:1,x:"Basic DuPont has three factors (net margin, asset turnover, equity multiplier). Extended DuPont uses operating margin and adds tax and interest components: five in total. (Ch 3 §3.8)"},
+// 8 WACC etc
+{t:8,c:1,q:"NOPAT is £9m. The company is financed by £40m of equity and £30m of long-term debt. WACC is 12%. What is its EVA?",o:["−£0.6m","£0.6m","£4.2m","£8.4m"],a:1,x:"Invested capital = 40 + 30 = £70m. Capital charge = 70 × 12% = £8.4m. EVA = 9 − 8.4 = +£0.6m, so value is created. (Ch 3 §3.3.3)"},
+{t:8,c:1,q:"Equity has a market value of £300m and a cost of 11%. Debt has a market value of £200m and a pre-tax cost of 6%. Tax is 25%. What is the WACC?",o:["8.4%","9.0%","7.5%","8.8%"],a:0,x:"WACC = [300×11% + 200×6%×0.75] ÷ 500 = (33 + 9) ÷ 500 = 8.4%. 9.0% forgets the tax shield on debt. (Ch 3 §3.1)"},
+{t:8,c:1,q:"A project costs £10,000 today and returns £6,000 at the end of each of the next two years. At a 10% discount rate, what is its NPV (to the nearest £)?",o:["−£413","£413","£2,000","£10,413"],a:1,x:"PV = 6,000 ÷ 1.10 + 6,000 ÷ 1.21 = 5,454.55 + 4,958.68 = 10,413.22. NPV = 10,413 − 10,000 = +£413. (Ch 3 §4.1)"},
+{t:8,c:1,q:"A project's NPV is +£600 at 8% and −£300 at 14%. Using interpolation, what is its approximate IRR?",o:["10%","11%","12%","13%"],a:2,x:"IRR ≈ 8 + [600 ÷ (600 + 300)] × (14 − 8) = 8 + 0.667 × 6 = 12%. (Ch 3 §4.1.1)"},
+{t:8,c:0,q:"According to the workbook, how should competing projects be ranked?",o:["By IRR, highest first","By NPV, because NPV ranks projects better; IRR is only the break-even rate","By payback period","By ROCE"],a:1,x:"NPV gives the better ranking. IRR shows the break-even discount rate at which NPV is zero. (Ch 3 §4.1.1)"},
+// 3 Liquidity
+{t:3,c:1,q:"Current assets are £900k, including stock of £300k. Current liabilities are £600k. What are the current ratio and the quick ratio?",o:["1.5 and 1.0","1.0 and 1.5","2.0 and 1.5","1.5 and 0.5"],a:0,x:"Current = 900 ÷ 600 = 1.5. Quick = (900 − 300) ÷ 600 = 1.0. (Ch 3 §3.4.1, §3.4.2)"},
+{t:3,c:1,q:"In which quarter was the quick (acid test) ratio highest?",tb:[["£000","Q1","Q2","Q3","Q4"],["Current assets","500","480","520","450"],["Stock","100","60","150","50"],["Current liabilities","400","350","380","360"]],o:["Q1","Q2","Q3","Q4"],a:1,x:"Quick ratios: Q1 400/400 = 1.00, Q2 420/350 = 1.20, Q3 370/380 = 0.97, Q4 400/360 = 1.11. Q3 has the biggest current assets but the most stock. (Ch 3 §3.4.2)"},
+{t:3,c:0,q:"A company's Z-score is 2.4. This places it:",o:["Safe: bankruptcy very unlikely within two years","In the grey area: bankruptcy as likely as not","In distress: bankruptcy likely","Insolvency imminent"],a:1,x:"Above 3.0 is safe, 1.8 to 3.0 is the grey area, below 1.8 means bankruptcy is likely, and negative means insolvency is imminent. (Ch 3 §3.4.3)"},
+{t:3,c:0,q:"Apart from a low Z-score, which is listed in the workbook as a danger signal of possible insolvency?",o:["A rising dividend cover","More use of leased assets and depending heavily on one customer","A falling P/E ratio","Revaluing property upwards"],a:1,x:"The workbook lists increased use of leased assets and overdependence on one customer as other danger signals. (Ch 3 §3.4.3)"},
+{t:3,c:1,q:"Trade receivables are £6,000 and annual revenue is £73,000. What is the receivables collection period?",o:["12 days","30 days","45 days","82 days"],a:1,x:"(6,000 ÷ 73,000) × 365 = 30 days. (Ch 3 §3.5.1)"},
+{t:3,c:1,q:"What is the cash cycle in days from this data?",tb:[["Inventory","£4,000"],["Cost of sales / purchases","£36,500"],["Trade receivables","£5,000"],["Revenue","£45,625"],["Trade payables","£3,000"]],o:["30 days","50 days","80 days","110 days"],a:1,x:"Inventory days = 4,000 ÷ 36,500 × 365 = 40. Receivable days = 5,000 ÷ 45,625 × 365 = 40. Payable days = 3,000 ÷ 36,500 × 365 = 30. Cash cycle = 40 + 40 − 30 = 50 days. (Ch 3 §3.5)"},
+// 4 Gearing
+{t:4,c:1,q:"A company has bank loans of £20m, debentures of £5m, preference shares of £5m and ordinary shareholders' equity of £60m. What is its debt-to-equity ratio?",o:["33.3%","41.7%","50%","45.5%"],a:2,x:"(20 + 5 + 5) ÷ 60 = 50%. Preference shares count as debt. Leaving them out gives 41.7%. (Ch 3 §3.7.1)"},
+{t:4,c:1,q:"Profit before tax is £8.4m after interest payable of £1.2m. What is the interest cover?",o:["7.0×","8.0×","9.6×","0.125×"],a:1,x:"PBIT = 8.4 + 1.2 = £9.6m. Interest cover = 9.6 ÷ 1.2 = 8×. Using PBT gives 7× (the classic trap). (Ch 3 §3.7.2)"},
+{t:4,c:0,q:"A company's interest cover is 1.4×. According to the workbook, this suggests:",o:["A very comfortable safety margin","Its ability to meet interest payments may be in doubt","It has no debt","Its dividend is uncovered"],a:1,x:"Interest cover of 1.5× or less suggests the company may struggle to meet its interest payments. (Ch 3 §3.7.2)"},
+{t:4,c:0,q:"Why are preference shares included as 'debt' in the debt-to-equity ratio?",o:["They are always redeemable","Their dividends take priority over ordinary dividends","They carry voting rights","They are secured on the company's assets"],a:1,x:"Preference dividends must be paid before ordinary dividends, so they behave like a fixed prior charge. (Ch 3 §3.7.1)"},
+// 9 Legal / limits / ESG / scale
+{t:9,c:0,q:"Which type of company must publish a statement of cash flows and may need to publish a 'special auditors' report'?",o:["A micro company","A small company","A medium-sized company","Only a listed plc"],a:2,x:"Medium-sized companies must publish a cash flow statement with notes and, if audited, may need an abridged 'special' auditors' report. (Ch 3 §1.1)"},
+{t:9,c:0,q:"Which of the following must a listed plc include in its annual report, in addition to what other companies include?",o:["A statement of changes in equity and an operating and financial review","A Z-score analysis","A DuPont breakdown","A cash budget for the next year"],a:0,x:"Listed plcs add a statement of changes in equity, an OFR and corporate governance disclosures. They also publish half-yearly (interim) accounts. (Ch 3 §1.1)"},
+{t:9,c:0,q:"When comparing two companies in the same industry, why can ratio analysis mislead?",o:["They always use different currencies","They may be at different stages of development, such as a young firm with high debt","Ratios cannot be calculated for the same industry","Accounting standards forbid it"],a:1,x:"A new company may show high debt and weak cash flow but still be the better long-term investment. Ratios are historic, can be window-dressed and are of limited use on their own. (Ch 3 §3.9)"},
+{t:9,c:0,q:"What does the SASB Materiality Map show?",o:["Sovereign ESG ratings by country","Which sustainability issues are likely to be financially material in each industry","Carbon prices across exchanges","The TCFD's four pillars"],a:1,x:"SASB standards are industry-specific (about 80 industries). The map shows how sustainability issues apply across sectors, for example GHG emissions for oil and gas. (Ch 3 §2.1.3)"},
+{t:9,c:0,q:"Which regime introduced an anti-greenwashing rule requiring sustainability claims to be clear, fair and not misleading?",o:["The EU's SFDR","The UK's Sustainability Disclosure Requirements (SDR)","The US Climate Disclosure Rule","The GRI Standards"],a:1,x:"The UK SDR brought in product labels and an anti-greenwashing rule for all regulated firms. The EU SFDR works on a comply-or-explain basis. (Ch 3 §2.3)"},
+{t:9,c:0,q:"What happens to a firm's average costs beyond its minimum efficient scale (MES)?",o:["They keep falling (economies of scale)","Diseconomies of scale set in, for example through management bureaucracy, so unit costs rise","They become zero","Marginal cost falls below average cost"],a:1,x:"Costs are lowest at the MES. Beyond it, diseconomies of scale raise unit costs. (Ch 1 §7)"}
+];
+// Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
+(function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+    q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
+try{ans=JSON.parse(localStorage.getItem("s3-ans")||"{}")}catch(e){ans={}}
+function save(){try{localStorage.setItem("s3-ans",JSON.stringify(ans))}catch(e){}}
+const topicSel=document.getElementById("topic");
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v+" ("+Q.filter(q=>q.t==k).length+")";topicSel.appendChild(o)});
+function list(){const t=topicSel.value;return order.filter(i=>t==="all"||String(Q[i].t)===t)}
+function tbl(rows){
+  const head=rows[0][0]===""||rows[0].length>2;
+  if(rows[0].length===2&&rows[0][0]!==""){return `<div class="table-wrap"><table><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="table-wrap"><table><thead><tr>${rows[0].map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map((c,j)=>`<td${j?' class="num"':""}>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function show(i){return mode==="practice"?ans[i]!==undefined:marked}
+function render(){
+  const ids=list();
+  document.getElementById("qlist").innerHTML=ids.map((i,k)=>{
+    const q=Q[i],a=ans[i],rev=show(i);
+    const opts=q.o.map((t,j)=>{let c="opt";
+      if(rev){if(j===q.a)c+=" right";else if(j===a)c+=" wrong"}else if(j===a)c+=" picked";
+      const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
+      return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
+    const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+  stats();
+}
+function stats(){
+  let html="",n=0,c=0;
+  Object.keys(T).forEach(k=>{let tn=0,tc=0;Q.forEach((q,i)=>{if(q.t==k&&ans[i]!==undefined&&(mode==="practice"||marked)){tn++;if(ans[i]===q.a)tc++}});n+=tn;c+=tc;
+    html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
+  document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
+  const answered=Object.keys(ans).length;
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+}
+function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+  const tEl=document.getElementById("timer");tEl.hidden=false;
+  tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
+  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
+  const c=Q.filter((q,i)=>ans[i]===q.a).length;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
+document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
+  ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
+document.getElementById("mode").addEventListener("change",e=>{mode=e.target.value;
+  if(mode==="mock"){topicSel.value="all";topicSel.disabled=true;startMock()}
+  else{clearInterval(tick);marked=false;topicSel.disabled=false;document.getElementById("timer").hidden=true;document.getElementById("finish").hidden=true;document.getElementById("result").innerHTML="";
+    try{ans=JSON.parse(localStorage.getItem("s3-ans")||"{}")}catch(e){ans={}}render()}});
+topicSel.addEventListener("change",render);
+document.getElementById("finish").addEventListener("click",finish);
+document.getElementById("shuffle").addEventListener("click",()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()});
+document.getElementById("reset").addEventListener("click",()=>{if(mode==="mock"){startMock();return}ans={};save();render()});
+const VIEWS=["learn","practice","method"];
+function route(){const h=(location.hash||"#learn").slice(1),v=VIEWS.includes(h)?h:"learn";
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
+window.addEventListener("hashchange",()=>{route();window.scrollTo(0,0)});
+route();render();
+</script>
