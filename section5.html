@@ -1,0 +1,638 @@
+<title>Section 5 Collectives Module</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one study column, sticky tabs; formula cards set like an exam formula sheet; highlighter marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2; --warn-bg:#fff4d6; --warn:#8a5a00;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:30px 10px}
+h3{font-size:1.1rem;margin-block:20px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.hi{background:var(--accent);color:var(--accent-ink)}
+.pill.md{border:1px solid var(--accent);color:var(--accent)}
+.pill.lo{border:1px solid var(--line);color:var(--muted)}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:14px}
+.topic h3{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.topic .why{color:var(--muted);font-size:13.5px;margin:2px 0 8px}
+.topic ul{margin:6px 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-block:8px}
+.f{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;background:var(--bg)}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px}
+.eg code,.mono{font-family:var(--mono);font-size:13px}
+.warnbox{margin-top:8px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);color:var(--ink);font-size:14px}
+.warnbox b{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.timer{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.q table{font-size:13px;margin-bottom:10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-block:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.stat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 18px;margin-block:12px}
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-block:16px;scroll-margin-top:60px}
+.lesson h3{margin-top:0;font-size:1.25rem}
+.lesson .kicker{font:500 12px var(--mono);color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.oneline{font-family:var(--display);font-size:1.08rem;line-height:1.45;margin:8px 0 12px;padding-left:12px;border-left:3px solid var(--mark)}
+.lesson h4{font:600 14px var(--body);margin:16px 0 4px;letter-spacing:.01em}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-block:10px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:6px 10px;border-radius:999px;color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-block:8px}
+.cols > div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);min-width:0}
+.cols b{display:block;margin-bottom:2px}
+details.check{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.check summary{cursor:pointer;padding:9px 12px;font-weight:500}
+details.check summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.check div{padding:0 12px 10px;font-size:14px}
+.confuse{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);font-size:14px}
+.confuse b{color:var(--warn)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+<header class="top wrap">
+  <h1>Section 5: Collectives and Other Investments</h1>
+  <p class="lede">A module for Element 5 of the CISI Investment Management exam, built from Chapter 5 of the Edition 4 workbook. It covers unit trusts, OEICs, ETPs and investment trusts, how to choose a fund, structured products, ESG bonds and carbon, hedge funds and crypto, property, currencies, commodities and infrastructure.</p>
+  <div class="facts">
+    <span class="chip">About <b>10</b> of 80 exam questions</span>
+    <span class="chip"><b>11</b> concept lessons</span>
+    <span class="chip"><b>50</b> practice questions</span>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#concepts">Concepts</a>
+  <a href="#learn">Formulas &amp; traps</a>
+  <a href="#practice">50 questions</a>
+  <a href="#method">How this was built</a>
+</div></nav>
+
+<main class="wrap">
+
+<section data-view="concepts">
+  <h2>Understand the concepts first</h2>
+  <p>Section 5 covers the vehicles and the less traditional asset classes. Most questions test what a product is, how it is priced and taxed, and what can go wrong. There are a few small calculations: trust discounts, property yields and structured product pay-offs. Each lesson ends with self-checks you can tap to reveal. Allow about 3 hours.</p>
+  <nav class="toc" aria-label="Lessons">
+    <a href="#c1">1. Fund basics</a>
+    <a href="#c2">2. Unit trusts</a>
+    <a href="#c3">3. OEICs, MMFs, MoM</a>
+    <a href="#c4">4. ETPs</a>
+    <a href="#c5">5. Investment trusts</a>
+    <a href="#c6">6. Choosing a fund</a>
+    <a href="#c7">7. Structured products</a>
+    <a href="#c8">8. ESG bonds &amp; carbon</a>
+    <a href="#c9">9. Hedge funds &amp; crypto</a>
+    <a href="#c10">10. Property</a>
+    <a href="#c11">11. FX, commodities, infrastructure</a>
+  </nav>
+
+  <article class="lesson" id="c1">
+    <div class="kicker">Lesson 1</div>
+    <h3>Fund basics: open-ended, closed-ended and legal forms</h3>
+    <p class="oneline">A collective pools many investors' money into one diversified portfolio. Whether it is open-ended or closed-ended decides how its price is set.</p>
+    <div class="cols">
+      <div><b>Open-ended</b>Creates units when investors buy and cancels them when they sell, so it is always priced at <b>NAV</b> per unit. Dealt through the manager. Examples: unit trusts, OEICs and (via the exchange) ETFs.</div>
+      <div><b>Closed-ended</b>A fixed number of shares, issued at an IPO and then traded on an exchange. The price is set by <b>supply and demand</b>, so it can sit at a premium or discount to NAV. Example: investment trusts.</div>
+    </div>
+    <div class="eg">NAV per unit = (assets − liabilities) ÷ units. £125m of investments and 100m units gives a NAV of <span class="mono">£1.25</span>.</div>
+    <p>A <b>fund mandate</b> sets out the aim, strategy, regions and sectors, allocation limits, permitted securities, whether the fund can short, hedge or gear, its benchmark and the maximum tracking error. A <b>factsheet</b> summarises it.</p>
+    <h4>Three legal forms</h4>
+    <div class="cols">
+      <div><b>Corporate</b>A company with variable capital (ICVC). Investors are shareholders. OEIC, SICAV, US mutual fund.</div>
+      <div><b>Trust</b>Created by a deed between the manager and the trustee. Investors are <b>beneficiaries</b> owning units. UK unit trust; also Singapore and New Zealand.</div>
+      <div><b>Contractual</b>The investor contracts with a management company and owns a proportional share. Germany, Denmark, Portugal, Sweden, Switzerland. In Luxembourg, the <b>FCP</b> is the contractual form and the SICAV the corporate one.</div>
+    </div>
+    <p><b>Authorised</b> funds are approved by the regulator, diversified and can be marketed to the public. <b>Unauthorised</b> funds are legal but restricted in who they can be marketed to. <b>IOSCO</b> principles for collectives cover independent review and oversight, a legal framework (fiduciary duty, disclosure, conflicts), investor rights (including the right to exit), internal controls, transparency, and industry codes of conduct.</p>
+    <details class="check"><summary>Check: why can an investment trust trade at a discount but a unit trust can't?</summary><div>A unit trust creates and cancels units at NAV. An investment trust has a fixed number of shares traded on the market, so its price depends on supply and demand.</div></details>
+  </article>
+
+  <article class="lesson" id="c2">
+    <div class="kicker">Lesson 2</div>
+    <h3>Unit trusts: structure, pricing and charges</h3>
+    <p class="oneline">A unit trust is a trust: a trustee holds the assets for the investors, and a manager invests them.</p>
+    <h4>Types and tax</h4>
+    <ul>
+      <li><b>Authorised unit trust (AUT):</b> constituted by a trust deed between manager and trustee. It pays <b>no tax on income or gains within the fund</b>; investors are taxed on what they receive and on disposal. It can be UCITS-certified for marketing across the EU.</li>
+      <li><b>Unauthorised unit trust (UUT):</b> not marketed to the public, and taxed within the fund.</li>
+      <li><b>Exempt unit trust (EUT):</b> no CGT within the fund, so only for CGT-exempt holders: <b>pensions and charities</b>.</li>
+      <li><b>Income units</b> pay out distributions; <b>accumulation units</b> reinvest them (still taxable outside a wrapper). If <b>more than 60%</b> is in fixed income, distributions are paid as <b>interest</b>; otherwise as dividends.</li>
+    </ul>
+    <p>The <b>manager</b> markets the trust, manages it under the deed, keeps the unit register for the trustee, and reports breaches to the regulator.</p>
+    <h4>Pricing</h4>
+    <p>Valued daily at a <b>valuation point</b> using NAV. Most unit trusts are <b>dual priced</b>: a higher offer (buy) price and a lower bid (sell) price, with a spread of about 2–3%.</p>
+    <div class="cols">
+      <div><b>Offer basis</b>A <b>rising market</b> with mostly buyers. The spread is moved to the top of its permitted range, so buyers pay the maximum.</div>
+      <div><b>Bid basis</b>A <b>falling market</b> with mostly sellers. The spread is moved to the bottom, so sellers receive the minimum.</div>
+    </div>
+    <p>Dual pricing makes those who cause dealing costs pay them. With <b>single pricing</b>, the fund absorbs those costs and all investors suffer <b>dilution</b>.</p>
+    <div class="cols">
+      <div><b>Historic pricing</b>You pay the price from the last valuation point. Known in advance, but may be stale.</div>
+      <div><b>Forward pricing</b>You pay the price at the next valuation point. Unknown in advance, but more accurate.</div>
+    </div>
+    <p>The FCA requires a historic-pricing manager to move to forward pricing if it believes the fund's value has moved <b>by 2% or more</b> since the last valuation, and when an investor asks for forward pricing.</p>
+    <h4>Charges</h4>
+    <p><b>Initial charge</b> (added to the buying price; often lower or nil now), <b>annual management charge</b> (about 0.5–1.5%, higher for active funds), <b>performance fee</b> (usually only on new highs above a <b>high-water mark</b>), and <b>exit charge</b> (on a sliding scale, common when there is no initial charge). The <b>OCF excludes performance fees; the TER includes them</b>. Neither includes one-off entry or exit charges. RDR, MiFID II, PRIIPs and the Consumer Duty all push for transparent, fair-value charging.</p>
+    <details class="check"><summary>Check: markets are falling and most unit trust investors are selling. Which pricing basis will the manager probably use?</summary><div>The bid basis: the spread moves to the bottom of its range.</div></details>
+  </article>
+
+  <article class="lesson" id="c3">
+    <div class="kicker">Lesson 3</div>
+    <h3>OEICs, money market funds and manager-of-managers</h3>
+    <p class="oneline">An OEIC is the company version of a unit trust: open-ended, priced at NAV, but structured as a company with shares.</p>
+    <ul>
+      <li>Also called an <b>ICVC</b> (or SICAV in Europe). Can be an <b>umbrella</b> with several sub-funds, each with its own assets and register. Has income and accumulation share classes, with the same 60% fixed-income rule as unit trusts.</li>
+      <li>It must have an <b>authorised corporate director (ACD)</b> for day-to-day management, and an independent <b>depositary</b> (usually a bank) that holds <b>legal title</b> to the assets, keeps them safe and checks compliance.</li>
+      <li><b>Single priced</b> (no bid-offer spread), with charges shown separately. Usually historic pricing. It <b>cannot trade at a discount to NAV</b>. The ACD may "run a box" of shares to reissue rather than create and cancel them.</li>
+      <li>Can be UCITS, a non-UCITS retail scheme (NURS) or a qualified investor scheme. Governed by the FCA's COLL rules. Like unit trusts, OEICs generally <b>can't borrow</b> to invest.</li>
+    </ul>
+    <h4>Money market funds</h4>
+    <p>They pool money into many highly rated short-term instruments. They usually pay more than a bank's money market account and spread the risk across many issuers, but their value can still fall. The IA has two sectors: <b>short-term MMFs</b>, which keep a <b>constant NAV</b>, and <b>standard MMFs</b>, with a <b>fluctuating NAV</b>.</p>
+    <h4>Manager of managers</h4>
+    <p>The fund appoints several specialist managers, each managing their own part of the portfolio, and monitors them against benchmarks. It diversifies away the risk of any one manager doing badly. (A fund of funds does something similar by buying other funds.)</p>
+    <details class="check"><summary>Check: who holds legal title to an OEIC's investments?</summary><div>The depositary, which may appoint sub-custodians but remains responsible.</div></details>
+  </article>
+
+  <article class="lesson" id="c4">
+    <div class="kicker">Lesson 4</div>
+    <h3>Exchange-traded products: ETFs, ETCs and ETNs</h3>
+    <p class="oneline">ETPs trade on an exchange like shares, but what sits behind them differs: a fund, a collateralised commodity note, or a bank's unsecured promise.</p>
+    <h4>ETFs</h4>
+    <p>Usually track an index and trade close to NAV, with <b>real-time pricing</b>, transparent holdings, low costs and <b>no initial or exit charges</b> (you pay normal broking commission). In Europe they are usually UCITS funds. Replication is <b>physical</b> (full or sampled) or <b>synthetic</b> (swaps). Drawbacks: tracking error from cash drag and costs, no risk management, and they follow the market down.</p>
+    <div class="cols">
+      <div><b>Reverse (inverse) ETFs</b>Rise when the index falls, so you can effectively go short without borrowing stock.</div>
+      <div><b>Leveraged ETFs</b>Aim for 2× or 3× (or −2×/−3×) the index's <b>daily</b> return. Over longer periods results can differ a lot from the multiple, especially in volatile markets. Higher charges.</div>
+    </div>
+    <h4>ETCs and ETNs</h4>
+    <div class="cols">
+      <div><b>ETC (exchange-traded commodity)</b>Usually tracks <b>one commodity or commodity index</b>, mostly by rolling futures (which adds roll costs). <b>Not UCITS</b>, but <b>fully collateralised</b>, so counterparty risk is effectively hedged.</div>
+      <div><b>ETN (exchange-traded note)</b>A <b>senior, unsecured, unsubordinated debt security</b> of a bank, which promises the index return minus fees at maturity. It owns nothing, pays no interest and has no votes. You bear the <b>bank's credit risk</b>. Can be collateralised or uncollateralised.</div>
+    </div>
+    <h4>ETP risks</h4>
+    <ul>
+      <li><b>Stock lending</b> brings counterparty and collateral risk, managed with legal agreements, over-collateralisation and daily mark-to-market.</li>
+      <li><b>Swap counterparty risk</b> in synthetic ETFs. UCITS limits: no more than <b>10% of NAV exposed to any one swap counterparty</b>, and no more than <b>20% in instruments of one issuer</b>.</li>
+      <li><b>Liquidity risk</b> where the underlying assets are illiquid (small caps, low-rated bonds, property).</li>
+    </ul>
+    <p>Charges are low, and there is no stamp duty on UK purchases of ETPs, which are typically domiciled offshore.</p>
+    <details class="check"><summary>Check: an investor holds an ETN and the issuing bank fails. What is the risk?</summary><div>A large or total loss. An ETN is unsecured bank debt and owns none of the assets it tracks.</div></details>
+  </article>
+
+  <article class="lesson" id="c5">
+    <div class="kicker">Lesson 5</div>
+    <h3>Investment trusts: closed-ended companies</h3>
+    <p class="oneline">An investment trust is a listed company that invests in other assets. Its share price floats free of its NAV.</p>
+    <ul>
+      <li>It has a board of directors, which usually outsources investment management.</li>
+      <li>Closed-ended: a fixed number of shares, traded on the exchange. Some offer periodic redemptions.</li>
+      <li>Price vs NAV: at a <b>premium</b> (above NAV) or <b>discount</b> (below). Usually a discount, reflecting the market's view of the trust's quality and investments. The discount <b>narrows</b> (or turns into a premium) when the trust is about to be <b>wound up</b> or is involved in a merger or takeover.</li>
+      <li>Can <b>borrow (gear)</b> within limits, which adds return and risk. Open-ended funds generally can't.</li>
+      <li>Taxed like ordinary shares.</li>
+    </ul>
+    <div class="eg">NAV 320p, share price 288p: discount = (320 − 288) ÷ 320 = <span class="mono">10%</span>. NAV 150p, price 159p: premium = 9 ÷ 150 = <span class="mono">6%</span>.</div>
+    <p>Closed-ended funds are also better at holding <b>illiquid assets</b> (property, infrastructure): sellers sell to other investors, so the manager never has to dump assets to meet redemptions.</p>
+    <details class="check"><summary>Check: an investment trust announces it will be wound up next year. What usually happens to its discount?</summary><div>It narrows, because investors expect to receive close to NAV when the assets are realised.</div></details>
+  </article>
+
+  <article class="lesson" id="c6">
+    <div class="kicker">Lesson 6</div>
+    <h3>Choosing a fund</h3>
+    <p class="oneline">Look past headline performance: check what the fund is trying to do, whether it can keep doing it, what it costs and how it is taxed.</p>
+    <ul>
+      <li><b>Objectives, mandate and strategy</b> must match the client, including active vs passive and any ESG requirements.</li>
+      <li><b>Fund size:</b> a big active fund may struggle, especially in small caps (it buys too large a share of each company, moves prices, or has to drift up the cap scale). Size matters little for passive or large-cap funds, and larger funds spread costs.</li>
+      <li><b>Track record:</b> judge it against the right benchmark and the market conditions, since styles go in and out of favour. Watch for <b>closet trackers</b> (active fees for index-like holdings) and <b>survivorship bias</b> (failed funds drop out of the figures, so averages look better). For passive funds check <b>tracking error</b>: below about 2% a year is low.</li>
+      <li><b>Fund ratings:</b> past performance may be <b>chance</b>, and managers <b>change</b>. Ratings are filters, not predictions.</li>
+      <li><b>Manager ratings:</b> often use the <b>information ratio</b>. Above 1 is unusual and impressive, 0.5 is still impressive, and negative means underperformance.</li>
+      <li><b>Key person risk:</b> if a star manager leaves, redemptions may follow. The impact is smaller with a diverse team and a large-cap focus.</li>
+      <li><b>Charges</b> (OCF/TER): active funds cost more than passive, and open-ended funds more than closed-ended. Institutional share classes are cheaper.</li>
+      <li><b>Portfolio turnover ratio:</b> more trading means more cost. Read it in context: satellites trade more, illiquid funds less, short bond funds more.</li>
+      <li><b>Administration</b>, <b>authorised vs unauthorised</b> status, and <b>onshore vs offshore</b>.</li>
+    </ul>
+    <h4>Offshore funds and UK tax</h4>
+    <div class="cols">
+      <div><b>Reporting fund</b>Reports its income to HMRC, and investors are taxed on it even if it isn't distributed. It is treated as interest if more than 60% is in cash or fixed interest, otherwise as dividends. <b>Gains are subject to CGT.</b></div>
+      <div><b>Non-reporting fund</b>Income rolls up gross inside the fund. On disposal, <b>the whole gain is taxed as income</b>, so the CGT allowance can't be used.</div>
+    </div>
+    <h4>Assessment of value</h4>
+    <p>Fund managers or boards publish an <b>annual assessment of value report</b>. It asks whether charges are justified, looking at performance against the benchmark, quality of service, cost-effectiveness and overall value for money.</p>
+    <details class="check"><summary>Check: what is survivorship bias?</summary><div>Failed funds or companies drop out of performance studies, so the surviving average looks better than investors actually experienced.</div></details>
+  </article>
+
+  <article class="lesson" id="c7">
+    <div class="kicker">Lesson 7</div>
+    <h3>Structured products</h3>
+    <p class="oneline">A structured product packages a bond or deposit with derivatives to give a defined pay-off linked to an index or asset. Any protection is only as good as the issuer.</p>
+    <p>Common features: <b>income or growth, not both</b>; defined returns and risks; returns linked to an external measure (such as an index, gold or oil); a defined term; designed to be held to maturity; low secondary-market liquidity.</p>
+    <div class="cols">
+      <div><b>Structured deposits</b>Cash deposits from banks, with returns linked to an index. Designed to return at least the deposit, and <b>covered by the FSCS</b>.</div>
+      <div><b>Structured investments</b>Built from derivatives and securities. <b>Not FSCS-protected</b>, and even "protected" capital depends on the issuer: <b>counterparty risk</b>.</div>
+    </div>
+    <p><b>Benefits:</b> flexible, possible capital protection, tax efficiency, enhanced returns, risk reduction, diversification. <b>Risks:</b> inflexible once bought, capped returns, barrier breaches, inflation erosion, illiquidity, issuer credit risk, complexity, no shareholder rights (no dividends or votes), high upfront costs, and opaque pricing. <b>Kick-out (autocall)</b> plans mature early if the index is at or above a set level on an observation date.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Type</th><th>How it works (book examples, $1,000 invested)</th></tr></thead>
+      <tbody>
+        <tr><td>Principal-protected</td><td>Capital back at maturity plus a share of growth (for example 80% participation). Index +50% → $1,400. Index −50% → $1,000. Usually 5–7 years.</td></tr>
+        <tr><td>Capital-protected tracker</td><td>Capital protection plus participation (for example 140% of DAX growth), in exchange for giving up dividends.</td></tr>
+        <tr><td>Buffer zone</td><td>No loss until the index falls past the buffer (for example 20%), then 1% loss per 1% fall. Index −45% → lose 25% → $750. Usually 2–4 years.</td></tr>
+        <tr><td>SCaRP</td><td>Variable protection with barriers and loss multipliers. A −20% barrier with 1.5:1: index −25% → lose 5 × 1.5 = 7.5% → $925.</td></tr>
+        <tr><td>Return-enhanced</td><td>Leveraged upside (for example 2×) up to a cap (for example 26%), with full downside. Index +12% → +24%. Index +30% → capped at +26%. Index −12% → −12%. Usually 1–3 years.</td></tr>
+        <tr><td>Accelerated tracker</td><td>For example 200% of growth; if the index is down, you lose the same as the index. An accelerated income version is a "booster".</td></tr>
+        <tr><td>Reverse tracker</td><td>Rises when the underlying falls (a "bear certificate").</td></tr>
+        <tr><td>Digital</td><td>A fixed payment if a target is met at maturity, otherwise just capital back.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Listed structured products settle in CREST at T+2 and are treated as derivatives under FCA conduct rules (a <b>two-way risk warning</b> is required). They are usually designed so the pay-off is taxed as a <b>capital gain</b>, and can be held in a SIPP.</p>
+    <details class="check"><summary>Check: a structured product with 100% capital protection is issued by a bank that later fails. Is the capital safe?</summary><div>Not necessarily. For a structured investment the protection is only as strong as the issuer, and there is no FSCS cover. Only structured deposits have FSCS protection.</div></details>
+  </article>
+
+  <article class="lesson" id="c8">
+    <div class="kicker">Lesson 8</div>
+    <h3>ESG bonds and carbon as an asset class</h3>
+    <p class="oneline">ESG bonds work like normal bonds but must use the money raised for defined environmental or social purposes. Carbon has become a tradable asset through emissions markets.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Bond</th><th>Proceeds used for</th></tr></thead>
+      <tbody>
+        <tr><td>Green</td><td>Projects with environmental benefits, such as renewables and green buildings</td></tr>
+        <tr><td>Blue</td><td><b>Ocean and marine</b> projects: biodiversity, wastewater, water pollution</td></tr>
+        <tr><td>Impact (impact debt)</td><td><b>Prevention and early intervention</b> for vulnerable groups</td></tr>
+        <tr><td>Social</td><td>Social outcomes: basic infrastructure, health, education</td></tr>
+        <tr><td>Sustainability</td><td>A mix of green and social projects</td></tr>
+        <tr><td>Sustainability-linked (SLB)</td><td><b>General purposes</b>, but the bond's terms (such as the coupon) <b>change depending on whether the issuer meets ESG targets</b></td></tr>
+        <tr><td>Gender</td><td>Reducing gender inequality and empowering women</td></tr>
+      </tbody>
+    </table></div>
+    <p>ICMA's Green Bond Principles, Social Bond Principles, Sustainability Bond Guidelines and Sustainability-Linked Bond Principles require reporting and often third-party verification, which helps guard against <b>greenwashing</b>.</p>
+    <h4>Carbon pricing</h4>
+    <div class="cols">
+      <div><b>Carbon tax</b>The government sets a price per tonne emitted, but <b>no cap</b> on the amount.</div>
+      <div><b>Emissions trading (cap and trade)</b>The government <b>caps</b> total emissions, issues permits (free or by auction) and lowers the cap each year. Firms trade surplus permits. Priced per tonne of CO₂e, through spot and derivatives.</div>
+    </div>
+    <p>The <b>EU ETS</b> (in force since 2005) is the largest, covering about 45% of EU emissions from over 11,000 installations. The <b>UK ETS</b> started in 2021. US schemes include RGGI and the Western Climate Initiative. Over 30 ETSs operate worldwide. ESG ratings (MSCI AAA–CCC, Sustainalytics, Moody's ESG) help, but vary widely between providers. More screening restrictions shrink the universe and may limit short-term performance.</p>
+    <details class="check"><summary>Check: how does a sustainability-linked bond differ from a green bond?</summary><div>A green bond's proceeds must fund green projects. An SLB's proceeds can be used for anything, but its terms change according to whether the issuer meets set ESG targets.</div></details>
+  </article>
+
+  <article class="lesson" id="c9">
+    <div class="kicker">Lesson 9</div>
+    <h3>Hedge funds, managed futures and cryptoassets</h3>
+    <p class="oneline">Alternatives promise returns that don't depend on the market, but bring leverage, illiquidity and, for crypto, almost no protection.</p>
+    <h4>Hedge funds</h4>
+    <p>The core idea is <b>absolute return regardless of market direction</b>: combine long and short positions to hedge out market risk and profit from selection skill. In practice, many focus more on geared returns.</p>
+    <ul>
+      <li><b>Structure:</b> US private partnerships, or <b>unauthorised funds in offshore centres</b> (Cayman, Dublin) with light regulation. A <b>prime broker</b> provides trading, credit and administration.</li>
+      <li>Full investment flexibility, use of gearing and derivatives.</li>
+      <li><b>Lock-in of one to three years</b>, then dealing only monthly or quarterly. <b>Minimums of $100,000 to $1m.</b> Size is often capped to stay nimble.</li>
+      <li>Generally <b>low correlation</b> with equities and bonds, but correlation can jump in a shock.</li>
+      <li>Fees are often "<b>2 and 20</b>": 2% management plus 20% of performance above a hurdle (usually the risk-free rate), only after past losses are recovered. Managers are expected to invest their own money.</li>
+      <li><b>Risks:</b> gearing, OTC settlement, currency, dealing delays, illiquidity, lack of visibility, fraud, and no independent trustees. Some are now launched as UCITS funds. Available as single funds or <b>funds of hedge funds</b>.</li>
+    </ul>
+    <p><b>Managed futures funds</b> use futures, often negatively correlated with a portfolio. The two common strategies are <b>market-neutral</b> (arbitrage) and <b>trend-following</b>.</p>
+    <h4>Cryptoassets</h4>
+    <p>Digital assets using <b>distributed ledger technology</b> (such as blockchain) with no middleman. <b>Cryptocurrencies</b> such as Bitcoin have no central bank; transactions are verified by "mining" and traded on online exchanges (Coinbase, Binance). <b>Risks:</b> extreme volatility, low liquidity, little regulation, no backing by assets or reserves, energy-hungry mining, and <b>no compensation scheme</b>. Some countries, including China, ban them. <b>Meme coins</b> (Dogecoin, Shiba Inu) are driven by trends and fear of missing out, with little utility.</p>
+    <p><b>NFTs</b> are <b>unique</b> tokens on a blockchain (non-fungible: one can't be swapped for another), linked to a digital or physical item. They have no intrinsic value (it depends on what buyers will pay), and owning one <b>doesn't give you the copyright or IP</b>. Risks include fakes, sellers who don't own them, no regulation and no legal definition. The creator decides how scarce they are.</p>
+    <details class="check"><summary>Check: what does "non-fungible" mean?</summary><div>Each token is unique and can't be replaced by another one of the same value, unlike units of a cryptocurrency, which are interchangeable.</div></details>
+  </article>
+
+  <article class="lesson" id="c10">
+    <div class="kicker">Lesson 10</div>
+    <h3>Property</h3>
+    <p class="oneline">Property is unique, lumpy and slow to sell, which shapes how it is valued, held and benchmarked.</p>
+    <div class="cols">
+      <div><b>Heterogeneity</b>Every property is unique.</div>
+      <div><b>Subjective valuation</b>No central market or continuous prices.</div>
+      <div><b>Illiquidity</b>Slow and costly to sell.</div>
+      <div><b>Indivisibility</b>Bought whole, which limits diversification.</div>
+      <div><b>Finite supply</b>Restricted by planning rules, so demand drives prices.</div>
+    </div>
+    <p><b>Risks:</b> property-specific (location, use, tenant quality, lease length, liquidity), market (interest rates, sector performance, rental growth) and vehicle (liquidity, diversification, gearing). Infrequent valuations make measures like standard deviation less reliable for property funds.</p>
+    <h4>Ways to invest</h4>
+    <ul>
+      <li><b>Direct:</b> rental income (often with upward-only rent reviews) plus capital growth, but highly illiquid.</li>
+      <li><b>Indirect:</b> property company shares, REITs and funds. More liquid, but they move with the stock market.</li>
+      <li><b>Property unit trusts:</b> can't be authorised, so they are unauthorised unit trusts.</li>
+      <li><b>PAIFs:</b> must be an <b>OEIC</b> with at least <b>60% of net income from property investment</b>. They pay rental income without corporation tax. Distributions are split into <b>property income distributions</b> (taxed as property income; charities, pensions and UK companies can receive them gross), interest and dividends.</li>
+      <li><b>LTAFs</b> handle open-ended funds' liquidity mismatch. Closed-ended funds and funds holding property shares don't have that problem.</li>
+      <li><b>Property ETFs</b> hold property shares and REITs, not buildings.</li>
+    </ul>
+    <h4>Yields</h4>
+    <div class="fgroup">
+      <div class="f"><div class="n">Gross rental yield</div><code>Annual rent ÷ Property value</code></div>
+      <div class="f"><div class="n">Net rental yield</div><code>(Annual rent − Operating costs) ÷ Property value</code></div>
+    </div>
+    <div class="eg">Value £1.5m, rent £90,000, costs £15,000: gross 6%, net 75 ÷ 1,500 = <span class="mono">5%</span>.</div>
+    <h4>Valuation and sustainability standards</h4>
+    <div class="cols">
+      <div><b>RICS Red Book</b>RICS was founded in 1868. The Red Book contains <b>mandatory</b> standards for RICS valuers, plus advisory <b>VPGAs</b>. Its November 2024 update added ESG and aligned it with IVS.</div>
+      <div><b>IVSC: International Valuation Standards</b>Global standards used in about 100 countries: 7 General Standards and 8 Asset Standards.</div>
+      <div><b>AREF</b>A trade association for real estate funds. Its <b>Code of Practice</b> covers governance, operation, dealing and reporting, at a minimum level and a best-practice level.</div>
+      <div><b>GRESB</b>Investor-led (founded 2009 by pension funds). It benchmarks the <b>ESG performance of real estate and infrastructure</b>, scored against all reporting entities and aligned with the UN SDGs and the Paris Agreement.</div>
+    </div>
+    <details class="check"><summary>Check: which feature means you can't buy a tenth of an office block directly?</summary><div>Indivisibility.</div></details>
+  </article>
+
+  <article class="lesson" id="c11">
+    <div class="kicker">Lesson 11</div>
+    <h3>Currencies, commodities and infrastructure</h3>
+    <p class="oneline">These are real assets and markets in their own right, each driven by different forces.</p>
+    <h4>Foreign exchange</h4>
+    <p>The world's largest market (about <b>$6.6 trillion a day</b>), very liquid, trading 24 hours a day five days a week. Currencies reflect each country's economy, interest rates and politics. Investors use FX for <b>speculation</b> and <b>hedging</b> (forwards, options, futures, swaps). Risks: exchange rate moves, volatility (even in developed currencies), patchy liquidity in some pairs, and hedging costs that can outweigh the benefit, especially in emerging markets.</p>
+    <h4>Commodities</h4>
+    <div class="cols">
+      <div><b>Softs</b>Agricultural products and livestock. Renewable and seasonal, perishable, weather-dependent and affected by geopolitics (Ukraine and grain in 2022). Hedged by farmers and processors.</div>
+      <div><b>Hards</b>Metals and energy. Finite, capital-intensive to extract, demand tied to growth. Traded mainly on the LME, CME and Shanghai Futures Exchange. <b>Gold is a safe haven</b> and held by central banks.</div>
+    </div>
+    <p>Exchanges include CME Group (CBOT for agricultural products, CME for energy and metals), ICE, Euronext, the Dubai Mercantile Exchange and the LME. Most commodities are <b>priced in US dollars</b>, so non-dollar investors face currency risk. <b>OPEC</b> supply decisions drive energy prices. Investors use commodities to diversify and hedge inflation, usually through futures or funds.</p>
+    <h4>Infrastructure</h4>
+    <p>Roads, ports, hospitals and schools, plus digital infrastructure, renewables and water. Individuals invest through <b>equity funds</b> (infrastructure company shares: defensive, steady yield), <b>debt funds</b> (regular income, lower volatility) or <b>direct funds</b> (projects; mature projects are lower risk than early-stage ones). The attraction is <b>higher yields than corporate bond funds with relatively low volatility</b>, from long, often inflation-linked cash flows. Risks include market and economic cycles, government policy and liquidity. <b>Closed-ended</b> structures suit illiquid direct projects (often with gearing), while infrastructure ETFs have higher OCFs than mainstream ETFs.</p>
+    <details class="check"><summary>Check: why is a closed-ended structure well suited to direct infrastructure?</summary><div>Investors sell shares to each other, so the manager never has to sell illiquid projects at distressed prices to meet redemptions.</div></details>
+  </article>
+
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
+
+</section>
+
+<section data-view="learn" hidden>
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions test it. Section 5 is mostly about knowing the features of each product, with three types of short calculation: trust discounts and premiums, rental yields, and structured product pay-offs.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Unit trusts, OEICs, legal structures, pricing</td><td><span class="pill hi">Tested often</span></td><td>MCQ 2 · Ch-end 1, 2, 4</td></tr>
+      <tr><td>Investment trusts: discounts, closed vs open</td><td><span class="pill hi">Tested often</span></td><td>MCQs 22, 48 · Ch-end 5</td></tr>
+      <tr><td>Structured products</td><td><span class="pill hi">Tested often</span></td><td>MCQ 11 · Ch-end 8</td></tr>
+      <tr><td>ETFs, ETCs, ETNs</td><td><span class="pill md">Regular</span></td><td>MCQ 53 · Ch-end 3</td></tr>
+      <tr><td>Hedge funds, crypto, NFTs</td><td><span class="pill md">Regular</span></td><td>MCQ 33</td></tr>
+      <tr><td>Property: features, yields, standards, GRESB</td><td><span class="pill md">Regular</span></td><td>MCQs 44, 58 · Ch-end 10</td></tr>
+      <tr><td>ESG bonds, carbon, ESG indices</td><td><span class="pill md">Regular</span></td><td>MCQs 21, 56 · Ch-end 9</td></tr>
+      <tr><td>Fund selection: OCF/TER, PTR, value, offshore</td><td><span class="pill md">Regular</span></td><td>Ch-end 6, 7</td></tr>
+      <tr><td>FX, commodities, infrastructure</td><td><span class="pill lo">Occasional</span></td><td>MCQs 68, 74</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">NAV per unit</div><code>(Assets − Liabilities) ÷ Units in issue</code></div>
+      <div class="f"><div class="n">Discount / premium to NAV</div><code>(Share price − NAV) ÷ NAV
+negative = discount, positive = premium</code></div>
+      <div class="f"><div class="n">Gross rental yield</div><code>Annual rent ÷ Property value</code></div>
+      <div class="f"><div class="n">Net rental yield</div><code>(Annual rent − Operating costs) ÷ Property value</code></div>
+      <div class="f"><div class="n">Participation pay-off</div><code>Capital + (Index growth × Participation %)</code><div class="small">Then apply any cap or barrier</div></div>
+      <div class="f"><div class="n">Barrier loss (SCaRP)</div><code>(Fall − Barrier) × Multiplier</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Numbers worth memorising</h3>
+    <div class="cols">
+      <div><b>60%</b>Fixed income above 60% → distributions are interest. PAIF needs 60% of net income from property.</div>
+      <div><b>2%</b>Fund value move that forces forward pricing. Tracking error below about 2% is low.</div>
+      <div><b>2–3%</b>Typical unit trust bid-offer spread</div>
+      <div><b>0.5–1.5%</b>Typical annual management charge</div>
+      <div><b>10% / 20%</b>UCITS limits: max 10% NAV to one swap counterparty, 20% to one issuer</div>
+      <div><b>2 and 20</b>Hedge fund fees. Lock-in 1–3 years, minimum $100k–$1m</div>
+      <div><b>2005 / 2021</b>EU ETS / UK ETS start dates</div>
+      <div><b>1868 / 2009</b>RICS founded / GRESB launched</div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Unit trust investors are beneficiaries</b> of a trust, not trustees and not parties to a contract (MCQ 2).</li>
+    <li><b>Open-ended funds can't trade at a discount to NAV</b>; closed-ended ones can. A trust being <b>wound up</b> usually has a <b>small</b> discount (MCQ 22). Discount is measured against <b>NAV</b> (MCQ 48).</li>
+    <li><b>OCF excludes performance fees; TER includes them.</b> Neither includes entry or exit charges.</li>
+    <li><b>Rising market → offer basis. Falling market → bid basis.</b></li>
+    <li><b>ETN = unsecured bank debt</b> (credit risk, no interest, no votes). <b>ETC = fully collateralised</b>, not UCITS.</li>
+    <li><b>Leveraged ETFs</b> aim for a multiple of the <i>daily</i> return, not the long-term return.</li>
+    <li><b>Structured deposits have FSCS cover; structured investments don't.</b> Capital protection always depends on the issuer.</li>
+    <li><b>Reverse tracker</b> = rises when the index falls (MCQ 11).</li>
+    <li><b>Hedge funds</b> are usually unauthorised or offshore, target absolute (not relative) returns, and have low correlation with markets (MCQ 33).</li>
+    <li><b>Property is heterogeneous</b> (MCQ 44). The net yield uses <i>annual</i> figures: multiply monthly figures by 12 (MCQ 58).</li>
+    <li><b>Impact bonds</b> fund prevention and early intervention (MCQ 21). <b>Blue bonds</b> fund ocean projects.</li>
+    <li><b>Non-reporting fund gains are taxed as income</b>, so the CGT allowance can't be used.</li>
+    <li><b>Owning an NFT doesn't give you the copyright.</b></li>
+  </ul>
+
+  <div class="warnbox"><b>Workbook inconsistency to know about.</b> Section 2.3.1 says an ETP with "less than 60%" in fixed income pays interest, but every other section (unit trusts, OEICs, offshore funds) says <b>more than 60%</b> means interest. Use "more than 60% fixed income → interest" in the exam.</div>
+
+</section>
+
+<section data-view="practice" hidden>
+  <h2>50 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <div class="controls">
+    <select id="mode" aria-label="Mode">
+      <option value="practice">Practice: instant feedback</option>
+      <option value="mock">Mock: timed, marked at the end</option>
+    </select>
+    <select id="topic" aria-label="Topic">
+      <option value="all">All topics</option>
+    </select>
+    <button id="shuffle" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset answers</button>
+    <button id="finish" class="primary" type="button" hidden>Finish and mark</button>
+    <span class="timer" id="timer" hidden></span>
+    <span class="score" id="score"></span>
+  </div>
+  <div id="result"></div>
+  <div class="stats" id="stats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section data-view="method" hidden>
+  <h2>How this was built</h2>
+  <ul>
+    <li>I read Chapter 5 of the Edition 4 workbook (June 2025) against the Element 5 learning objectives in its syllabus map.</li>
+    <li>I matched each objective against the book's 80 practice questions and the Chapter 5 end-of-chapter questions to set the priority labels.</li>
+    <li>Real CISI exam questions are confidential and not published. These 50 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
+  </ul>
+
+</section>
+</main>
+
+<script>
+const T={1:"Fund basics & structures",2:"Unit trusts & OEICs",3:"ETPs",4:"Investment trusts",5:"Choosing a fund",6:"Structured products",7:"ESG bonds & carbon",8:"Hedge funds & crypto",9:"Property",10:"FX, commodities, infrastructure"};
+const Q=[
+// 1 Fund basics (5)
+{t:1,c:0,q:"What is the defining feature of an open-ended fund?",o:["A fixed number of shares traded on an exchange","It creates units when investors buy and cancels them when they sell, so it is priced at NAV","It can only invest in bonds","It must be listed"],a:1,x:"Open-ended funds expand and contract with demand and deal at NAV. Closed-ended funds have a fixed number of shares traded in the secondary market. (Ch 5 §1)"},
+{t:1,c:1,q:"A fund holds investments worth £250m and has liabilities of £10m. There are 160 million units in issue. What is the NAV per unit?",o:["£1.50","£1.5625","£1.4375","£0.64"],a:0,x:"NAV = (250 − 10) ÷ 160 = £1.50. Ignoring liabilities gives £1.5625. (Ch 5 §2.1.3)"},
+{t:1,c:0,q:"Under the contractual form of collective investment scheme:",o:["Investors are shareholders of an investment company","Investors are beneficiaries of a trust","The investor enters into a contract with a management company, which manages a portfolio on their behalf; holdings are represented by units","There is no legal agreement"],a:2,x:"The contractual form is used in Germany, Denmark, Portugal, Sweden and Switzerland. The corporate form makes investors shareholders; the trust form makes them beneficiaries. (Ch 5 §2.7)"},
+{t:1,c:0,q:"Luxembourg recognises two legal forms of fund. Which pairing is correct?",o:["SICAV is the contractual form; FCP is the corporate form","SICAV is the corporate form; FCP is the contractual form","Both are trusts","Both are partnerships"],a:1,x:"Luxembourg, the largest fund domicile outside the US, recognises the SICAV (corporate) and the FCP (contractual). (Ch 5 §2.7)"},
+{t:1,c:0,q:"Which of these is one of the IOSCO principles for collective investment schemes?",o:["Funds must guarantee capital","Funds should be subject to independent review and oversight","Funds must be listed on an exchange","Funds cannot charge fees"],a:1,x:"The IOSCO principles cover independent review and oversight, a legal and regulatory framework, investor rights (including the right to exit), internal controls, transparency and industry codes of conduct. (Ch 5 §2.9)"},
+// 2 Unit trusts & OEICs (8)
+{t:2,c:0,q:"How is an authorised unit trust (AUT) taxed?",o:["The fund pays income tax and CGT before distributing","The fund is exempt from tax on income and capital gains; unitholders are taxed on what they receive and on disposal","Neither the fund nor investors pay tax","Only the trustee pays tax"],a:1,x:"Authorisation gives favourable tax treatment within the fund. Unauthorised unit trusts are generally taxed within the fund. (Ch 5 §2.1)"},
+{t:2,c:0,q:"Who can invest in an exempt unit trust (EUT)?",o:["Any retail investor","Only entities exempt from CGT, such as pension schemes and registered charities","Only non-UK residents","Only hedge funds"],a:1,x:"EUTs are free of CGT on disposals within the fund (but still pay income tax), so holders are limited to CGT-exempt entities. (Ch 5 §2.1)"},
+{t:2,c:0,q:"A unit trust holds 70% of its assets in bonds. How will its distributions be treated for tax?",o:["As dividends","As interest","As capital gains","They are tax-free"],a:1,x:"If more than 60% of the assets are in fixed-income securities, distributions are paid as interest; otherwise as dividends. The same rule applies to OEICs. (Ch 5 §2.1, §2.2)"},
+{t:2,c:0,q:"In a strongly rising market with mostly buyers, a dual-priced unit trust manager is likely to price on:",o:["A bid basis","An offer basis, moving the spread to the top of its permitted range","A single price","A historic basis only"],a:1,x:"On an offer basis, buyers pay the maximum allowed. In a falling market with mostly sellers, the manager moves to a bid basis. (Ch 5 §2.1.3)"},
+{t:2,c:0,q:"In a single-priced fund, who bears the cost of creating and cancelling units?",o:["Only the investor who buys or sells","The fund itself, affecting all investors: this is known as dilution","The trustee personally","The regulator"],a:1,x:"Dual pricing charges those costs to the buyer or seller who causes them. In single-priced funds the fund absorbs them, diluting all investors. (Ch 5 §2.1.3)"},
+{t:2,c:0,q:"When must a UK unit trust manager using historic pricing move to forward pricing?",o:["Never","If it believes the fund's value has changed by 2% or more since the last valuation, or if an investor asks for forward pricing","Only at the year-end","When the fund falls by 10%"],a:1,x:"Historic pricing uses the last valuation point; forward pricing uses the next. The FCA sets the 2% trigger, and forward pricing must also be given on request. (Ch 5 §2.1.3)"},
+{t:2,c:0,q:"In an OEIC, which party holds legal title to the investments?",o:["The authorised corporate director (ACD)","The depositary","The shareholders directly","The FCA"],a:1,x:"The ACD runs the fund day to day. The independent depositary (usually a bank) holds legal title, keeps the assets safe and checks compliance. (Ch 5 §2.2.1)"},
+{t:2,c:0,q:"Which statement about the IA's money market fund sectors is correct?",o:["Both must have a fluctuating NAV","Short-term money market funds maintain a constant NAV; standard money market funds have a fluctuating NAV","Money market funds cannot fall in value","They may only hold equities"],a:1,x:"Money market funds pool short-term instruments from many issuers. Their value can still fall, and standard funds may hold instruments where capital is at risk. (Ch 5 §2.2.5)"},
+// 3 ETPs (6)
+{t:3,c:0,q:"Which is a typical feature of an exchange-traded fund (ETF)?",o:["High initial and exit charges","Real-time pricing during market hours, low costs and no initial or exit charges, with normal broking commission paid","Priced once a day at the valuation point","Cannot be sold short"],a:1,x:"ETFs trade continuously close to NAV, with transparent holdings and low expense ratios. Investors pay standard dealing commission. (Ch 5 §2.3.1)"},
+{t:3,c:0,q:"A 2× leveraged ETF on the FTSE 100 is held for a year. Which statement is correct?",o:["It will always return exactly twice the index's annual return","It aims for twice the index's daily return, so its return over a year can differ significantly from twice the annual index return","It cannot lose money","It is unaffected by volatility"],a:1,x:"Leveraged ETFs rebalance daily to hit their stated multiple of the daily return. Over longer periods, compounding (especially in volatile markets) makes results diverge from the simple multiple. (Ch 5 §2.3.1)"},
+{t:3,c:0,q:"What is an exchange-traded note (ETN)?",o:["A fund that holds the index's shares","A senior, unsecured, unsubordinated debt security of a bank that promises the index return minus fees, exposing holders to the bank's credit risk","A fully collateralised commodity product","A UCITS equity fund"],a:1,x:"ETNs own none of the underlying assets, pay no interest and have no votes. A downgrade or failure of the issuing bank can erode their value. (Ch 5 §2.3.3)"},
+{t:3,c:0,q:"Which statement about exchange-traded commodities (ETCs) is correct?",o:["They are UCITS-compliant equity funds","They typically track a single commodity or commodity index, often by rolling futures, and are fully collateralised","They are unsecured bank debt","They own shares in mining companies"],a:1,x:"ETCs are not UCITS-compliant but are fully collateralised, so counterparty risk is effectively hedged. Rolling futures can make returns differ from owning the commodity. (Ch 5 §2.3.2)"},
+{t:3,c:0,q:"Under UCITS diversification rules, what is the maximum exposure a synthetic ETF may have to any single swap counterparty?",o:["5% of NAV","10% of NAV","20% of NAV","50% of NAV"],a:1,x:"UCITS funds are limited to 10% of NAV with any one swap counterparty and 20% in instruments of one issuer, so swap-based ETPs use several counterparties and take collateral. (Ch 5 §2.4.2)"},
+{t:3,c:0,q:"Why might an investor buy a reverse (inverse) ETF?",o:["To double their exposure to a rising market","To benefit from a fall in an index or sector without having to borrow stock to short it","To receive a guaranteed income","To avoid all market risk"],a:1,x:"Reverse ETFs hold short positions (or derivatives giving synthetic shorts), so a long holding in the ETF profits when the index falls. (Ch 5 §2.3.1)"},
+// 4 Investment trusts (4)
+{t:4,c:1,q:"An investment trust has a NAV per share of 320p and a share price of 288p. What is its discount?",o:["10%","11.1%","32p, which is 11%","8%"],a:0,x:"Discount = (320 − 288) ÷ 320 = 10%. Dividing by the share price instead (11.1%) is the trap; always measure against NAV. (Ch 5 §2.8.1)"},
+{t:4,c:1,q:"An investment trust's NAV per share is 150p and its shares trade at 159p. It trades at:",o:["A 6% discount","A 6% premium","A 5.7% premium","A 9% premium"],a:1,x:"Premium = (159 − 150) ÷ 150 = 6%. (Ch 5 §2.8.1)"},
+{t:4,c:0,q:"Why can investment trust shares be valued differently from the NAV of their assets, unlike unit trusts?",o:["Investment trusts don't publish a NAV","Their fixed number of shares trade on an exchange, so the price is set by supply and demand rather than by creating and cancelling shares at NAV","They are not regulated","They only hold cash"],a:1,x:"Investment trusts usually trade at a discount reflecting the market's view of quality. The discount narrows on wind-up or corporate activity. Open-ended funds deal at NAV. (Ch 5 §2.8.1)"},
+{t:4,c:0,q:"Which feature is available to investment trust managers but generally not to unit trusts and OEICs?",o:["Holding equities","Borrowing (gearing) within set limits to invest","Paying dividends","Having a benchmark"],a:1,x:"Investment trusts can gear, which adds potential reward and risk. Unit trusts and OEICs are generally not allowed to borrow to invest. (Ch 5 §2.8.1, §2.2.4)"},
+// 5 Choosing a fund (6)
+{t:5,c:0,q:"What is the key difference between a fund's OCF and its TER?",o:["The OCF includes entry charges","The TER includes performance fees; the OCF excludes them","The OCF includes dealing costs; the TER does not","There is no difference"],a:1,x:"Both include the AMC and other ongoing costs as a percentage of assets. Neither includes one-off initial or exit charges. (Ch 5 §2.1.4)"},
+{t:5,c:0,q:"Studies of average fund performance often look better than investors' actual experience because failed funds are removed from the data. This is called:",o:["Tracking error","Survivorship bias","Dilution","Key person risk"],a:1,x:"Survivorship bias skews results upwards, because only funds that survived to the end of the period are included. (Ch 5 §3.5)"},
+{t:5,c:0,q:"A passive fund tracking a large, liquid equity index has a tracking error of 4% a year. What should an investor conclude?",o:["It is tracking very closely","The tracking error is high (low is generally below about 2%), which may signal inefficiency or that it isn't truly passive","Tracking error is irrelevant for passive funds","4% is the minimum possible"],a:1,x:"Passive funds should have tracking error close to zero, although cash drag and costs make zero rare. Higher tracking error is expected only in niche or illiquid markets. (Ch 5 §3.5)"},
+{t:5,c:0,q:"A fund manager has an information ratio of 0.5. According to the workbook, this is considered:",o:["Poor","Impressive","Negative","Unusual and exceptional (above 1)"],a:1,x:"An information ratio above 1 is unusual and impressive, 0.5 is still considered impressive, and a negative figure means underperformance. (Ch 5 §3.7)"},
+{t:5,c:0,q:"A UK investor sells a holding in an offshore non-reporting fund at a gain. How is the gain taxed?",o:["Under CGT, using the annual allowance","As income, so the annual CGT allowance cannot be used","It is tax-free","As a dividend"],a:1,x:"Non-reporting funds roll up income gross, but all gains on disposal are taxed as income. Reporting fund gains are subject to CGT. (Ch 5 §3.13.2)"},
+{t:5,c:0,q:"What must an annual assessment of value report evaluate?",o:["Only the fund's share price","Whether the fund's charges are justified by the value delivered: performance, service quality, cost-effectiveness and value for money","The manager's salary","The FCA's fees"],a:1,x:"Fund managers or boards publish it annually to show whether investors are getting value for the fees charged. (Ch 5 §3.14)"},
+// 6 Structured products (6)
+{t:6,c:0,q:"Which structured products are covered by a deposit protection scheme such as the FSCS?",o:["All structured products","Structured deposits, but not structured investments","Structured investments, but not structured deposits","None"],a:1,x:"Structured deposits are bank deposits with index-linked returns. Structured investments are not deposit-protected, and their protection depends on the issuer's creditworthiness. (Ch 5 §4.1)"},
+{t:6,c:1,q:"$1,000 is invested in a seven-year principal-protected note with 80% participation in an index. The index rises 30% by maturity. How much does the investor receive?",o:["$1,240","$1,300","$1,080","$1,000"],a:0,x:"Return = 80% × 30% = 24%, so $1,000 + $240 = $1,240. If the index had fallen, the principal of $1,000 would be returned. (Ch 5 §4.3.1)"},
+{t:6,c:1,q:"$1,000 is invested in a buffered note with a 20% buffer. Losses are 1% of principal for each 1% the index falls beyond the buffer. The index is down 30% at maturity. How much is returned?",o:["$700","$800","$900","$1,000"],a:2,x:"The index fell 10 points beyond the 20% buffer, so the investor loses 10%: $1,000 − $100 = $900. (Ch 5 §4.3.2)"},
+{t:6,c:1,q:"A SCaRP has a −20% barrier. Losses beyond it are multiplied 1.5:1. The index falls 28% by maturity. What does a $1,000 investment return?",o:["$720","$880","$920","$1,000"],a:1,x:"Breach = 28 − 20 = 8 points. Loss = 8 × 1.5 = 12%, so $1,000 − $120 = $880. (Ch 5 §4.3.2)"},
+{t:6,c:1,q:"A return-enhanced note pays twice the index's growth, capped at a 26% return, with full downside. The index rises 18%. What does a $1,000 investment return?",o:["$1,180","$1,260","$1,360","$1,000"],a:1,x:"2 × 18% = 36%, but the cap limits the return to 26%, so $1,260. If the index had fallen 12%, the investor would get $880. (Ch 5 §4.3.3)"},
+{t:6,c:0,q:"What is a 'kick-out' (autocall) feature in a structured product?",o:["A penalty for early withdrawal","The product matures early, paying back capital plus growth, if the underlying is at or above a set level on an observation date","A guarantee of double returns","The issuer's right to cancel without payment"],a:1,x:"If the trigger is met on an anniversary observation date, the product ends early. Otherwise it continues to the next observation date. (Ch 5 §4.2)"},
+// 7 ESG bonds & carbon (4)
+{t:7,c:0,q:"How does a sustainability-linked bond (SLB) differ from a green bond?",o:["SLB proceeds must fund ocean projects","SLB proceeds can be used for general purposes, but the bond's financial or structural terms change depending on whether the issuer meets ESG targets","SLBs pay no coupon","There is no difference"],a:1,x:"Green, blue, social and sustainability bonds restrict how proceeds are used. SLBs instead link their terms to the issuer's sustainability performance. (Ch 5 §5.1.1)"},
+{t:7,c:0,q:"What is the key difference between a carbon tax and an emissions trading system (ETS)?",o:["A carbon tax caps total emissions; an ETS does not","A carbon tax sets a price per tonne but doesn't limit total emissions; an ETS caps total emissions and lets firms trade permits","Both cap emissions","Neither puts a price on carbon"],a:1,x:"Under 'cap and trade', the government sets a falling cap, issues permits, and firms buy or sell surplus allowances. (Ch 5 §5.2)"},
+{t:7,c:0,q:"Which statement about emissions trading schemes is correct?",o:["The EU ETS started in 2021","The EU ETS came into force in 2005 and covers about 45% of EU greenhouse gas emissions; the UK ETS launched in 2021","There are only two ETSs worldwide","The UK still participates fully in the EU ETS"],a:1,x:"The EU ETS covers over 11,000 installations. After Brexit the UK launched its own ETS in 2021. Over 30 ETSs operate globally. (Ch 5 §5.2)"},
+{t:7,c:0,q:"How do the ICMA principles (such as the Green Bond Principles) help investors?",o:["They guarantee bond returns","They provide a framework for allocating proceeds, reporting and often third-party verification, reducing greenwashing risk","They set coupon rates","They replace credit ratings"],a:1,x:"The Green Bond Principles, Social Bond Principles, Sustainability Bond Guidelines and Sustainability-Linked Bond Principles give assurance that funds are used as claimed. (Ch 5 §5.1.1)"},
+// 8 Hedge funds & crypto (5)
+{t:8,c:0,q:"Which combination describes typical hedge fund dealing and fees?",o:["Daily dealing and a 0.5% fee","A lock-in of one to three years, then monthly or quarterly dealing, with fees of '2 and 20'","No lock-in and no performance fee","Weekly dealing and a fixed fee only"],a:1,x:"Hedge funds often charge 2% a year plus 20% of performance above a hurdle once past losses are recovered. Minimum investments are typically $100,000 to $1m. (Ch 5 §6.1.1)"},
+{t:8,c:0,q:"Which statement about hedge funds' correlation with traditional markets is correct?",o:["They are always highly correlated with equities","They usually have low correlation with equity and bond markets, but this can rise sharply during a major market shock","They have zero correlation in all conditions","Correlation doesn't apply to hedge funds"],a:1,x:"Low correlation gives diversification, depending on the strategy, but correlations can increase markedly in a crisis. (Ch 5 §6.1.1)"},
+{t:8,c:0,q:"What are the two most common managed futures strategies named in the workbook?",o:["Value and growth","Market-neutral (arbitrage of mispricing) and trend-following","Buy and hold and indexation","Income and growth"],a:1,x:"Managed futures funds can be tailored to hedge risk, often being negatively correlated with an existing portfolio. (Ch 5 §6.2)"},
+{t:8,c:0,q:"Which statement about non-fungible tokens (NFTs) is correct?",o:["Each NFT is identical and interchangeable","Each NFT is unique; it has no intrinsic monetary value, and owning one does not in itself give copyright or IP rights","NFTs are protected by the FSCS","NFTs have a strict legal definition"],a:1,x:"NFTs are unique blockchain tokens, valued only by what buyers will pay. Risks include fakes, sellers who don't own them, no regulation and no legal definition. (Ch 5 §6.3.3)"},
+{t:8,c:0,q:"Which is a risk of cryptocurrencies identified in the workbook?",o:["They are backed by central bank reserves","They are largely unregulated, not backed by assets, and usually not covered by compensation schemes","They have very low volatility","They are guaranteed by governments"],a:1,x:"Other risks include extreme volatility, low liquidity in decentralised trading and energy-intensive mining. (Ch 5 §6.3.1)"},
+// 9 Property (4)
+{t:9,c:0,q:"Which characteristic of property means it can only be bought in whole units, limiting diversification?",o:["Heterogeneity","Indivisibility","Finite supply","Subjective valuation"],a:1,x:"Indivisibility means property is bought whole. Heterogeneity means each property is unique. (Ch 5 §7)"},
+{t:9,c:1,q:"A property valued at £1.5m earns annual rent of £90,000 and has annual operating costs of £15,000. What is its net rental yield?",o:["5%","6%","7%","1%"],a:0,x:"Net yield = (90,000 − 15,000) ÷ 1,500,000 = 5%. The gross yield is 6%. (Ch 5 §7.2)"},
+{t:9,c:0,q:"Which statement about Property Authorised Investment Funds (PAIFs) is correct?",o:["They must be unit trusts","They must be OEICs with at least 60% of net income from property investment, and can pay rental income without corporation tax deducted","They cannot hold property","Their distributions are all treated as dividends"],a:1,x:"PAIF distributions are split into property income distributions (taxed as property income; pensions, charities and UK companies can receive them gross), interest and dividends. (Ch 5 §7.1.2)"},
+{t:9,c:0,q:"Which body sets the 'Red Book' valuation standards, which are mandatory for its registered valuers?",o:["IVSC","RICS","AREF","GRESB"],a:1,x:"RICS (founded 1868) publishes the Red Book, fully compliant with the IVSC's International Valuation Standards. AREF sets a Code of Practice for property funds. GRESB benchmarks the ESG performance of real assets. (Ch 5 §7.3–7.4)"},
+// 10 FX, commodities, infrastructure (2)
+{t:10,c:0,q:"Why are non-dollar investors in most commodities exposed to currency risk?",o:["Commodities only trade in Asia","Most commodities are priced in US dollars","Commodity prices are fixed","Commodities can't be hedged"],a:1,x:"Most commodities are dollar-priced, so exchange rate moves affect returns for other investors. Gold is traditionally a safe haven in turbulent markets. (Ch 5 §9.1.2)"},
+{t:10,c:0,q:"Why is a closed-ended structure well suited to direct infrastructure investment?",o:["Closed-ended funds must hold only cash","Investors trade shares with each other, so the manager doesn't have to sell illiquid projects at distressed prices to meet redemptions","Closed-ended funds can never use gearing","They always trade at NAV"],a:1,x:"Infrastructure's long-term, often inflation-linked cash flows suit closed-ended funds, which often use gearing. The trade-offs are discounts and premiums and possible trading illiquidity. (Ch 5 §10.4.2)"}
+];
+
+// Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
+(function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+    q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
+try{ans=JSON.parse(localStorage.getItem("s5-ans")||"{}")}catch(e){ans={}}
+function save(){try{localStorage.setItem("s5-ans",JSON.stringify(ans))}catch(e){}}
+const topicSel=document.getElementById("topic");
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v+" ("+Q.filter(q=>q.t==k).length+")";topicSel.appendChild(o)});
+function list(){const t=topicSel.value;return order.filter(i=>t==="all"||String(Q[i].t)===t)}
+function tbl(rows){
+  const head=rows[0][0]===""||rows[0].length>2;
+  if(rows[0].length===2&&rows[0][0]!==""){return `<div class="table-wrap"><table><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="table-wrap"><table><thead><tr>${rows[0].map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map((c,j)=>`<td${j?' class="num"':""}>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function show(i){return mode==="practice"?ans[i]!==undefined:marked}
+function render(){
+  const ids=list();
+  document.getElementById("qlist").innerHTML=ids.map((i,k)=>{
+    const q=Q[i],a=ans[i],rev=show(i);
+    const opts=q.o.map((t,j)=>{let c="opt";
+      if(rev){if(j===q.a)c+=" right";else if(j===a)c+=" wrong"}else if(j===a)c+=" picked";
+      const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
+      return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
+    const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+  stats();
+}
+function stats(){
+  let html="",n=0,c=0;
+  Object.keys(T).forEach(k=>{let tn=0,tc=0;Q.forEach((q,i)=>{if(q.t==k&&ans[i]!==undefined&&(mode==="practice"||marked)){tn++;if(ans[i]===q.a)tc++}});n+=tn;c+=tc;
+    html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
+  document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
+  const answered=Object.keys(ans).length;
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+}
+function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+  const tEl=document.getElementById("timer");tEl.hidden=false;
+  tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
+  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
+  const c=Q.filter((q,i)=>ans[i]===q.a).length;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
+document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
+  ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
+document.getElementById("mode").addEventListener("change",e=>{mode=e.target.value;
+  if(mode==="mock"){topicSel.value="all";topicSel.disabled=true;startMock()}
+  else{clearInterval(tick);marked=false;topicSel.disabled=false;document.getElementById("timer").hidden=true;document.getElementById("finish").hidden=true;document.getElementById("result").innerHTML="";
+    try{ans=JSON.parse(localStorage.getItem("s5-ans")||"{}")}catch(e){ans={}}render()}});
+topicSel.addEventListener("change",render);
+document.getElementById("finish").addEventListener("click",finish);
+document.getElementById("shuffle").addEventListener("click",()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()});
+document.getElementById("reset").addEventListener("click",()=>{if(mode==="mock"){startMock();return}ans={};save();render()});
+const VIEWS=["concepts","learn","practice","method"];
+function route(){const h=(location.hash||"#concepts").slice(1);
+  const lesson=/^c\d+$/.test(h)?document.getElementById(h):null;
+  const v=lesson?"concepts":(VIEWS.includes(h)?h:"concepts");
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  return lesson}
+window.addEventListener("hashchange",()=>{const l=route();if(l)l.scrollIntoView();else window.scrollTo(0,0)});
+route();render();
+</script>
