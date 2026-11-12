@@ -1,0 +1,56 @@
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions test it. Section 2 is mostly conceptual, with a few short calculations: holding period return, maximum drawdown, VWAP, the overseas return formula and beta.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Types of risk: systematic, unsystematic, systemic, counterparty</td><td><span class="pill hi">Tested often</span></td><td>MCQs 8, 70</td></tr>
+      <tr><td>Alpha, beta, correlation and diversification</td><td><span class="pill hi">Tested often</span></td><td>MCQs 4, 43, 80 · Ch-end 4, 8</td></tr>
+      <tr><td>Suitability: ATR/CFL, suitability report, churning</td><td><span class="pill hi">Tested often</span></td><td>Ch-end 2, 3</td></tr>
+      <tr><td>Monitoring, reporting, HPR, maximum drawdown</td><td><span class="pill md">Regular</span></td><td>MCQ 71 · Ch-end 5, 6</td></tr>
+      <tr><td>Trading venues, HFT, algo wheel, VWAP, TCA</td><td><span class="pill md">Regular</span></td><td>MCQs 41, 61</td></tr>
+      <tr><td>Foreign currency and operational risk</td><td><span class="pill md">Regular</span></td><td>Ch-end 10</td></tr>
+      <tr><td>Stewardship, conflicts, front running, transparency</td><td><span class="pill md">Regular</span></td><td>Ch-end 1</td></tr>
+      <tr><td>Rebalancing, time out of the market, client churn</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 9</td></tr>
+      <tr><td>Hedging and immunisation</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 7</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Holding period (total) return</div><code>(V1 + D − V0) ÷ V0</code></div>
+      <div class="f"><div class="n">Maximum drawdown</div><code>(Peak − Following trough) ÷ Peak</code></div>
+      <div class="f"><div class="n">Return in home currency</div><code>Rd = (1 + Rf) × (1 + Rfx) − 1</code></div>
+      <div class="f"><div class="n">Currency return (GBP investor in USD)</div><code>Start GBP/USD rate ÷ End GBP/USD rate − 1</code></div>
+      <div class="f"><div class="n">VWAP</div><code>Σ(Price × Volume) ÷ Σ Volume</code></div>
+      <div class="f"><div class="n">Beta in practice</div><code>Expected move = β × Market move</code><div class="small">β 1.5 = 50% more volatile · β 0.7 = 30% less</div></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Lists worth memorising</h3>
+    <div class="cols">
+      <div><b>Suitability information</b>Knowledge and experience · financial situation, including ability to bear losses · objectives and risk profile</div>
+      <div><b>Suitability report contents</b>Demands and needs · possible disadvantages · why it is suitable</div>
+      <div><b>Unsystematic risks</b>Business · industry · management · financial (gearing) · liquidity · counterparty · credit</div>
+      <div><b>Systematic risks</b>Inflation · interest rate · currency · asset price volatility · commodity · sustainability</div>
+      <div><b>MiFID II venues</b>Regulated markets · MTFs · OTFs (no equities) · SIs (own account)</div>
+      <div><b>Currency hedges</b>Forwards · back-to-back loans · currency options · currency futures · currency swaps</div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Systematic ≠ systemic.</b> Market-wide falls are systematic risk. A collapse of the financial system is systemic risk.</li>
+    <li><b>Beta 1.2</b> means 20% more volatile than the market, not 20% outperformance (MCQ 4).</li>
+    <li><b>CFL, not ATR,</b> drives the final risk profile when the two conflict.</li>
+    <li><b>Suitability doesn't apply to execution-only.</b> The ability to bear losses can only be assumed for <i>per se</i> professionals.</li>
+    <li><b>Churning</b> is excessive trading for commission. <b>Client churn</b> is clients leaving the firm.</li>
+    <li><b>Best client communication</b>, per the book: a real-time web portal (MCQ 71).</li>
+    <li><b>CCPs reduce counterparty risk.</b> Moving OTC trades onto exchanges reduces it too (MCQ 70).</li>
+    <li><b>VWAP</b> is best used intraday (MCQ 61).</li>
+    <li><b>HFT's commonly quoted downside</b> is the illusion of liquidity (MCQ 41).</li>
+    <li><b>OTFs can't trade equities. AIM is an MTF.</b></li>
+    <li><b>Hedge currency on overseas bonds</b>; it is often not done for diversified overseas equity portfolios.</li>
+    <li><b>Puts keep the upside; futures and forwards give it up.</b></li>
+  </ul>

@@ -1,0 +1,564 @@
+<title>Section 2 Client Portfolios Module</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one study column, sticky tabs; formula cards set like an exam formula sheet; highlighter marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2; --warn-bg:#fff4d6; --warn:#8a5a00;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:30px 10px}
+h3{font-size:1.1rem;margin-block:20px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.hi{background:var(--accent);color:var(--accent-ink)}
+.pill.md{border:1px solid var(--accent);color:var(--accent)}
+.pill.lo{border:1px solid var(--line);color:var(--muted)}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:14px}
+.topic h3{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.topic .why{color:var(--muted);font-size:13.5px;margin:2px 0 8px}
+.topic ul{margin:6px 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-block:8px}
+.f{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;background:var(--bg)}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px}
+.eg code,.mono{font-family:var(--mono);font-size:13px}
+.warnbox{margin-top:8px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);color:var(--ink);font-size:14px}
+.warnbox b{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.timer{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.q table{font-size:13px;margin-bottom:10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-block:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.stat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 18px;margin-block:12px}
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-block:16px;scroll-margin-top:60px}
+.lesson h3{margin-top:0;font-size:1.25rem}
+.lesson .kicker{font:500 12px var(--mono);color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.oneline{font-family:var(--display);font-size:1.08rem;line-height:1.45;margin:8px 0 12px;padding-left:12px;border-left:3px solid var(--mark)}
+.lesson h4{font:600 14px var(--body);margin:16px 0 4px;letter-spacing:.01em}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-block:10px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:6px 10px;border-radius:999px;color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-block:8px}
+.cols > div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);min-width:0}
+.cols b{display:block;margin-bottom:2px}
+details.check{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.check summary{cursor:pointer;padding:9px 12px;font-weight:500}
+details.check summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.check div{padding:0 12px 10px;font-size:14px}
+.confuse{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);font-size:14px}
+.confuse b{color:var(--warn)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+<header class="top wrap">
+  <h1>Section 2: Managing Client Portfolios</h1>
+  <p class="lede">A module for Element 2 of the CISI Investment Management exam, built from Chapter 2 of the Edition 4 workbook and the market-activity and international-dealing sections printed at the end of Chapter 4. It covers duties to clients, suitability, risk, trading venues, execution and rebalancing.</p>
+  <div class="facts">
+    <span class="chip">About <b>11</b> of 80 exam questions</span>
+    <span class="chip"><b>10</b> concept lessons</span>
+    <span class="chip"><b>50</b> practice questions</span>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#concepts">Concepts</a>
+  <a href="#learn">Formulas &amp; traps</a>
+  <a href="#practice">50 questions</a>
+  <a href="#method">How this was built</a>
+</div></nav>
+
+<main class="wrap">
+
+<section data-view="concepts">
+  <h2>Understand the concepts first</h2>
+  <p>Section 2 is about running a client's money properly: knowing the client, recommending what suits them, understanding the risks, dealing well, and keeping the portfolio on track. Each lesson ends with self-checks you can tap to reveal. Allow about 2.5 hours.</p>
+  <nav class="toc" aria-label="Lessons">
+    <a href="#c1">1. Stewardship &amp; conflicts</a>
+    <a href="#c2">2. Knowing the client</a>
+    <a href="#c3">3. Suitability</a>
+    <a href="#c4">4. Monitoring &amp; reporting</a>
+    <a href="#c5">5. Types of risk</a>
+    <a href="#c6">6. Reducing risk</a>
+    <a href="#c7">7. Trading venues</a>
+    <a href="#c8">8. Algorithmic dealing</a>
+    <a href="#c9">9. Investing abroad</a>
+    <a href="#c10">10. Change &amp; rebalancing</a>
+  </nav>
+
+  <article class="lesson" id="c1">
+    <div class="kicker">Lesson 1</div>
+    <h3>Stewardship, conflicts of interest and transparency</h3>
+    <p class="oneline">A manager looks after other people's money, so it must act in their interests, engage with the companies it owns, and manage or disclose any conflict.</p>
+    <h4>The UK Stewardship Code</h4>
+    <p>Published in <b>2010</b> (last updated <b>2024</b>) by the <b>FRC and FCA</b> for institutional investors with voting rights in UK companies. It is <b>voluntary</b>, on a <b>"comply or explain"</b> basis: firms disclose on their website how they apply it, or why not. It expects investors to:</p>
+    <ul>
+      <li>publicly disclose their stewardship policy and a robust conflicts policy</li>
+      <li>monitor investee companies, with clear guidelines on when and how to <b>escalate</b></li>
+      <li>be willing to act collectively with other investors</li>
+      <li>have a clear voting policy, and report periodically on stewardship and voting</li>
+    </ul>
+    <p>If dialogue fails, managers agree targets with the board and track progress, then escalate by <b>collaborating with other shareholders</b> or making a <b>public statement before the AGM</b>. Elsewhere, EFAMA adopted a stewardship code in 2018, and Japan's GPIF requires its external managers to sign Japan's code.</p>
+    <h4>Conflicts of interest (FCA SYSC)</h4>
+    <p>Firms must identify conflicts between the firm and a client, and between one client and another. They must keep an effective conflicts policy (with a description given to retail clients), maintain arrangements to stop conflicts harming clients, put <b>information barriers</b> around research produced for external use, keep records, and, <b>only if a conflict can't be managed, disclose it</b>. Conflicts commonly arise in execution, aggregation and allocation of orders, research, inducements and churning.</p>
+    <p><b>Front running</b> (pre-positioning) means dealing ahead of a client's order to profit from its expected price impact. It can amount to insider dealing and is prohibited under the <b>Market Abuse Regulation</b>.</p>
+    <h4>Transparency</h4>
+    <div class="cols">
+      <div><b>Pre-trade</b>The size and price of trading interest before a trade, such as firm quotes and the order book. It can range from the full book to just the best bid and offer.</div>
+      <div><b>Post-trade</b>The price and volume of completed trades. Pre-trade transparency alone isn't enough, because many trades happen between or outside the quotes.</div>
+    </div>
+    <details class="check"><summary>Check: a firm identifies a conflict it cannot prevent. What must it do?</summary><div>Disclose the general or specific nature of the conflict to the client. Disclosure is the last resort, after trying to manage the conflict.</div></details>
+  </article>
+
+  <article class="lesson" id="c2">
+    <div class="kicker">Lesson 2</div>
+    <h3>Knowing the client: risk, liquidity, time horizon and tax</h3>
+    <p class="oneline">Everything in investment management starts with the client. Their circumstances, not the manager's preferences, set the strategy.</p>
+    <p>The findings are recorded in an <b>investment policy statement (IPS)</b>: return objectives, risk tolerance, time horizon, liquidity needs, tax position and any constraints, together with the strategy to meet them.</p>
+    <h4>Attitude to risk vs capacity for loss</h4>
+    <div class="cols">
+      <div><b>Attitude to risk (ATR)</b><b>Subjective</b>: how much risk the client is <i>willing</i> to take (cautious, balanced or adventurous). Measured with questionnaires.</div>
+      <div><b>Capacity for loss (CFL)</b><b>Objective</b>: whether the client could keep a comfortable standard of living if the investments fell. Someone with less of their wealth at risk has a higher CFL.</div>
+    </div>
+    <p>If a client has a high ATR but a low CFL, the adviser must discuss the risks and may recommend less exposure. <b>CFL drives the overall risk profile.</b> Both change over time; moving to lower risk approaching retirement is <b>lifestyling</b>, and the pace of that shift is the <b>glide path</b>.</p>
+    <h4>Other factors</h4>
+    <ul>
+      <li><b>Preferences and restrictions:</b> exclusions (such as armaments), holdings that must not be sold, or themes (ESG, Islamic principles).</li>
+      <li><b>Liquidity:</b> keep an accessible emergency reserve for known and unexpected needs (the book says enough to cover expected cash needs for three to five years). High liquidity needs mean lower-risk assets.</li>
+      <li><b>Time horizon:</b> cash for money needed within about six months; bonds a little longer; <b>equities generally only if the money isn't needed for five years or more</b>; <b>property for ten years or more</b>.</li>
+      <li><b>Tax:</b> residence, domicile, current and future income tax, allowances and tax wrappers. High-yield bond income held outside a wrapper hurts a higher-rate taxpayer. Transfers between spouses are generally <b>free of CGT and IHT</b>, so a spouse's unused allowances can be used.</li>
+    </ul>
+    <details class="check"><summary>Check: a client is enthusiastic about risk but has few other assets and relies on this portfolio. What decides the risk profile?</summary><div>Their capacity for loss. The adviser should discuss the risks and may recommend reducing exposure.</div></details>
+  </article>
+
+  <article class="lesson" id="c3">
+    <div class="kicker">Lesson 3</div>
+    <h3>Suitability, the mandate and the suitability report</h3>
+    <p class="oneline">Every recommendation and every discretionary trade must suit the client, and retail clients must be told in writing why.</p>
+    <h4>The mandate</h4>
+    <p>A discretionary manager works under a <b>mandate</b> that sets the limited scope of its authority (the <b>limits of authority</b>). Changing the mandate requires a suitability assessment. Ongoing relationships require client information to be kept up to date. Under the <b>Consumer Duty</b>, firms must deliver good outcomes throughout.</p>
+    <h4>What a firm needs to know</h4>
+    <ol>
+      <li>The client's <b>knowledge and experience</b> of the relevant investments.</li>
+      <li>Their <b>financial situation</b>, including the ability to bear losses.</li>
+      <li>Their <b>investment objectives</b> and current risk profile.</li>
+    </ol>
+    <p>Suitability applies to <b>advisory and discretionary</b> business, <b>not execution-only</b>. For professional clients, a firm may assume <b>both</b> per se and elective professionals have the necessary knowledge and experience. It may assume the ability to bear losses <b>only for per se professionals</b> (authorised firms), not elective ones (who opted in writing).</p>
+    <h4>The suitability report</h4>
+    <p>Required whenever advice or a personal recommendation is given to a <b>retail client</b> (and for life policies). It must set out the client's <b>demands and needs</b>, any <b>disadvantages</b>, and <b>why</b> the recommendation is suitable. Timing: for a life policy, before the contract is concluded; for a personal or stakeholder pension with cancellation rights, <b>within 14 days</b>; otherwise before the transaction. There are exceptions, such as a portfolio manager's recommendation on a regulated fund, or topping up an existing regular premium.</p>
+    <h4>Costs and churning</h4>
+    <p>Fees, dealing charges, spreads, wrapper and advice charges and commissions all reduce net returns. <b>Churning</b> is dealing excessively to generate commission. Trades that each look suitable can be unsuitable together if they are too frequent. <b>Switching</b> simply means selling one investment to buy another.</p>
+    <details class="check"><summary>Check: may a firm assume an elective professional client can bear any investment losses?</summary><div>No. That assumption is only allowed for per se professional clients. Knowledge and experience can be assumed for both.</div></details>
+  </article>
+
+  <article class="lesson" id="c4">
+    <div class="kicker">Lesson 4</div>
+    <h3>Diversification, monitoring and reporting</h3>
+    <p class="oneline">Combine assets that don't move together, keep checking progress against an appropriate benchmark, and keep the client informed.</p>
+    <h4>Diversification</h4>
+    <p>Correlation runs from +1 (moving in step, typically above +0.8 counts as high) to −1 (moving opposite, typically −0.8 to −1). Low or negative correlation cuts portfolio volatility <b>without sacrificing return</b>; that is the essence of diversification. A risky asset, such as an emerging market share, can even reduce portfolio risk if it behaves differently from the rest.</p>
+    <h4>Reporting and compliance</h4>
+    <p>Clients receive periodic reports in a durable medium. The book says the most appropriate method is <b>current, near real-time information through a secure web portal</b>, plus periodic meetings. Ratios such as Sharpe and Treynor may need explaining, or replacing with simpler measures. Monitoring checks progress against objectives, costs and performance, and keeps up with regulation.</p>
+    <h4>Benchmarks and two key measures</h4>
+    <ul>
+      <li><b>Comparisons:</b> a relevant market or specialist index; a <b>universe</b> of similar portfolios (a peer group); or a <b>custom or composite</b> benchmark for unusual or multi-asset mandates.</li>
+      <li><b>Holding period (total) return</b> = (end value + income − start value) ÷ start value.</li>
+      <li><b>Maximum drawdown</b> = the largest fall from a peak (the "high-water mark") to the following trough. It captures loss potential that volatility measures miss.</li>
+    </ul>
+    <div class="eg">A portfolio rises to £200,000, falls to £150,000, then recovers to £220,000. Maximum drawdown = 50 ÷ 200 = <span class="mono">25%</span>.</div>
+    <details class="check"><summary>Check: two assets have a correlation of −0.9. What happens if you hold equal amounts of each?</summary><div>Gains in one tend to be offset by losses in the other, so portfolio volatility falls sharply.</div></details>
+  </article>
+
+  <article class="lesson" id="c5">
+    <div class="kicker">Lesson 5</div>
+    <h3>The types of risk</h3>
+    <p class="oneline">Some risks belong to one company and can be diversified away. Some hit the whole market. Systemic risk threatens the system itself.</p>
+    <div class="cols">
+      <div><b>Unsystematic (specific, diversifiable)</b>Business risk · industry risk · management risk · <b>financial (gearing) risk</b>: an all-equity firm has none · liquidity risk · <b>counterparty risk</b>: reduced by a central counterparty such as LCH, and highest in OTC markets · credit and default risk.</div>
+      <div><b>Systematic (market, undiversifiable)</b>Default risk · <b>inflation</b>: erodes the real value of cash, as in 2022–23 · <b>interest rate</b>: being locked into 4% when rates hit 8% · <b>currency</b> · <b>asset price volatility</b> · <b>commodity price volatility</b>, driven by politics, seasons and supply · <b>sustainability</b>: an ESG event damaging a company's value.</div>
+    </div>
+    <h4>Systemic risk</h4>
+    <p>The risk of <b>collapse of the whole financial system</b>, where one institution's failure cascades through others, as in the 2007–08 crisis. In a panic, correlations between assets <b>rise towards 1</b> as everything falls together, so diversification fails exactly when it is needed. It is almost impossible to insure against, because there may be no solvent counterparty. The central bank as lender of last resort is the backstop.</p>
+    <div class="confuse"><b>Common confusion:</b> <b>systematic</b> risk is market-wide and can't be diversified away. <b>Systemic</b> risk is the system breaking down. A sharp fall in emerging market equities hurting a portfolio is <b>systematic</b> (workbook MCQ 8).</div>
+    <p><b>Investment horizon</b> is also a risk: does the investor have the time and resources to see a long-term strategy through?</p>
+    <details class="check"><summary>Check: why does diversification often fail in a financial crisis?</summary><div>Correlations between assets rise sharply (towards 1) as they all fall together.</div></details>
+  </article>
+
+  <article class="lesson" id="c6">
+    <div class="kicker">Lesson 6</div>
+    <h3>Reducing risk: diversification, hedging, alpha and beta</h3>
+    <p class="oneline">Rather than buying only low-risk, low-return assets, a manager can hold riskier assets and then reduce the risk by diversifying or hedging.</p>
+    <h4>Asset allocation</h4>
+    <p>Spreading money across equities, bonds, cash, property and commodities, which respond differently to the economy (equities tend to do well in growth, bonds give stability in recessions). The right mix is unique to each client and should be reviewed regularly.</p>
+    <h4>Hedging</h4>
+    <div class="cols">
+      <div><b>Buying puts</b>Protects against a fall but <b>keeps the upside</b>. Costs a premium.</div>
+      <div><b>Futures and forwards</b>Lock in a price, removing the downside <b>and the upside</b>.</div>
+    </div>
+    <p>Hedges are rarely perfect and always cost something. <b>Immunisation</b> matches bond duration to the investment horizon. Active managers can reduce risk by hedging or selling ahead of weakness. Passive funds and ETFs reduce single-stock risk but follow the market down.</p>
+    <h4>Alpha and beta</h4>
+    <ul>
+      <li><b>Alpha</b> is the return above the benchmark. An alpha of 2.5 means the portfolio beat its benchmark by 2.5%. An index tracker should have an alpha near zero.</li>
+      <li><b>Beta</b> measures systematic risk relative to the market. β = 1 moves with the market. <b>β 1.5 is 50% more volatile</b>. <b>β 0.7 is 30% less volatile</b>. β &lt; 0 moves opposite to the market. β = 0 means no relationship.</li>
+      <li>Both are <b>backward-looking</b> and no guarantee of future behaviour.</li>
+    </ul>
+    <div class="eg">A portfolio with β 1.5 when the market rises 8% would be expected to rise 1.5 × 8 = <span class="mono">12%</span>.</div>
+    <details class="check"><summary>Check: you want protection against a market fall but still want to benefit if it rises. Futures or put options?</summary><div>Put options. They protect the downside while keeping the upside, at the cost of the premium. Futures remove the upside too.</div></details>
+  </article>
+
+  <article class="lesson" id="c7">
+    <div class="kicker">Lesson 7</div>
+    <h3>Where trades happen: exchanges, MTFs, OTFs, SIs and OTC</h3>
+    <p class="oneline">MiFID opened trading to competing venues. Each venue type offers a different balance of transparency, flexibility and risk.</p>
+    <p><b>MiFID</b> (2007) requires firms to take all reasonable steps to achieve <b>best execution</b>, weighing price, cost, speed and certainty of execution and settlement. It promotes competition between venues. <b>MiFID II</b> (2018) recognises four venue types: regulated markets, MTFs, OTFs and SIs.</p>
+    <h4>Regulated exchanges worth knowing</h4>
+    <ul>
+      <li><b>UK:</b> LSE Main Market. <b>SETS</b> is the electronic order book for FTSE 100, 250 and Small Cap shares. <b>SETSqx</b> handles less liquid shares (auctions plus market makers). <b>SEAQ</b> handles fixed interest and some AIM shares. <b>AIM</b>, for smaller companies, is classed as an <b>MTF</b>.</li>
+      <li><b>Europe:</b> Euronext, Deutsche Börse (over 90% of German trading on <b>Xetra</b>), SIX Swiss and Borsa Italiana.</li>
+      <li><b>US:</b> NYSE (the largest by market cap, still with an open-outcry floor) and NASDAQ (most tech listings, higher trading volume).</li>
+      <li><b>Asia and the Middle East:</b> Tokyo (prime, standard and growth segments); India's NSE and BSE (BSE has the most listed companies); Shanghai (<b>A shares in renminbi, B shares in US dollars</b>), Shenzhen and Beijing (SMEs, 2021); Hong Kong (Hang Seng: the 80 largest companies, with Stock Connect links); Saudi Arabia's Tadawul.</li>
+    </ul>
+    <h4>Alternative venues</h4>
+    <div class="cols">
+      <div><b>MTF</b>A multilateral system matching many buyers and sellers in shares, bonds and derivatives. Example: <b>Turquoise</b> (majority-owned by LSE Group). Regulated broadly like an exchange.</div>
+      <div><b>OTF</b>Introduced by MiFID II for bonds, structured products, emission allowances and derivatives. <b>Equities are not allowed</b> (equity derivatives are).</div>
+      <div><b>Systematic internaliser</b>An investment firm dealing on its <b>own account</b>, frequently and systematically, to fill client orders outside other venues. The same legal entity can't run both an OTF and an SI.</div>
+    </div>
+    <p><b>OTC trading</b> happens directly between two parties. It is flexible and customisable, but carries <b>more counterparty risk and less transparency</b>. Global reforms are pushing OTC trades onto exchanges and central clearing to reduce systemic risk.</p>
+    <details class="check"><summary>Check: can a company's shares be traded on an OTF?</summary><div>No. OTFs can trade bonds, structured products, emission allowances and derivatives (including equity derivatives), but not equities.</div></details>
+  </article>
+
+  <article class="lesson" id="c8">
+    <div class="kicker">Lesson 8</div>
+    <h3>Algorithmic trading, VWAP and transaction cost analysis</h3>
+    <p class="oneline">Computers now execute much of the trading. The skill is choosing how to execute, and then proving it was done well.</p>
+    <h4>High-frequency trading</h4>
+    <p>Algorithms trade in microseconds to exploit tiny price differences (arbitrage) or to make markets (earning the bid-offer spread). Supporters say it narrows spreads and adds liquidity. Critics say it raises costs, destabilises markets and can create an <b>illusion of liquidity</b>. It was linked to the <b>flash crash of 6 May 2010</b>, when the Dow fell about 1,000 points (about 9%) in minutes.</p>
+    <h4>The algo wheel</h4>
+    <p>The workbook describes it as an <b>automated system that selects the execution strategy (algorithm) for each order</b> from pre-set options, and switches between them in real time as conditions change. For example, it might split a large order into smaller pieces when markets are volatile, or route to a dark pool when liquidity is thin. It removes human error and judgement, and gives consistent, transparent decisions that help prove <b>best execution under MiFID II</b>. The downsides are dependence on technology and poor handling of irrational markets.</p>
+    <h4>VWAP</h4>
+    <p>Volume weighted average price = Σ(price × volume) ÷ total volume. It is a benchmark for whether a trade was done at a good price: trading above VWAP may mean the stock is expensive relative to the day's average. It can cover any period but is <b>best suited to intraday</b> use.</p>
+    <div class="eg"><b>Book example.</b> 1,000 at $10, 1,500 at $12, 2,000 at $11 and 500 at $13 gives $56,500 ÷ 5,000 = <span class="mono">$11.30</span>.</div>
+    <h4>Transaction cost analysis</h4>
+    <p>TCA is the framework institutions use to achieve and evidence best execution. <b>Pre-trade</b> analysis chooses the execution strategy that minimises cost for an acceptable level of risk. <b>Post-trade</b> analysis measures <b>slippage</b>, the difference between the actual price and a benchmark such as VWAP. FX TCA is harder because FX data is incomplete.</p>
+    <details class="check"><summary>Check: what does post-trade TCA usually measure?</summary><div>Slippage: the difference between the price achieved and a benchmark price such as VWAP.</div></details>
+  </article>
+
+  <article class="lesson" id="c9">
+    <div class="kicker">Lesson 9</div>
+    <h3>Investing abroad: operational, currency and country risk</h3>
+    <p class="oneline">Overseas investing adds diversification, but also new things that can go wrong: different systems, time zones, currencies and governments.</p>
+    <h4>Operational risk</h4>
+    <p>Failures of internal processes, people or systems, so it is <b>unsystematic</b>. Internationally this includes system failures, fraud, political unrest, staff not understanding local rules, needing local authorisation or brokers, bans on short selling, <b>time-zone delays</b> between order, execution and settlement instructions, choosing a local custodian, different settlement penalties and buy-ins, safeguarding assets, and processing corporate actions.</p>
+    <h4>Currency risk</h4>
+    <p>The return in your home currency combines the asset's local return and the currency's return:</p>
+    <div class="f"><code>Rd = (1 + Rf) × (1 + Rfx) − 1</code></div>
+    <div class="eg"><b>Book example.</b> A UK investor converts £20,000 into $30,000 at 1.50 and buys shares that rise 25% to $37,500. The dollar weakens to 1.90, so the money converts back to £19,737. Currency return = 1.50 ÷ 1.90 − 1 = −21.05%. Rd = 1.25 × 0.7895 − 1 = <span class="mono">−1.31%</span>. A good share pick was wiped out by the currency.</div>
+    <p>It can be hedged with <b>forwards, back-to-back loans, currency options, currency futures and currency swaps</b>, but hedging is imperfect and costs money. It is generally <b>recommended for overseas bonds</b> (fixed income that depreciation would erode) and often <b>avoided for diversified overseas equity portfolios</b>, which are more volatile and spread across many currencies.</p>
+    <h4>Country (sovereign credit) risk</h4>
+    <p>Agencies look at the debt profile, banking stability, access to capital markets, GDP growth, political stability, national security, governance (rule of law, corruption), export profile, the balance of payments and fiscal policy. A <b>downgrade means investors demand a higher yield</b>.</p>
+    <details class="check"><summary>Check: US shares rise 20% in dollars, but the dollar falls 10% against sterling. What is the sterling return?</summary><div>1.20 × 0.90 − 1 = 8%.</div></details>
+  </article>
+
+  <article class="lesson" id="c10">
+    <div class="kicker">Lesson 10</div>
+    <h3>What changes a portfolio, and rebalancing</h3>
+    <p class="oneline">Clients, markets and products all change, so a portfolio needs regular review, and sometimes a complete rethink.</p>
+    <ul>
+      <li><b>Client circumstances:</b> losing income may force sales, possibly at a bad time, with penalties, or with early exits from derivatives at a loss. Then the portfolio needs rebalancing.</li>
+      <li><b>The financial environment:</b> crises (2008, COVID, the cost-of-living crisis) change risk appetite. Some investors flee risk, others see bargains. Each cycle differs: today's profitable tech giants are not the loss-making dotcoms of 2000.</li>
+      <li><b>Rebalancing:</b> after a significant change, <b>reassess the whole asset allocation</b> and set a new strategic allocation rather than patching the old one. Tax (for example assets outside a wrapper) may delay it.</li>
+      <li><b>New products and services:</b> ETFs, CFDs, CDS, hedge funds and so on. Professionals must keep re-educating themselves.</li>
+      <li><b>Administrative changes:</b> innovation and fee pressure from passive competitors are forcing back-office change.</li>
+      <li><b>Investment-related changes:</b> rating changes (downgrades hit prices harder than upgrades help) and corporate actions.</li>
+      <li><b>Benchmark review:</b> needed if the benchmark no longer matches the objective or risk, or holds assets the portfolio no longer owns. Agree the review frequency with the client.</li>
+      <li><b>Portfolio turnover costs:</b> more trading means more costs and lower returns.</li>
+      <li><b>Time out of the market:</b> for example when <b>transferring between managers</b> (sell everything and move cash, or transfer <b>in specie</b> while the old manager can't trade), or waiting for sale proceeds to settle before buying. Markets may move against you meanwhile.</li>
+      <li><b>Client churn:</b> the rate at which <b>clients leave the firm</b>. Winning new clients costs far more than keeping existing ones, so firms should track it and find out why. (This is different from <i>churning</i>, which is excessive trading.)</li>
+    </ul>
+    <details class="check"><summary>Check: give an example of time out of the market becoming a high risk.</summary><div>Moving a portfolio between managers: either it is sold to cash and the market rises before it is reinvested, or it is transferred in specie and can't be traded while markets fall.</div></details>
+  </article>
+
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
+
+</section>
+
+<section data-view="learn" hidden>
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions test it. Section 2 is mostly conceptual, with a few short calculations: holding period return, maximum drawdown, VWAP, the overseas return formula and beta.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Types of risk: systematic, unsystematic, systemic, counterparty</td><td><span class="pill hi">Tested often</span></td><td>MCQs 8, 70</td></tr>
+      <tr><td>Alpha, beta, correlation and diversification</td><td><span class="pill hi">Tested often</span></td><td>MCQs 4, 43, 80 · Ch-end 4, 8</td></tr>
+      <tr><td>Suitability: ATR/CFL, suitability report, churning</td><td><span class="pill hi">Tested often</span></td><td>Ch-end 2, 3</td></tr>
+      <tr><td>Monitoring, reporting, HPR, maximum drawdown</td><td><span class="pill md">Regular</span></td><td>MCQ 71 · Ch-end 5, 6</td></tr>
+      <tr><td>Trading venues, HFT, algo wheel, VWAP, TCA</td><td><span class="pill md">Regular</span></td><td>MCQs 41, 61</td></tr>
+      <tr><td>Foreign currency and operational risk</td><td><span class="pill md">Regular</span></td><td>Ch-end 10</td></tr>
+      <tr><td>Stewardship, conflicts, front running, transparency</td><td><span class="pill md">Regular</span></td><td>Ch-end 1</td></tr>
+      <tr><td>Rebalancing, time out of the market, client churn</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 9</td></tr>
+      <tr><td>Hedging and immunisation</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 7</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Holding period (total) return</div><code>(V1 + D − V0) ÷ V0</code></div>
+      <div class="f"><div class="n">Maximum drawdown</div><code>(Peak − Following trough) ÷ Peak</code></div>
+      <div class="f"><div class="n">Return in home currency</div><code>Rd = (1 + Rf) × (1 + Rfx) − 1</code></div>
+      <div class="f"><div class="n">Currency return (GBP investor in USD)</div><code>Start GBP/USD rate ÷ End GBP/USD rate − 1</code></div>
+      <div class="f"><div class="n">VWAP</div><code>Σ(Price × Volume) ÷ Σ Volume</code></div>
+      <div class="f"><div class="n">Beta in practice</div><code>Expected move = β × Market move</code><div class="small">β 1.5 = 50% more volatile · β 0.7 = 30% less</div></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Lists worth memorising</h3>
+    <div class="cols">
+      <div><b>Suitability information</b>Knowledge and experience · financial situation, including ability to bear losses · objectives and risk profile</div>
+      <div><b>Suitability report contents</b>Demands and needs · possible disadvantages · why it is suitable</div>
+      <div><b>Unsystematic risks</b>Business · industry · management · financial (gearing) · liquidity · counterparty · credit</div>
+      <div><b>Systematic risks</b>Inflation · interest rate · currency · asset price volatility · commodity · sustainability</div>
+      <div><b>MiFID II venues</b>Regulated markets · MTFs · OTFs (no equities) · SIs (own account)</div>
+      <div><b>Currency hedges</b>Forwards · back-to-back loans · currency options · currency futures · currency swaps</div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Systematic ≠ systemic.</b> Market-wide falls are systematic risk. A collapse of the financial system is systemic risk.</li>
+    <li><b>Beta 1.2</b> means 20% more volatile than the market, not 20% outperformance (MCQ 4).</li>
+    <li><b>CFL, not ATR,</b> drives the final risk profile when the two conflict.</li>
+    <li><b>Suitability doesn't apply to execution-only.</b> The ability to bear losses can only be assumed for <i>per se</i> professionals.</li>
+    <li><b>Churning</b> is excessive trading for commission. <b>Client churn</b> is clients leaving the firm.</li>
+    <li><b>Best client communication</b>, per the book: a real-time web portal (MCQ 71).</li>
+    <li><b>CCPs reduce counterparty risk.</b> Moving OTC trades onto exchanges reduces it too (MCQ 70).</li>
+    <li><b>VWAP</b> is best used intraday (MCQ 61).</li>
+    <li><b>HFT's commonly quoted downside</b> is the illusion of liquidity (MCQ 41).</li>
+    <li><b>OTFs can't trade equities. AIM is an MTF.</b></li>
+    <li><b>Hedge currency on overseas bonds</b>; it is often not done for diversified overseas equity portfolios.</li>
+    <li><b>Puts keep the upside; futures and forwards give it up.</b></li>
+  </ul>
+
+</section>
+
+<section data-view="practice" hidden>
+  <h2>50 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <div class="controls">
+    <select id="mode" aria-label="Mode">
+      <option value="practice">Practice: instant feedback</option>
+      <option value="mock">Mock: timed, marked at the end</option>
+    </select>
+    <select id="topic" aria-label="Topic">
+      <option value="all">All topics</option>
+    </select>
+    <button id="shuffle" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset answers</button>
+    <button id="finish" class="primary" type="button" hidden>Finish and mark</button>
+    <span class="timer" id="timer" hidden></span>
+    <span class="score" id="score"></span>
+  </div>
+  <div id="result"></div>
+  <div class="stats" id="stats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section data-view="method" hidden>
+  <h2>How this was built</h2>
+  <ul>
+    <li>I read Chapter 2 of the Edition 4 workbook (June 2025), plus sections 11 and 12 of Chapter 4. Those cover exchanges, alternative trading platforms, algorithmic trading, VWAP, TCA and international dealing risks, which the syllabus counts under Element 2.</li>
+    <li>I matched each Element 2 learning objective against the book's 80 practice questions and the Chapter 2 end-of-chapter questions to set the priority labels.</li>
+    <li>Real CISI exam questions are confidential and not published. These 50 questions are original and follow the workbook's style. Each explanation names the workbook section.</li>
+  </ul>
+
+</section>
+</main>
+
+<script>
+const T={1:"Stewardship & conflicts",2:"Knowing the client",3:"Suitability & mandate",4:"Monitoring & performance",5:"Types of risk",6:"Reducing risk",7:"Trading venues",8:"Algo trading, VWAP, TCA",9:"Investing abroad",10:"Change & rebalancing"};
+const Q=[
+// 1 Stewardship & conflicts (6)
+{t:1,c:0,q:"Which statement about the UK Stewardship Code is correct?",o:["It is a mandatory law for all investors","It is a voluntary code for institutional investors, applied on a 'comply or explain' basis, developed by the FRC and FCA","It applies only to retail investors","It was abolished in 2024"],a:1,x:"The Code (2010, last updated 2024) aims to make institutional investors engage actively. Firms disclose how they apply it, or explain why not. (Ch 2 §1.1.1)"},
+{t:1,c:0,q:"Dialogue with a company's board has failed to address a fund manager's concerns. Under the Stewardship Code, which is an appropriate next step?",o:["Sell immediately without telling anyone","Escalate, for example by acting collectively with other shareholders or making a public statement before the AGM","Ask the regulator to replace the board","Stop voting altogether"],a:1,x:"The Code expects clear escalation guidelines and willingness to act collectively. Public statements ahead of the AGM are given as an example. (Ch 2 §1.1.1)"},
+{t:1,c:0,q:"Under the FCA's SYSC rules, what must a firm do if a specific conflict of interest cannot be managed?",o:["Ignore it if it is small","Disclose the general or specific nature of the conflict to the client","Stop dealing for all clients","Report it only to the auditors"],a:1,x:"Firms must identify and manage conflicts, keep a policy and records, and use information barriers. If a conflict still can't be managed, they must disclose it. (Ch 2 §1.2)"},
+{t:1,c:0,q:"A broker buys shares for its own account just before executing a large client buy order in the same stock. This is:",o:["Best execution","Front running, prohibited under the Market Abuse Regulation","Aggregation","Stock lending"],a:1,x:"Front running (pre-positioning) exploits knowledge of a client order and its likely price impact. It may amount to insider dealing and is prohibited under MAR. (Ch 2 §1.2)"},
+{t:1,c:0,q:"What does post-trade transparency refer to?",o:["Showing firm quotes before trading","Publishing the price and volume of completed transactions","Disclosing the client's identity","Publishing the limit order book"],a:1,x:"Post-trade transparency disseminates completed trade prices and volumes. Pre-trade transparency covers quotes and orders. Pre-trade transparency alone is not enough to protect investors. (Ch 2 §1.3)"},
+{t:1,c:0,q:"A firm produces investment research for external use. What does the SYSC conflicts regime require?",o:["The research must be free","Appropriate information controls and barriers to stop research information flowing to the rest of the firm","The research must be approved by the FCA","Analysts must own the shares they cover"],a:1,x:"Information barriers protect clients from conflicts between research and other business, such as staff dealing ahead of research. (Ch 2 §1.2)"},
+// 2 Knowing the client (6)
+{t:2,c:0,q:"How does capacity for loss (CFL) differ from attitude to risk (ATR)?",o:["CFL is subjective; ATR is objective","ATR is the client's subjective willingness to take risk; CFL is an objective measure of whether they could maintain their standard of living if investments fell","They are the same","CFL applies only to institutions"],a:1,x:"ATR is measured by questionnaires about willingness. CFL looks at income and assets outside the portfolio. Both should be reviewed regularly. (Ch 2 §2.1.2)"},
+{t:2,c:0,q:"A client has a high attitude to risk but a low capacity for loss. What should drive the overall risk profile?",o:["The attitude to risk","The capacity for loss; the adviser should discuss the risks and may recommend reducing exposure","The adviser's own preference","The benchmark"],a:1,x:"The workbook states that CFL ultimately drives the overall risk profile when the two conflict. (Ch 2 §2.1.2)"},
+{t:2,c:0,q:"As a client approaches retirement, their portfolio is gradually moved into lower-risk investments. This process, and the speed at which it happens, are known as:",o:["Churning and turnover","Lifestyling and the glide path","Immunisation and duration","Rebalancing and drift"],a:1,x:"Lifestyling is the shift to lower risk with age. The glide path is how fast that shift happens. (Ch 2 §2.1.2)"},
+{t:2,c:0,q:"According to the workbook, equities generally become suitable only if the money will not be needed for at least:",o:["Six months","One year","Five years","Ten years"],a:2,x:"Cash suits money needed within about six months, bonds a little longer, equities five years or more, and property (being illiquid) ten years or more. (Ch 2 §2.1.5)"},
+{t:2,c:0,q:"Why might a client transfer some investments to their spouse as part of tax planning?",o:["Transfers between spouses are generally free of CGT and IHT, so the spouse's unused allowances can be used","Spouses pay no income tax","It avoids suitability rules","It removes all market risk"],a:0,x:"Transfers between spouses or civil partners are generally CGT- and IHT-free, allowing unused allowances to be used, although the client gives up control of the assets. (Ch 2 §2.1.6)"},
+{t:2,c:0,q:"Why might high-yield bonds held outside a tax wrapper be less suitable for an additional-rate taxpayer?",o:["They cannot be held by individuals","Their high interest income is taxed at the investor's highest income tax rate, eroding after-tax return","They are exempt from tax","They pay dividends taxed at 0%"],a:1,x:"Interest is taxed as income, so high-yield interest received outside a wrapper loses a large share to tax for higher and additional-rate taxpayers. (Ch 2 §2.1.6)"},
+// 3 Suitability & mandate (6)
+{t:3,c:0,q:"Which three areas of client information must a firm obtain to assess suitability?",o:["Age, address and employer","Knowledge and experience; financial situation, including ability to bear losses; investment objectives and risk profile","Nationality, tax code and bank details","Past returns, benchmark and fees"],a:1,x:"These three areas apply to personal recommendations and discretionary management. (Ch 2 §2.2)"},
+{t:3,c:0,q:"To which type of business do the suitability rules NOT apply?",o:["Discretionary portfolio management","Advisory business","Execution-only business","Personal recommendations on pensions"],a:2,x:"Suitability applies to advisory and discretionary business. Execution-only involves no advice. (Ch 2 §2.2)"},
+{t:3,c:0,q:"What may a firm assume about an elective professional client, compared with a per se professional client?",o:["It may assume both have the necessary knowledge and experience, but may assume the ability to bear losses only for the per se professional","It may assume nothing about either","It may assume everything about both","It may assume the ability to bear losses only for the elective client"],a:0,x:"Knowledge and experience may be assumed for both. Financial ability to bear the risks may only be assumed for per se professionals (authorised firms). (Ch 2 §2.3.1)"},
+{t:3,c:0,q:"What must a suitability report contain, as a minimum?",o:["Only the price of the investment","The client's demands and needs, any possible disadvantages, and why the recommendation is suitable","A guarantee of returns","The adviser's own holdings"],a:1,x:"Under MiFID II, suitability reports are required for advice to retail clients and must cover these three elements. (Ch 2 §2.3.2)"},
+{t:3,c:0,q:"A recommendation is made to start a personal pension that carries cancellation rights. When must the suitability report be provided?",o:["Before any discussion","Within 14 days of concluding the contract","Within one year","It is not required"],a:1,x:"For personal and stakeholder pensions with cancellation rights, the report is due within 14 days. For life policies it is usually before the contract; otherwise before the transaction. (Ch 2 §2.3.2)"},
+{t:3,c:0,q:"What is churning?",o:["Selling one investment and buying another","Excessive or over-frequent dealing for a client in order to generate extra commission or fees","Rebalancing once a year","Losing clients to competitors"],a:1,x:"Churning is a suitability failure: even individually suitable trades can be unsuitable if they are too frequent. Switching is simply replacing one investment with another. (Ch 2 §2.3.5)"},
+// 4 Monitoring & performance (5)
+{t:4,c:0,q:"According to the workbook, what is the most appropriate method of client communication for tracking portfolio performance?",o:["Annual printed statements only","Current, near real-time information through a secure web portal, with periodic meetings","Daily phone calls","Newspaper prices"],a:1,x:"Hard-copy statements are often out of date as soon as they are printed. The book favours online portals plus meetings. (Ch 2 §3.2.2)"},
+{t:4,c:0,q:"Comparing a portfolio's returns with those of other managers running portfolios with similar objectives is known as:",o:["An index comparison","A universe (peer group) comparison","A custom benchmark","An absolute benchmark"],a:1,x:"A group of similar portfolios is an investment universe. Index comparisons and custom or composite benchmarks are the other two approaches. (Ch 2 §3.2.3)"},
+{t:4,c:1,q:"A portfolio worth £80,000 at the start of the year is worth £86,000 at the end, after paying out £2,000 of income during the year. What is its total (holding period) return?",o:["7.5%","10%","5%","12.5%"],a:1,x:"HPR = (86,000 + 2,000 − 80,000) ÷ 80,000 = 8,000 ÷ 80,000 = 10%. Ignoring the income gives 7.5%. (Ch 2 §3.2.3)"},
+{t:4,c:1,q:"A portfolio rises to £200,000, falls to £150,000, then recovers to £220,000. What is its maximum drawdown?",o:["10%","25%","33.3%","46.7%"],a:1,x:"Maximum drawdown = largest peak-to-trough fall = (200 − 150) ÷ 200 = 25%. The later recovery doesn't change it. (Ch 2 §3.2.3)"},
+{t:4,c:0,q:"Two assets in a portfolio have a correlation of −0.9. What is the effect of holding equal amounts of each?",o:["Volatility roughly doubles","Gains in one tend to offset losses in the other, sharply reducing portfolio volatility","Returns are guaranteed","The assets behave identically"],a:1,x:"Strong negative correlation (−0.8 to −1) means returns tend to cancel out, reducing risk. Low or negative correlation is the essence of diversification. (Ch 2 §3.1)"},
+// 5 Types of risk (7)
+{t:5,c:0,q:"Which of these is an unsystematic (specific) risk?",o:["Inflation risk","Interest rate risk","Management risk","Currency risk"],a:2,x:"Management risk relates to one company's leadership and can be diversified away. Inflation, interest rate and currency risks affect the whole market. (Ch 2 §4.1.1)"},
+{t:5,c:0,q:"How does a central counterparty (CCP) such as LCH affect counterparty risk?",o:["It increases it","It reduces it by standing between the two parties, replacing the original counterparty with a well-capitalised clearing house","It eliminates market risk","It only applies to OTC deals with no clearing"],a:1,x:"Counterparty risk is highest in OTC markets. Global initiatives push OTC trades towards exchanges and central clearing. (Ch 2 §4.1.1)"},
+{t:5,c:0,q:"What typically happens to correlations between assets during a systemic crisis?",o:["They fall towards zero","They rise towards +1 as most assets fall together","They become negative","They are unaffected"],a:1,x:"In contagion and panic, assets move in the same (downward) direction, so diversification fails. This also makes systemic risk very hard to insure. (Ch 2 §4.2)"},
+{t:5,c:0,q:"A long-term investor keeps all their savings in cash deposits during a period of high inflation. Which risk are they most exposed to?",o:["Liquidity risk","Inflation risk: the real value of their money falls","Counterparty risk","Commodity price risk"],a:1,x:"In 2022–23, inflation outpaced deposit rates, eroding purchasing power. (Ch 2 §4.1.2)"},
+{t:5,c:0,q:"An investor locks into a fixed rate of 4% for three years, and market rates then rise to 8%. Which risk has affected them?",o:["Interest rate risk","Business risk","Sustainability risk","Systemic risk"],a:0,x:"Interest rate risk is rates moving against the investor. The workbook uses this exact example. (Ch 2 §4.1.2)"},
+{t:5,c:0,q:"What is sustainability risk?",o:["The risk that a company cannot sustain its dividend","The risk that an environmental, social or governance event damages the value of an investment","The risk of a bank run","The risk of a market crash"],a:1,x:"Sustainability risk is an ESG event hurting a company's value. It also covers investors switching to sustainable alternatives and not achieving the returns they hoped for. (Ch 2 §4.1.2)"},
+{t:5,c:0,q:"According to the workbook, a company financed entirely by equity has no:",o:["Business risk","Financial (gearing) risk","Market risk","Management risk"],a:1,x:"Financial risk comes from debt in the capital structure, which creates obligations to pay coupons and principal. More borrowing means more risk for shareholders. (Ch 2 §4.1.1)"},
+// 6 Reducing risk (5)
+{t:6,c:0,q:"An investor wants protection against a fall in their share portfolio but wants to keep the benefit if prices rise. Which hedge fits?",o:["Selling index futures","Buying put options, at the cost of the premium","Selling currency forwards","Buying more of the same shares"],a:1,x:"Puts protect the downside and keep the upside. Futures and forwards lock in a price, removing both downside and upside. (Ch 2 §4.4.2)"},
+{t:6,c:0,q:"A portfolio has an alpha of 2.5. What does this indicate?",o:["It is 2.5 times as volatile as the market","It outperformed its benchmark index by 2.5%","Its beta is 2.5","It lost 2.5%"],a:1,x:"Alpha is the excess return over the benchmark. Volatility relative to the market is measured by beta. (Ch 2 §4.4.4)"},
+{t:6,c:0,q:"A share has a beta of 0.7. Compared with the market, it is:",o:["30% more volatile","30% less volatile","70% less volatile","Moving in the opposite direction"],a:1,x:"β below 1 is less volatile than the market: 0.7 is 30% less. β of 1.5 would be 50% more. A negative β moves in the opposite direction. (Ch 2 §4.4.4)"},
+{t:6,c:1,q:"A portfolio has a beta of 1.5. If the market rises by 8%, what is the portfolio's expected move?",o:["+5.3%","+8%","+9.5%","+12%"],a:3,x:"Expected move = β × market move = 1.5 × 8% = 12%. (Ch 2 §4.4.4)"},
+{t:6,c:0,q:"Which statement about alpha and beta is correct?",o:["They reliably predict future performance","They are backward-looking measures, so they reflect past performance and give no assurance about the future","Beta measures specific risk","Alpha measures volatility"],a:1,x:"The workbook warns that alpha and beta are backward-looking, so any conclusions reflect past performance only. (Ch 2 §4.4.4)"},
+// 7 Trading venues (5)
+{t:7,c:0,q:"Under MiFID, which factors must firms take into account when delivering best execution?",o:["Only price","Factors including price, cost, speed and certainty of execution and settlement","Only the venue's reputation","Only the broker's commission"],a:1,x:"MiFID requires all reasonable steps to achieve best execution, considering factors such as cost, speed and certainty of execution and settlement. (Ch 4 §11.1)"},
+{t:7,c:0,q:"How is the London Stock Exchange's AIM classified?",o:["As a regulated market","As a multilateral trading facility (MTF)","As an organised trading facility (OTF)","As a systematic internaliser"],a:1,x:"AIM, for smaller companies, is classified as an MTF regulated by the LSE, with less demanding listing rules. Turquoise is another MTF. (Ch 4 §11.1.1, §11.2.1)"},
+{t:7,c:0,q:"What is a systematic internaliser (SI)?",o:["A multilateral venue for bonds","An investment firm that deals on its own account, frequently and systematically, to execute client orders outside a regulated market, MTF or OTF","A dark pool operated by an exchange","A central counterparty"],a:1,x:"An SI fills client orders against its own book or against other clients' orders. The same legal entity cannot operate both an OTF and an SI. (Ch 4 §11.2.3)"},
+{t:7,c:0,q:"On the Shanghai Stock Exchange, what distinguishes A shares from B shares?",o:["A shares have votes; B shares don't","A shares trade in renminbi; B shares trade in US dollars","A shares are bonds","B shares are only for Chinese residents"],a:1,x:"The difference is the trading currency. Most of the roughly 1,800 Shanghai-listed stocks are A shares. (Ch 4 §11.1.6)"},
+{t:7,c:0,q:"What is the main trade-off of executing a transaction OTC rather than on an exchange?",o:["Less flexibility, but lower counterparty risk","Greater flexibility to customise terms, but more counterparty risk and less price transparency","Lower costs with no risks","Mandatory central clearing for all trades"],a:1,x:"OTC deals are bilateral and tailored but less regulated, with more counterparty risk and less transparency. (Ch 4 §11.2.2)"},
+// 8 Algo, VWAP, TCA (4)
+{t:8,c:0,q:"What is often quoted as a disadvantage of high-frequency trading for the wider market?",o:["It always widens bid-offer spreads","It can create an illusion of liquidity","It is too slow","It only trades bonds"],a:1,x:"HFT firms may trade rapidly without real buying or selling pressure, which can mislead other investors. It was linked to the 6 May 2010 flash crash. (Ch 4 §11.3)"},
+{t:8,c:0,q:"How does the workbook describe an algo wheel?",o:["A manual dealing desk rota","An automated system that selects the execution strategy for each order from pre-set algorithms and switches between them as conditions change, helping firms prove best execution","A type of option","A pricing model for bonds"],a:1,x:"It removes human judgement errors and gives consistent, transparent execution decisions under MiFID II. Its weaknesses are dependence on technology and poor handling of irrational markets. (Ch 4 §11.4)"},
+{t:8,c:1,q:"During a day a stock trades 2,000 shares at £5.00, 1,000 at £5.30 and 2,000 at £5.10. What is the VWAP?",o:["£5.10","£5.13","£5.15","£5.20"],a:0,x:"(10,000 + 5,300 + 10,200) ÷ 5,000 = 25,500 ÷ 5,000 = £5.10. The simple average of the three prices (£5.13) ignores volume. (Ch 4 §11.5)"},
+{t:8,c:0,q:"In transaction cost analysis, what is 'slippage'?",o:["The broker's commission","The difference between the actual trade price and a benchmark price such as VWAP, measured post-trade","The bid-offer spread","Stamp duty"],a:1,x:"Pre-trade analysis chooses a cost-minimising strategy. Post-trade analysis checks best execution by measuring slippage against a benchmark. (Ch 4 §11.6)"},
+// 9 Investing abroad (3)
+{t:9,c:1,q:"A UK investor's US shares rise 20% in dollar terms, but the dollar falls 10% against sterling over the year. What is the investor's return in sterling?",o:["8%","10%","30%","−8%"],a:0,x:"Rd = (1 + 0.20) × (1 − 0.10) − 1 = 1.08 − 1 = 8%. Simply subtracting gives 10%. (Ch 4 §12.2)"},
+{t:9,c:0,q:"According to the workbook, when is currency hedging generally recommended?",o:["For a diversified portfolio of overseas equities in many currencies","For overseas bonds, whose fixed income would be eroded by currency depreciation","Never","Only for domestic shares"],a:1,x:"Hedging is generally recommended for overseas bonds. It is often avoided for diversified overseas equity portfolios, which are more volatile and harder to hedge effectively. (Ch 4 §12.2)"},
+{t:9,c:0,q:"Delays between placing an order in Tokyo and receiving execution details in London, caused by time differences, are an example of:",o:["Systematic risk","Operational risk","Interest rate risk","Inflation risk"],a:1,x:"Operational risk comes from failures or weaknesses in processes, people or systems, such as time-zone delays, system failures and fraud. It is treated as unsystematic. (Ch 4 §12.1)"},
+// 10 Change & rebalancing (3)
+{t:10,c:0,q:"A client's circumstances change significantly. According to the workbook, what is the proper approach to rebalancing?",o:["Make small piecemeal changes to the old allocation","Reassess the entire asset allocation and develop a new strategic allocation for the new circumstances","Sell everything to cash","Wait for the next annual review regardless"],a:1,x:"The book recommends a new strategic asset allocation rather than patching the old one. Tax, for example on assets held outside a wrapper, may affect the timing. (Ch 2 §5.1.3)"},
+{t:10,c:0,q:"An investor moves their portfolio from one manager to another by selling everything and transferring cash. What is the main risk?",o:["Counterparty risk","Time out of the market: prices may move against them before the money is reinvested","Inflation risk","Sustainability risk"],a:1,x:"Time out of the market also arises with in specie transfers, when the old manager can't trade, and when waiting for sale proceeds to settle. (Ch 2 §5.1.9)"},
+{t:10,c:0,q:"In the context of an investment firm, 'client churn' refers to:",o:["Excessive trading in client accounts","The rate at which clients leave the firm, which matters because winning new clients costs far more than keeping existing ones","Rebalancing frequency","Switching between funds"],a:1,x:"Firms should track client retention and investigate rising churn. Don't confuse this with churning (excessive dealing). (Ch 2 §5.1.10)"}
+];
+
+// Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
+(function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+    q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
+try{ans=JSON.parse(localStorage.getItem("s2-ans")||"{}")}catch(e){ans={}}
+function save(){try{localStorage.setItem("s2-ans",JSON.stringify(ans))}catch(e){}}
+const topicSel=document.getElementById("topic");
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v+" ("+Q.filter(q=>q.t==k).length+")";topicSel.appendChild(o)});
+function list(){const t=topicSel.value;return order.filter(i=>t==="all"||String(Q[i].t)===t)}
+function tbl(rows){
+  const head=rows[0][0]===""||rows[0].length>2;
+  if(rows[0].length===2&&rows[0][0]!==""){return `<div class="table-wrap"><table><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="table-wrap"><table><thead><tr>${rows[0].map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map((c,j)=>`<td${j?' class="num"':""}>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function show(i){return mode==="practice"?ans[i]!==undefined:marked}
+function render(){
+  const ids=list();
+  document.getElementById("qlist").innerHTML=ids.map((i,k)=>{
+    const q=Q[i],a=ans[i],rev=show(i);
+    const opts=q.o.map((t,j)=>{let c="opt";
+      if(rev){if(j===q.a)c+=" right";else if(j===a)c+=" wrong"}else if(j===a)c+=" picked";
+      const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
+      return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
+    const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+  stats();
+}
+function stats(){
+  let html="",n=0,c=0;
+  Object.keys(T).forEach(k=>{let tn=0,tc=0;Q.forEach((q,i)=>{if(q.t==k&&ans[i]!==undefined&&(mode==="practice"||marked)){tn++;if(ans[i]===q.a)tc++}});n+=tn;c+=tc;
+    html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
+  document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
+  const answered=Object.keys(ans).length;
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+}
+function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+  const tEl=document.getElementById("timer");tEl.hidden=false;
+  tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
+  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
+  const c=Q.filter((q,i)=>ans[i]===q.a).length;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
+document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
+  ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
+document.getElementById("mode").addEventListener("change",e=>{mode=e.target.value;
+  if(mode==="mock"){topicSel.value="all";topicSel.disabled=true;startMock()}
+  else{clearInterval(tick);marked=false;topicSel.disabled=false;document.getElementById("timer").hidden=true;document.getElementById("finish").hidden=true;document.getElementById("result").innerHTML="";
+    try{ans=JSON.parse(localStorage.getItem("s2-ans")||"{}")}catch(e){ans={}}render()}});
+topicSel.addEventListener("change",render);
+document.getElementById("finish").addEventListener("click",finish);
+document.getElementById("shuffle").addEventListener("click",()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()});
+document.getElementById("reset").addEventListener("click",()=>{if(mode==="mock"){startMock();return}ans={};save();render()});
+const VIEWS=["concepts","learn","practice","method"];
+function route(){const h=(location.hash||"#concepts").slice(1);
+  const lesson=/^c\d+$/.test(h)?document.getElementById(h):null;
+  const v=lesson?"concepts":(VIEWS.includes(h)?h:"concepts");
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  return lesson}
+window.addEventListener("hashchange",()=>{const l=route();if(l)l.scrollIntoView();else window.scrollTo(0,0)});
+route();render();
+</script>
