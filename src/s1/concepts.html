@@ -1,0 +1,281 @@
+  <h2>Understand the concepts first</h2>
+  <p>Section 1 is mostly about understanding rather than calculation. You need to know how managers invest, who they invest for, how central banks and the economy move prices, and the theories behind it all. Each lesson ends with self-checks you can tap to reveal. Allow about 3 hours.</p>
+  <nav class="toc" aria-label="Lessons">
+    <a href="#c1">1. Passive investing</a>
+    <a href="#c2">2. Active investing</a>
+    <a href="#c3">3. Blends &amp; allocation</a>
+    <a href="#c4">4. Who invests</a>
+    <a href="#c5">5. Services &amp; stock lending</a>
+    <a href="#c6">6. ESG investing</a>
+    <a href="#c7">7. Central banks</a>
+    <a href="#c8">8. The economy</a>
+    <a href="#c9">9. What moves prices</a>
+    <a href="#c10">10. Investment theory</a>
+    <a href="#c11">11. Behavioural finance</a>
+  </nav>
+
+  <article class="lesson" id="c1">
+    <div class="kicker">Lesson 1</div>
+    <h3>Passive investing: matching the market</h3>
+    <p class="oneline">Passive managers believe markets price securities efficiently, so instead of trying to beat the market they aim to match it as cheaply as possible.</p>
+    <h4>Passive equity methods</h4>
+    <ul>
+      <li><b>Buy and hold:</b> buy and keep for the long term.</li>
+      <li><b>Indexation (index matching):</b> copy an index, which removes diversifiable risk. The first decision is <b>choosing the right index for the client</b>. Ways to do it:
+        <ul>
+          <li><b>Full replication:</b> hold every constituent at its index weight. Accurate but costly; the MSCI ACWI has about 2,650 stocks.</li>
+          <li><b>Stratified sampling:</b> hold a representative sample from each segment. Often used for bond indices.</li>
+          <li><b>Factor matching:</b> match the index's risk characteristics, such as duration or credit exposure.</li>
+          <li><b>Optimisation:</b> computer models find the most efficient portfolio within cost and liquidity limits.</li>
+          <li><b>Synthetic:</b> use swaps or futures to get the index return. Useful for hard-to-reach markets, but adds <b>counterparty risk</b>.</li>
+        </ul></li>
+    </ul>
+    <p>Bond indices are harder to copy than equity indices: bonds mature and new ones are added, so duration keeps shifting, and one issuer may have many different bonds.</p>
+    <h4>Passive bond methods</h4>
+    <div class="cols">
+      <div><b>Cash flow matching (LDI)</b>Buy bonds whose coupons and redemptions pay each liability as it falls due, starting from the last one. Buy and hold, with no rebalancing.</div>
+      <div><b>Immunisation</b>Match the <b>duration</b> (not the maturity) and present value of assets to the liability, so rate changes affect both equally.</div>
+      <div><b>Ladder, bullet, barbell</b>Ladder: a spread of maturities. Bullet: bonds clustered around one target date (such as 9- and 11-year bonds for a 10-year liability). Barbell: very short plus very long bonds.</div>
+    </div>
+    <p><b>Combination (horizon) matching</b> uses cash flow matching for early liabilities and immunisation for later ones.</p>
+    <h4>Pros and cons</h4>
+    <div class="cols">
+      <div><b>Advantages</b>Low fees, liquid, transparent, and a wide choice of indices.</div>
+      <div><b>Disadvantages</b>Can't beat the index. Follows the market down in a bear market. May have to buy or sell at poor prices when the index changes. Can become concentrated in a few giant stocks.</div>
+    </div>
+    <details class="check"><summary>Check: what is the key difference between cash flow matching and immunisation?</summary><div>Cash flow matching matches the timing of cash flows to each liability. Immunisation matches the duration (and present value) of the portfolio to the liability.</div></details>
+  </article>
+
+  <article class="lesson" id="c2">
+    <div class="kicker">Lesson 2</div>
+    <h3>Active investing: trying to beat the benchmark</h3>
+    <p class="oneline">Active managers believe investors are emotional and markets misprice securities, and that skill can find and exploit those mistakes.</p>
+    <h4>Top-down vs bottom-up</h4>
+    <div class="cols">
+      <div><b>Top-down</b>Start with the big picture (economies, asset classes, regions) to set the asset allocation, then pick securities. The order is: <b>asset allocation → tactical allocation (market timing) → stock selection</b>.</div>
+      <div><b>Bottom-up</b>Focus on individual companies, ignoring index weights. It relies on the manager's own analysis.</div>
+    </div>
+    <p><b>Fundamental analysis</b> estimates a company's intrinsic value from its accounts, management and markets, over a long horizon, for investing. <b>Technical analysis</b> uses past price and volume charts over a short horizon, for trading. The two can complement each other.</p>
+    <h4>Equity styles</h4>
+    <p><b>Growth</b> (above-average earnings growth, high P/E), <b>value</b> (undervalued shares; the oldest style), <b>income</b> (mature, high-dividend companies such as utilities), <b>contrarian</b> (go against the crowd when consensus is extreme), <b>quality</b> (high ROE, low debt, strong cash flow), <b>trend/momentum</b>, <b>blend</b> and <b>absolute return</b>.</p>
+    <h4>Active bond strategies</h4>
+    <ul>
+      <li><b>Riding the yield curve:</b> buy a bond longer than your horizon and sell it early. As it shortens its yield falls and its price rises. This <b>only works if the curve is upward sloping</b> and stays that way.</li>
+      <li><b>Duration switching:</b> adjust duration according to your view on rates.</li>
+      <li><b>Anomaly switch:</b> between two bonds that are identical except for price and yield, from the dearer to the cheaper.</li>
+      <li><b>Policy switch:</b> if you expect a rate cut that the market hasn't priced in, sell low-duration bonds and buy high-duration bonds.</li>
+      <li><b>Intermarket spread switch:</b> move between government and corporate bonds when you think the yield spread is too wide or too narrow.</li>
+    </ul>
+    <h4>Quant and quantamental</h4>
+    <p><b>Quantitative investing</b> lets computer models pick the stocks (pure "systematic investing"), with no room for manager judgement. Strategies include statistical arbitrage, long/short and dispersion. It assumes past statistical relationships will continue. <b>Quantamental</b> combines quantitative models (including AI) with human, fundamental insight.</p>
+    <div class="cols">
+      <div><b>Active advantages</b>The chance to beat the market, tailoring to goals, and flexibility to reduce risk.</div>
+      <div><b>Active disadvantages</b>No guarantee of outperformance, high fees that compound, time-consuming, and some funds are "closet trackers".</div>
+    </div>
+    <details class="check"><summary>Check: a manager expects a rate cut that isn't reflected in the yield curve. Which bond switch fits?</summary><div>A policy switch: sell low-duration bonds and buy high-duration bonds to benefit most when rates fall.</div></details>
+  </article>
+
+  <article class="lesson" id="c3">
+    <div class="kicker">Lesson 3</div>
+    <h3>Blending active and passive, and asset allocation</h3>
+    <p class="oneline">Most portfolios aren't purely active or passive. Blends try to capture outperformance while keeping costs and risk down.</p>
+    <ul>
+      <li><b>Core/satellite:</b> a passive <b>core of about 70–80%</b> held for the long term, with active satellites around it seeking outperformance. The core can be <b>enhanced</b> (stock lending, anticipating index changes), or use <b>index tilts</b> (slightly over- or underweighting constituents).</li>
+      <li><b>Smart beta</b> (also called factor investing or enhanced indexing): tracks an index built on <b>factors rather than market cap</b>. Macroeconomic factors include growth, real rates, inflation, credit and liquidity. Style factors include minimum volatility, momentum, value, quality and size. Building the custom index is the active part; tracking it is the passive part.</li>
+      <li><b>Smart alpha:</b> like smart beta, but tracks the investor's best ideas and <b>hedges out market exposure (beta)</b>, so it is <b>market-neutral</b> and captures pure alpha.</li>
+    </ul>
+    <h4>Asset allocation and selection</h4>
+    <p><b>Strategic asset allocation (SAA)</b> sets long-term target weights. <b>Tactical asset allocation (TAA)</b> makes short-term adjustments as conditions change. The IA classifies funds by objective (capital protection, income, growth, outcome), and a fund generally needs <b>80% of its assets</b> in its sector. The AIC classifies investment trusts.</p>
+    <p><b>Issuer selection</b> (bottom-up) looks at P/E against peers, growth, profitability and gearing. P/E suits some sectors poorly: for capital-heavy utilities and telecoms, price-to-book or price-to-cash-flow may be better. For bonds, look at ratings and spreads.</p>
+    <h4>Market capitalisation</h4>
+    <p>Market cap = shares in issue × share price. 100m shares at £10 = £1bn. A takeover usually requires a premium over market cap. Size bands are relative: a UK large cap can be a US mid cap.</p>
+    <div class="cols">
+      <div><b>Large caps</b>Less volatile, more reliable dividends, international and exposed to currencies.</div>
+      <div><b>Mid caps</b>More local, room for faster gains, more risk of sharp falls.</div>
+      <div><b>Small caps</b>Newer, high growth potential but high loss potential, narrower revenue sources, more affected by the economy.</div>
+    </div>
+    <details class="check"><summary>Check: what makes smart alpha different from smart beta?</summary><div>Smart alpha hedges out the market's beta, so it is market-neutral and follows only the investor's ideas.</div></details>
+  </article>
+
+  <article class="lesson" id="c4">
+    <div class="kicker">Lesson 4</div>
+    <h3>Who invests and how: patient capital, life assurance and family offices</h3>
+    <p class="oneline">Different investors have different horizons and needs, and the structures they use reflect that.</p>
+    <h4>Patient capital</h4>
+    <p>Long-term investment (from 3–5 years up to 10–15 years), typical of <b>pension funds and sovereign wealth funds</b>. It accepts short-term losses and higher risk for sustainable long-term growth, and is increasingly linked to ESG and impact investing. In the UK, British Patient Capital (2018) has £2.5bn over 10 years.</p>
+    <p><b>Long-Term Asset Funds (LTAFs)</b> were introduced by the FCA in <b>2021</b> for illiquid assets such as infrastructure, private equity and property. They fix the mismatch where daily-dealing funds hold assets that take months to sell: investors give <b>90 to 180 days' notice</b> and redemptions are <b>no more often than monthly</b>. The rules are in COLL 15. They suit pension funds and endowments.</p>
+    <h4>Life assurance as an investment wrapper</h4>
+    <div class="cols">
+      <div><b>Non-profit</b>A guaranteed sum only.</div>
+      <div><b>With-profits</b>A guaranteed sum plus bonuses. Returns are <b>smoothed</b> (good years are held back to support bad years). <b>Reversionary</b> bonuses are added yearly and can't be removed; a <b>terminal</b> bonus is paid at maturity or death.</div>
+      <div><b>Unit-linked</b>Value moves directly with the units of the chosen funds, usually with no guaranteed minimum.</div>
+    </div>
+    <p>Key terms: the <b>proposer</b> takes out the policy and must have an <b>insurable interest</b>; the <b>life assured</b> is the person whose life is covered. A <b>joint life</b> policy pays on the first death; two single-life policies cost more but give wider cover.</p>
+    <h4>Family offices</h4>
+    <p>These serve ultra-high-net-worth families (at least <b>$30m</b>). A <b>single-family office</b> serves one family; a <b>multi-family office</b> serves several, with economies of scale. They offer investment, tax, estate and succession planning, trusts, and lifestyle and PA services.</p>
+    <h4>Other vehicles in the syllabus (taught in Chapter 5)</h4>
+    <p>Hedge funds (absolute return, often unauthorised or offshore, use leverage and short selling), managed futures funds (trade futures, often trend-following), money market funds and manager-of-managers funds. See the Section 5 module.</p>
+    <details class="check"><summary>Check: what is the minimum notice period an investor must give to redeem from an LTAF?</summary><div>At least 90 days (up to 180 or more), and the fund can't allow redemptions more often than monthly.</div></details>
+  </article>
+
+  <article class="lesson" id="c5">
+    <div class="kicker">Lesson 5</div>
+    <h3>Investment services, prime brokers and stock lending</h3>
+    <p class="oneline">Firms package investment management in different ways, and specialist providers handle the plumbing behind it.</p>
+    <h4>Centralised investment proposition (CIP)</h4>
+    <p>A firm's centrally constructed range of investments. It gives a <b>consistent, robust and standardised</b> approach, cuts research duplication and reduces bias. But it won't suit every client, and a firm must <b>never force clients</b> into it; it must still be suitable.</p>
+    <h4>Service levels</h4>
+    <div class="cols">
+      <div><b>Discretionary (DFM)</b>The firm decides and deals without asking the client first. Often bespoke, for HNW clients.</div>
+      <div><b>Model portfolio service (MPS)</b>Ready-made managed portfolios for clients who want active management without a bespoke service.</div>
+      <div><b>Advisory</b>The firm advises; the client makes the final decision.</div>
+      <div><b>Execution-only</b>No advice; the firm just carries out the client's order.</div>
+    </div>
+    <h4>Prime brokers</h4>
+    <p>A package of services for <b>hedge funds</b>. The core is <b>clearing, settlement and custody; margin finance; securities lending; and consolidated reporting</b>. They also provide securities financing, repo, leveraged execution, treasury management and synthetic exposure through derivatives.</p>
+    <h4>Transfer agents</h4>
+    <p>Usually a bank or trust company. They keep the <b>register of fund unitholders</b>, record transactions, issue and cancel certificates, send mailings and pay dividends, interest and redemptions.</p>
+    <h4>Stock lending</h4>
+    <ul>
+      <li><b>Why borrow:</b> to cover short sales, take positions, hedge, or avoid failed settlements.</li>
+      <li><b>Lenders</b> are large institutions (pension funds, insurers, sovereign wealth funds) earning extra income. A <b>lending agent</b>, often the custodian, takes a share of the fee.</li>
+      <li><b>Collateral</b> of equal or greater value protects against <b>counterparty risk and market risk</b>. Delivery versus payment avoids daylight exposure. Agreements usually follow the <b>GMSLA</b>.</li>
+      <li><b>Ownership:</b> legal title passes to the borrower, so the lender <b>loses its vote</b> (it must recall the stock to vote), but remains the beneficial owner, still exposed to the price, and receives a <b>manufactured dividend</b> in place of the real one.</li>
+    </ul>
+    <details class="check"><summary>Check: a pension fund has lent shares and wants to vote at the AGM. What must it do?</summary><div>Recall the shares in time to complete the proxy form, because legal title (and with it the vote) passed to the borrower.</div></details>
+  </article>
+
+  <article class="lesson" id="c6">
+    <div class="kicker">Lesson 6</div>
+    <h3>Ethical, responsible and sustainable investing</h3>
+    <p class="oneline">These investors care about how returns are made as well as how big they are, and the labels mean different things.</p>
+    <p>Ethical investing began with religious groups avoiding "sin" industries. It grew through 1960s civil rights concerns, 1980s environmental disasters (Chernobyl, Exxon Valdez), and COVID-era social concerns. Global sustainable assets reached $30.3 trillion in 2022.</p>
+    <div class="cols">
+      <div><b>Negative screening</b>Exclude "sin stocks" (alcohol, tobacco, gambling, adult entertainment, weapons) and more recently deforestation, fur and payday lending. <b>De minimis</b> thresholds set how much exposure is tolerated: the lower the threshold, the stricter the exclusion.</div>
+      <div><b>Positive screening</b>Back companies offering solutions. It can include imperfect firms that are genuinely improving.</div>
+    </div>
+    <ul>
+      <li><b>ESG</b> assesses environmental, social and governance factors, aiming to find companies with <b>higher investment potential</b>.</li>
+      <li><b>SRI</b> is driven first by the investor's <b>own values</b>. <b>Shareholder engagement</b> (talking to management to change behaviour) is central to it.</li>
+      <li><b>Impact investing</b> aims for measurable positive outcomes alongside a return.</li>
+    </ul>
+    <p>Because the terms are used loosely and some firms simply rebrand, investors must do due diligence to avoid <b>greenwashing</b>.</p>
+    <details class="check"><summary>Check: how does SRI differ from ESG investing?</summary><div>SRI is driven first by the investor's personal values. ESG analysis looks for companies whose ESG profile points to better investment potential.</div></details>
+  </article>
+
+  <article class="lesson" id="c7">
+    <div class="kicker">Lesson 7</div>
+    <h3>Central banks and their tools</h3>
+    <p class="oneline">Central banks aim to keep prices and the financial system stable. When cutting interest rates isn't enough, they use unconventional tools such as QE.</p>
+    <p>Core roles include: banker to the banks and to the government, managing national debt, regulating banks, <b>lender of last resort</b>, setting the short-term interest rate, controlling the money supply, issuing currency, holding reserves, and depositor protection.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Bank</th><th>Key facts</th></tr></thead>
+      <tbody>
+        <tr><td>Bank of England</td><td>Founded 1694, independent since 1997. Inflation target <b>2% CPI</b>. The <b>MPC has 9 members</b>, one vote each. The PRA supervises about 1,500 firms.</td></tr>
+        <tr><td>ECB</td><td>Since 1999, for 20 eurozone countries. Inflation (HICP) <b>close to but below 2%</b> in the medium term. Price stability is its sole objective.</td></tr>
+        <tr><td>Federal Reserve</td><td>Since 1913, with 12 regional banks. The FOMC meets every six weeks and targets <b>price stability and full employment</b> through the Fed funds rate.</td></tr>
+        <tr><td>Bank of Japan / PBOC</td><td>BoJ: price stability and lender of last resort. PBOC: currency stability to promote growth.</td></tr>
+      </tbody>
+    </table></div>
+    <h4>The tools</h4>
+    <ul>
+      <li><b>Financial sector intervention:</b> guarantees, direct lending, capital injections, nationalisation, removing bad loans, supporting asset prices.</li>
+      <li><b>Lender of last resort:</b> lends to banks that can't get funding elsewhere. Critics say it encourages excessive risk-taking (moral hazard); supporters say the alternative is far worse.</li>
+      <li><b>Interest rates:</b> raised to cool inflation, cut to boost spending, with up to about <b>two years</b> to take full effect. UK base rate went from 0.1% to 5.25% in 2021–23 after inflation peaked at 11.1%.</li>
+      <li><b>Controlling the yield curve:</b> setting a target for long-term rates and buying or selling bonds to hit it.</li>
+      <li><b>Quantitative easing:</b> used when rates can't go lower. The central bank <b>creates reserves</b> to buy bonds (and sometimes MBS or equities) from banks, hoping they lend more. In practice it raised bond and share prices more than spending. First used by the BoJ.</li>
+      <li><b>Tapering</b> gradually slows QE purchases. The 2013 "<b>taper tantrum</b>" saw bond yields spike when the Fed signalled it. <b>QT</b> reverses QE by selling assets, which is contractionary.</li>
+      <li><b>Fiscal stimulus</b> (government spending and tax cuts) works alongside, but leaves high debt that must later be reduced (<b>fiscal consolidation</b>).</li>
+    </ul>
+    <p><b>After a crisis</b>, reforms focus on stopping individual bank failures (more capital and liquidity), preventing system-wide contagion, and tackling <b>procyclicality</b> by building capital buffers in booms to draw on in busts.</p>
+    <details class="check"><summary>Check: what was the "taper tantrum"?</summary><div>The sharp rise in bond yields (and market volatility) in 2013 when the Fed signalled it would slow its QE purchases.</div></details>
+  </article>
+
+  <article class="lesson" id="c8">
+    <div class="kicker">Lesson 8</div>
+    <h3>Reading the economy</h3>
+    <p class="oneline">Economic data tells investors where the cycle is, and where the cycle is shapes what to own.</p>
+    <h4>Key statistics</h4>
+    <ul>
+      <li><b>GDP</b> = total output produced in the country. <b>GNP</b> = GDP + net property income from abroad. <b>GNI</b> (the World Bank's measure) = GDP + net foreign factor income.</li>
+      <li><b>Retail sales</b> are a leading indicator of consumer spending. Rising house and share prices make people feel richer and spend more: the <b>wealth effect</b>, which also works in reverse.</li>
+      <li><b>PMI:</b> monthly surveys of purchasing managers. Above 50 = expansion, below 50 = contraction. A leading indicator.</li>
+      <li><b>Labour market:</b> unemployment is the critical figure; it falls in expansions and rises sharply in recessions. US non-farm payrolls are watched worldwide.</li>
+      <li><b>Balance of payments:</b> <b>current account</b> (trade in goods, which are "visibles", and services, which are "invisibles"; also called the balance of trade), <b>capital account</b> and <b>financial account</b> (FDI and portfolio flows). Persistent deficits usually come from the current account and may weaken the currency.</li>
+    </ul>
+    <p><b>Leading indicators</b> point ahead, such as PMI, new orders and business start-ups. <b>Lagging indicators</b> confirm what has already happened, such as unemployment. The book treats all technical indicators as lagging, and notes that consumer confidence is debated.</p>
+    <h4>The investment clock</h4>
+    <p>Different assets suit different points in the cycle: growth and rate-sensitive assets in good times; cyclicals, high yield and emerging markets as the cycle builds; broad equities while earnings grow; <b>defensives</b> (utilities, staples, healthcare, short-duration bonds) as growth slows; quality and liquidity (government bonds, investment-grade debt, cash) in downturns; and <b>safe havens</b> (Treasuries, gold) in crises. But nobody knows exactly where the cycle is, and each cycle differs.</p>
+    <h4>Information and market structure</h4>
+    <p><b>Inequality of information:</b> too little or too much information leads to poor decisions; information overload can make investors give up or be mis-sold to. Independent <b>fund ratings</b> (such as Morningstar) and <b>ESG ratings</b> (MSCI from AAA to CCC, Sustainalytics) help filter, but ESG ratings vary widely between providers.</p>
+    <div class="cols">
+      <div><b>Perfect competition</b>Infinite firms, an identical product, no barriers, perfect information. Firms make only <b>normal profits</b> in the long run, because supernormal profits attract new entrants.</div>
+      <div><b>Monopoly / oligopoly</b>One supplier, or a few interdependent firms, with market power. Higher prices and lower output.</div>
+    </div>
+    <details class="check"><summary>Check: the services PMI reads 47. What does that tell you?</summary><div>The sector is contracting. Below 50 means a decline; 50 means no change.</div></details>
+  </article>
+
+  <article class="lesson" id="c9">
+    <div class="kicker">Lesson 9</div>
+    <h3>What moves market prices</h3>
+    <p class="oneline">Prices react to new information, how creditworthy the issuer looks, and how easy it is to trade.</p>
+    <ul>
+      <li><b>Company announcements:</b> listed companies must promptly publish <b>price-sensitive information</b>. Trading on it beforehand is insider dealing. In the UK a holding of <b>3% or more</b> of voting capital is a notifiable interest, and must be disclosed within <b>two business days</b>.</li>
+      <li><b>Credit ratings</b> from S&amp;P, Moody's and Fitch are opinions on credit risk, not recommendations to buy or sell. Seniority matters: senior debt ranks above subordinated debt, which ranks above mezzanine/PIK. Sovereign ratings weigh political willingness to pay as well as economic factors. Possible changes are flagged on <b>CreditWatch</b> (S&amp;P), <b>Under Review</b> (Moody's) or <b>Rating Watch</b> (Fitch). <b>Downgrades move prices more than upgrades</b>, because a price can fall to zero but has limited room to rise. Agencies are criticised for being slow to react and for <b>conflicts of interest</b>, since issuers pay them.</li>
+      <li><b>Market liquidity:</b> trading concentrates in benchmark ("on-the-run") bonds. Others become "seasoned" and illiquid as holders keep them to maturity. In turmoil investors rush to the most liquid issues.</li>
+      <li><b>Bid-offer spreads</b> widen when liquidity is poor. <b>The media</b>, including social media, can move prices quickly.</li>
+      <li><b>Research costs:</b> under MiFID II, managers can only accept third-party research if they pay for it from <b>their own resources</b> or a <b>research payment account</b> funded transparently by clients. Previously it was bundled into dealing commissions.</li>
+    </ul>
+    <details class="check"><summary>Check: why does a downgrade usually move a bond's price more than an upgrade?</summary><div>A bond's price can fall all the way to zero, but there is a limit to how far it can rise.</div></details>
+  </article>
+
+  <article class="lesson" id="c10">
+    <div class="kicker">Lesson 10</div>
+    <h3>Investment theory: EMH, MPT, CAPM and APT</h3>
+    <p class="oneline">These theories explain how prices reflect information, how diversification cuts risk, and how much return each kind of risk should earn.</p>
+    <h4>Efficient markets hypothesis</h4>
+    <div class="cols">
+      <div><b>Weak form</b>Prices reflect all past price and volume data, so <b>technical analysis</b> can't beat the market.</div>
+      <div><b>Semi-strong</b>Prices reflect all public information instantly, so neither technical nor fundamental analysis works. Supported by how few managers beat the market consistently.</div>
+      <div><b>Strong</b>Prices reflect all information, including inside information. Insider dealing laws make this impossible in practice.</div>
+    </div>
+    <p>Weaknesses: investors aren't always rational, anchor on past prices, can't all process information equally, bubbles happen, and people trade for non-investment reasons. <b>Big data</b> increases information efficiency. <b>Dark pools</b> are anonymous trading venues (MTFs) for large block trades, often without a central counterparty.</p>
+    <h4>Modern portfolio theory (Markowitz, 1952)</h4>
+    <p>Combining assets whose returns aren't perfectly correlated reduces risk. Total risk = <b>systematic</b> (market-wide, undiversifiable) + <b>unsystematic</b> (company-specific, diversifiable). The <b>efficient frontier</b> shows the best return for each level of risk; portfolios below it are inefficient. Investors can go beyond the market portfolio by <b>borrowing at the risk-free rate</b> (leverage). Assumptions: rational investors, efficient markets, no costs or taxes, normal distributions (reality has fat tails), past data predicts the future, and everyone has the same expectations.</p>
+    <h4>CAPM</h4>
+    <p>Expected return = Rf + β(Rm − Rf). Only <b>systematic risk (beta)</b> is rewarded, because specific risk can be diversified away. Plotting expected return against beta gives the <b>security market line</b>. Assumptions: everyone borrows and lends at the risk-free rate, is well diversified, pays no taxes or costs, seeks maximum return for minimum risk, and has the same expectations.</p>
+    <div class="eg">Rf 2%, Rm 8%, β 0.75 → 2 + 0.75 × 6 = <span class="mono">6.5%</span>.</div>
+    <h4>APT and factor models</h4>
+    <p><b>Arbitrage pricing theory</b> (late 1970s) uses <b>several factors</b>, each with its own beta and risk premium (for example inflation, industrial production and the credit spread). It needs fewer assumptions than CAPM, but assumes the factors are uncorrelated, investors can short sell, and relationships stay stable. <b>Fama-French</b> adds size and value to the market factor. <b>Carhart</b> adds momentum.</p>
+    <details class="check"><summary>Check: why does CAPM reward beta but not total risk?</summary><div>Investors can remove specific (unsystematic) risk by diversifying, so the market only pays for systematic risk, which beta measures.</div></details>
+  </article>
+
+  <article class="lesson" id="c11">
+    <div class="kicker">Lesson 11</div>
+    <h3>Behavioural finance: how investors really behave</h3>
+    <p class="oneline">Real investors use mental shortcuts and emotions, and these lead to predictable mistakes.</p>
+    <p>Biases are <b>cognitive</b> (how information is processed, often through <b>heuristics</b>, or mental rules of thumb) or <b>emotional</b> (feelings over facts). Heuristics often help, but can mislead.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Bias</th><th>What it looks like</th></tr></thead>
+      <tbody>
+        <tr><td>Availability</td><td>Over-weighting information that is easy to recall, such as a recent headline</td></tr>
+        <tr><td>Confirmation</td><td>Seeking evidence that supports your view and ignoring what doesn't</td></tr>
+        <tr><td>Overreaction</td><td>Over-responding to news, which causes short-term mispricing</td></tr>
+        <tr><td>Herding</td><td>Copying the crowd (the bandwagon effect)</td></tr>
+        <tr><td>Anchoring</td><td>Fixing on a reference value, such as the price you paid, even a random one</td></tr>
+        <tr><td>Overconfidence</td><td>Overrating your own skill and judgement</td></tr>
+        <tr><td>Gambler's fallacy</td><td>Thinking a random run must reverse ("six heads, so tails is due")</td></tr>
+        <tr><td>Representativeness</td><td>Applying a stereotype to a new situation</td></tr>
+        <tr><td>Hindsight</td><td>"I knew it all along", which feeds overconfidence</td></tr>
+        <tr><td>Naïve diversification</td><td>Splitting money equally across whatever options are offered</td></tr>
+        <tr><td>Mental accounting</td><td>Treating money differently depending on which mental "pot" it is in</td></tr>
+        <tr><td>Loss aversion</td><td>Losses hurt about <b>twice</b> as much as equal gains please</td></tr>
+        <tr><td>Regret aversion</td><td>Holding losers to avoid admitting a mistake; avoiding markets that recently fell</td></tr>
+        <tr><td>Sunk cost fallacy</td><td>Continuing because of what has already been spent, not future prospects</td></tr>
+        <tr><td>Framing</td><td>Being swayed by how a choice is presented</td></tr>
+      </tbody>
+    </table></div>
+    <details class="check"><summary>Check: an investor won't sell a share that has halved, because selling would mean admitting the purchase was a mistake. Which bias is this?</summary><div>Regret aversion.</div></details>
+  </article>
+
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
