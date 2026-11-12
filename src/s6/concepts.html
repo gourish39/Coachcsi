@@ -1,0 +1,246 @@
+  <h2>Understand the concepts first</h2>
+  <p>Section 6 is the most mathematical part of the exam, but every formula comes from a simple idea. If you know what a number is trying to measure, you can rebuild the formula under pressure. Each lesson ends with self-checks you can tap to reveal. Allow about 3 hours.</p>
+  <nav class="toc" aria-label="Lessons">
+    <a href="#c1">1. Data</a>
+    <a href="#c2">2. Averages</a>
+    <a href="#c3">3. Spread &amp; shape</a>
+    <a href="#c4">4. Correlation &amp; regression</a>
+    <a href="#c5">5. Big data &amp; AI</a>
+    <a href="#c6">6. Technical analysis</a>
+    <a href="#c7">7. Measuring returns</a>
+    <a href="#c8">8. Indices &amp; benchmarks</a>
+    <a href="#c9">9. Attribution</a>
+    <a href="#c10">10. Risk-adjusted returns</a>
+  </nav>
+
+  <article class="lesson" id="c1">
+    <div class="kicker">Lesson 1</div>
+    <h3>Data: where it comes from and how it's shown</h3>
+    <p class="oneline">Before you analyse data, know who collected it, what kind of numbers they are, and whether they cover everyone or only a sample.</p>
+    <div class="cols">
+      <div><b>Primary data</b>Collected for your specific purpose, so you know how it was gathered and its limits.</div>
+      <div><b>Secondary data</b>Collected by others, such as government agencies or international bodies, and published in a convenient form. It usually needs more analysis.</div>
+    </div>
+    <div class="cols">
+      <div><b>Continuous</b>Can take any value, such as a return of 4.37%.</div>
+      <div><b>Discrete</b>Restricted to set values such as whole numbers, for example the number of trades in a day.</div>
+      <div><b>Categorical</b>Groups rather than numbers, such as sector or meal choice. The mode is the useful average here.</div>
+    </div>
+    <h4>Populations and samples</h4>
+    <p>A <b>population</b> includes every member (all S&amp;P 500 stocks). A <b>sample</b> is a subset, used when the population is too big to study. Larger samples are more representative. In a <b>random</b> sample every member has an equal chance of selection, which avoids bias. A <b>non-random</b> sample is picked to be more representative but can introduce bias.</p>
+    <h4>Presenting data</h4>
+    <p>A <b>frequency distribution</b> counts how often values fall into each band. A <b>cumulative frequency</b> table adds them up as you go. Choose band widths carefully, because they change what you can see.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Chart</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td>Bar chart</td><td>Comparing categories or frequencies</td></tr>
+        <tr><td>Pie chart</td><td>Showing the parts of a whole</td></tr>
+        <tr><td>Histogram</td><td>Showing a distribution. The <b>area</b>, not the height, of each bar shows frequency</td></tr>
+        <tr><td>Time series</td><td>Values over time, such as a share price</td></tr>
+        <tr><td>Scattergram</td><td>The <b>relationship between two variables</b></td></tr>
+        <tr><td>Semi-log graph</td><td>Rates of change, such as accelerating growth</td></tr>
+      </tbody>
+    </table></div>
+    <details class="check"><summary>Check: which chart would you use to see whether two funds' returns move together?</summary><div>A scattergram (scatter diagram).</div></details>
+  </article>
+
+  <article class="lesson" id="c2">
+    <div class="kicker">Lesson 2</div>
+    <h3>Averages: mean, geometric mean, median and mode</h3>
+    <p class="oneline">Each average answers a slightly different question. For investment returns that compound, the geometric mean gives the true average growth rate.</p>
+    <ul>
+      <li><b>Arithmetic mean:</b> add up all the values and divide by how many there are. It uses every value, so <b>outliers pull it around</b>.</li>
+      <li><b>Geometric mean:</b> multiply (1 + each return), take the n-th root, and subtract 1. It reflects compounding, so it is the right average for returns over time. It is always less than or equal to the arithmetic mean.</li>
+      <li><b>Median:</b> the middle value once sorted. With an even count, average the two middle values. It is not affected by outliers, so use it for skewed data such as incomes or long-run returns.</li>
+      <li><b>Mode:</b> the most frequent value. There may be none, or several (bimodal, multimodal). It is the only average that is always an actual observed value, and the useful one for categories.</li>
+    </ul>
+    <div class="eg"><b>Why the geometric mean matters.</b> A fund gains 20% and then loses 20%. The arithmetic mean says 0%, but £100 → £120 → £96, a loss. The geometric mean is √(1.2 × 0.8) − 1 = <span class="mono">−2.02%</span> a year, which matches what really happened.</div>
+    <h4>How skew moves the averages</h4>
+    <div class="cols">
+      <div><b>Symmetrical (normal)</b>Mean = median = mode.</div>
+      <div><b>Positive skew</b>Long right tail. Mean &gt; median &gt; mode.</div>
+      <div><b>Negative skew</b>Long left tail. Mode &gt; median &gt; mean.</div>
+    </div>
+    <div class="confuse"><b>Book error:</b> section 2.1 calls the house prices £100k, £125k, £135k, £95k, £100k "bimodal". There is only one repeated value (£100k), so the data has a single mode.</div>
+    <details class="check"><summary>Check: what is the median of 1, 3, 4, 5, 7, 9, 11, 12?</summary><div>There are 8 values, so average the 4th and 5th: (5 + 7) ÷ 2 = 6.</div></details>
+  </article>
+
+  <article class="lesson" id="c3">
+    <div class="kicker">Lesson 3</div>
+    <h3>Spread and shape: how much returns vary</h3>
+    <p class="oneline">Dispersion measures how far results stray from the average. In investment that is risk, and standard deviation is the main measure.</p>
+    <h4>From simple to thorough</h4>
+    <ul>
+      <li><b>Range</b> = highest − lowest. Simple, but driven entirely by the two extremes.</li>
+      <li><b>Inter-quartile range</b> = Q3 − Q1: the spread of the <b>middle 50%</b>. Q1 is the median of the lower half and Q3 the median of the upper half. It ignores outliers, but also ignores everything outside that middle half.</li>
+      <li><b>Variance</b> = the average squared distance from the mean. Squaring stops positive and negative deviations cancelling out, but leaves the answer in squared units.</li>
+      <li><b>Standard deviation</b> = √variance. It is back in the original units, which makes it the most widely used.</li>
+    </ul>
+    <h4>Population vs sample</h4>
+    <p>For a <b>population</b>, divide the sum of squared deviations by <b>n</b>. For a <b>sample</b>, divide by <b>n − 1</b>. A sample tends to underestimate the true spread, and dividing by a slightly smaller number corrects for that (the "degrees of freedom" adjustment).</p>
+    <div class="eg"><b>Worked example.</b> Returns of 4, 6, 8, 10 and 12. Mean = 8. Squared deviations: 16 + 4 + 0 + 4 + 16 = 40. Population variance = 40 ÷ 5 = 8, so SD = <span class="mono">2.83</span>. Sample variance = 40 ÷ 4 = 10, so SD = <span class="mono">3.16</span>.</div>
+    <h4>The normal distribution</h4>
+    <p>A symmetrical bell curve. About <b>68.26%</b> of results fall within 1 SD of the mean, <b>95.5%</b> within 2 SDs, and <b>99.75%</b> within 3 SDs. A fund averaging 6% with an SD of 4% should return between 2% and 10% in about two years out of three.</p>
+    <h4>Skew and kurtosis: when reality isn't normal</h4>
+    <div class="cols">
+      <div><b>Skew</b>Lopsidedness. Positive skew has a longer right tail (mean above median). Negative skew has a longer left tail (mean below median).</div>
+      <div><b>Kurtosis</b>"Tailedness": how often extreme outcomes occur. Mesokurtic = 3 (normal). <b>Leptokurtic &gt; 3</b> has fat tails and more extreme events. Platykurtic &lt; 3 has thin tails.</div>
+    </div>
+    <p>Real equity returns often have fatter tails than a normal distribution predicts, so extreme moves happen more often than the bell curve suggests. The book calls positive skew "leftward" while describing a long right tail; go by the tail and the mean-vs-median relationship.</p>
+    <details class="check"><summary>Check: you have 12 months of returns from one fund. Do you divide by n or n − 1?</summary><div>n − 1. Twelve months is a sample of the fund's possible returns, not the whole population.</div></details>
+  </article>
+
+  <article class="lesson" id="c4">
+    <div class="kicker">Lesson 4</div>
+    <h3>Correlation, covariance and regression</h3>
+    <p class="oneline">Covariance tells you whether two assets move together. Correlation puts that on a −1 to +1 scale so it can be compared. Regression measures how much one moves for each move in the other.</p>
+    <h4>Correlation</h4>
+    <p>A correlation of +1 means the assets move in perfect step, −1 means exactly opposite, and 0 means no relationship. The book's rule of thumb: <b>0.66–1 strong</b>, <b>0.33–0.66 moderate</b>, <b>0–0.33 weak or none</b>. Diversification works best with assets whose correlation is low or close to zero. Correlations are not stable; they change over time, and history only gives an estimate.</p>
+    <h4>Covariance vs correlation</h4>
+    <p>Covariance shows the <b>direction</b> of co-movement in the original units, so its size is hard to interpret. Correlation <b>standardises</b> it by dividing by both standard deviations, which shows strength as well as direction.</p>
+    <div class="fgroup">
+      <div class="f"><div class="n">From covariance to correlation</div><code>ρ = Cov ÷ (σA × σB)</code></div>
+      <div class="f"><div class="n">From correlation to covariance</div><code>Cov = ρ × σA × σB</code></div>
+    </div>
+    <h4>Regression</h4>
+    <p>Regression fits a line showing how a <b>dependent</b> variable changes when an <b>independent</b> variable changes; for example a share's return against the market's. An upward slope is a positive relationship, downward is negative, flat means none. A steeper slope means a bigger effect. A scatter plot can show a pattern but <b>cannot prove cause and effect</b>. When a share's returns are regressed on the market's, the slope is its <b>beta</b>.</p>
+    <details class="check"><summary>Check: two assets have standard deviations of 15% and 20% and a correlation of 0.4. What is their covariance?</summary><div>0.4 × 15 × 20 = 120.</div></details>
+  </article>
+
+  <article class="lesson" id="c5">
+    <div class="kicker">Lesson 5</div>
+    <h3>Big data and artificial intelligence</h3>
+    <p class="oneline">Big data is too large, fast and varied for traditional tools. AI learns from it, but brings risks of bias and data security.</p>
+    <p>Big data is defined by the <b>three Vs</b>: <b>volume</b> (how much), <b>velocity</b> (how fast it arrives) and <b>variety</b> (how many forms). Client data is sensitive, so encryption, secure storage and GDPR compliance are essential.</p>
+    <div class="cols">
+      <div><b>Structured</b>Set fields in tables, such as daily closing prices. Easy to process.</div>
+      <div><b>Unstructured</b>No set format: social media posts, PDFs, images. Hard to analyse, but useful for sentiment, as when one tweet moves a share price.</div>
+      <div><b>Semi-structured</b>Some tags or metadata, such as an analyst PDF with embedded EBITDA figures.</div>
+      <div><b>Multi-structured</b>A mix of all three, such as transactions, chat logs and app usage combined.</div>
+    </div>
+    <h4>AI in finance</h4>
+    <p>Uses include chatbots, customer relationship management, credit risk assessment and fraud detection. The main risk is <b>biased algorithms</b> producing unfair outcomes, which conflicts with the FCA's fair treatment of customers. Firms need ethical guidelines, monitoring and audits.</p>
+    <p><b>Robo-advisers</b> build and automatically rebalance a diversified portfolio from an online questionnaire, sometimes with tax-loss harvesting. They suit low-cost, simple needs, not investors who need personal advice or complex strategies. Data itself is becoming a tradable commodity (the Shanghai Data Exchange).</p>
+    <details class="check"><summary>Check: what type of big data is a collection of social media posts about a company?</summary><div>Unstructured data.</div></details>
+  </article>
+
+  <article class="lesson" id="c6">
+    <div class="kicker">Lesson 6</div>
+    <h3>Technical analysis: reading the charts</h3>
+    <p class="oneline">Technical analysts don't ask what a share is worth. They ask where its price is likely to go next, based on patterns in past prices and volume.</p>
+    <p>It rests on three assumptions: <b>the market discounts everything</b>, <b>prices move in trends</b>, and <b>history tends to repeat itself</b>. (The weak form of the efficient markets hypothesis says this shouldn't work.)</p>
+    <h4>Trends and movements</h4>
+    <p>An uptrend makes higher highs and <b>higher lows</b>. A line along the lows is <b>support</b>; a line along the highs of a downtrend is <b>resistance</b>. Price movements come in three sizes: <b>primary</b> (years, such as a bull market), <b>secondary</b> (months, such as corrections or rallies) and <b>tertiary</b> (days or weeks, which is noise).</p>
+    <h4>Chart types</h4>
+    <ul>
+      <li><b>Line:</b> closing prices, often with moving averages (10, 50, 100, 200 days) to smooth them.</li>
+      <li><b>Point and figure:</b> columns of Xs (rises) and Os (falls) of a set size, with <b>no timescale</b>.</li>
+      <li><b>Bar:</b> high-low line with ticks for open (left) and close (right).</li>
+      <li><b>Candlestick:</b> like a bar chart, but open-to-close is shown as a "body": clear or green if it closed up, filled or red if it closed down.</li>
+    </ul>
+    <h4>Overlays and oscillators</h4>
+    <div class="cols">
+      <div><b>Overlays</b>Drawn on top of the price chart to give buy and sell signals, such as moving averages.</div>
+      <div><b>Oscillators</b>Plotted separately to show overbought or oversold conditions. The <b>RSI</b> (usually 14 days) runs from 0 to 100: <b>above 70 is overbought, below 30 is oversold</b>.</div>
+    </div>
+    <p><b>Patterns:</b> channels (support and resistance) and breakouts, such as from a triangle. <b>Relative strength charts</b> confirm a breakout by comparing a share with the market. The <b>head and shoulders</b> is the best-known reversal (sell) signal, triggered when the price breaks below the neckline.</p>
+    <details class="check"><summary>Check: is a moving average an overlay or an oscillator?</summary><div>An overlay, because it is drawn on the price chart itself.</div></details>
+  </article>
+
+  <article class="lesson" id="c7">
+    <div class="kicker">Lesson 7</div>
+    <h3>Measuring returns when money comes and goes</h3>
+    <p class="oneline">Cash added to or taken from a portfolio is not performance, so it has to be taken out of the return. The two methods do this differently.</p>
+    <h4>Holding period return</h4>
+    <p>With no cash flows: HPR = (income + end value − start value) ÷ start value. To annualise, compound: 25% over six months is (1.25)² − 1 = 56.25% a year, not 50%.</p>
+    <h4>Money-weighted return (MWRR)</h4>
+    <p>This is the portfolio's IRR. The simplified exam version takes the gain after removing net new money, and divides by the starting value plus each cash flow weighted by how long it was invested:</p>
+    <div class="f"><code>MWRR ≈ (V1 − V0 − net inflows) ÷ (V0 + Σ cash flow × months remaining ÷ 12)</code></div>
+    <p>Money added early counts more because it was invested longer. The result depends on <b>when and how much</b> the client added, so it reflects the investor's experience. Use it when the manager controls the cash flows. It needs only start and end valuations.</p>
+    <h4>Time-weighted return (TWRR)</h4>
+    <p>Split the period at every cash flow, work out the return for each sub-period, then chain them together: (1 + R1)(1 + R2)… − 1. The size and timing of cash flows have no effect, so it measures the <b>manager's</b> skill. It is required by GIPS and more widely used, but needs a valuation every time cash moves.</p>
+    <div class="eg"><b>Worked example.</b> A portfolio starts at £50,000 and grows to £55,000 (+10%). The client adds £15,000, making £70,000, which grows to £77,000 (+10%). TWRR = 1.10 × 1.10 − 1 = <span class="mono">21%</span>. The £15,000 doesn't distort the result.</div>
+    <details class="check"><summary>Check: a manager can't control when clients add or withdraw money. Which return should be used to judge them?</summary><div>TWRR, because it strips out the effect of cash flows the manager doesn't control.</div></details>
+  </article>
+
+  <article class="lesson" id="c8">
+    <div class="kicker">Lesson 8</div>
+    <h3>Indices, benchmarks and GIPS</h3>
+    <p class="oneline">A benchmark is only fair if it matches what the manager is trying to do, so you need to know how each index is built.</p>
+    <h4>How indices are weighted</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Method</th><th>How it works</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Price-weighted</td><td>Equal number of shares in each company, so high-priced shares dominate</td><td>Dow Jones Industrial Average</td></tr>
+        <tr><td>Market-cap weighted</td><td>Bigger companies count for more. Most major indices work this way</td><td>FTSE 100, S&amp;P 500, Hang Seng</td></tr>
+        <tr><td>Equal-weighted</td><td>Equal money in each share. Useful when giants dominate a cap-weighted index</td><td>MSCI USA Equal Weighted</td></tr>
+        <tr><td>Float-adjusted</td><td>Counts only freely tradable shares (the free float)</td><td>MSCI World</td></tr>
+        <tr><td>Capped</td><td>Limits any single stock, sector or country</td><td>MSCI FM 15% Country Capped</td></tr>
+      </tbody>
+    </table></div>
+    <p>An index starts at an arbitrary base value (such as 1,000). A <b>divisor</b> is adjusted whenever constituents or capital change, so the index doesn't jump. Bond indices set eligibility rules (currency, country, sector, rating, minimum maturity, issue size) and usually <b>rebalance monthly</b>. Equity indices rebalance quarterly or half-yearly.</p>
+    <h4>Specialist indices</h4>
+    <ul>
+      <li><b>Yield index:</b> tracks income return rather than total return.</li>
+      <li><b>Synthetic dividend (decrement) index:</b> takes a total return index and deducts a <b>predefined</b> dividend, applied <b>daily</b>, such as the CAC 40 Synthetic Dividend Index.</li>
+      <li><b>Smart beta:</b> a rules-based index built on factors such as low volatility, value or momentum (the active part), then tracked passively.</li>
+      <li><b>Composite (synthetic) benchmark:</b> several asset-class indices blended to match a multi-asset portfolio, such as the MSCI PIMFA Private Investor indices.</li>
+    </ul>
+    <h4>Other benchmark types</h4>
+    <div class="cols">
+      <div><b>Absolute</b>Beat a minimum target, such as SONIA + 3%.</div>
+      <div><b>Manager universe</b>The median peer. It can't be known in advance and encourages herding.</div>
+      <div><b>Broad market</b>Simple and well known, but may not match the manager's style.</div>
+      <div><b>Style</b>Large-cap, small-cap, value and so on, to match the manager.</div>
+      <div><b>Factor model</b>Explains returns through factors, but is complex and costly.</div>
+      <div><b>Returns-based</b>A blend of style indices that best explains the manager's returns.</div>
+    </div>
+    <h4>GIPS</h4>
+    <p>The Global Investment Performance Standards are not a benchmark. They are <b>ethical standards for calculating and presenting performance</b>, set up by the CFA Institute in 1999 (updated 2005 and 2020) and voluntary. To claim compliance, a firm must include <b>all actual, discretionary, fee-paying portfolios in at least one composite</b> (so it can't cherry-pick), follow set methods, make full disclosures, and use <b>TWRR</b>.</p>
+    <details class="check"><summary>Check: in a price-weighted index, which company has the most influence?</summary><div>The one with the highest share price, regardless of the company's size.</div></details>
+  </article>
+
+  <article class="lesson" id="c9">
+    <div class="kicker">Lesson 9</div>
+    <h3>Performance attribution: why did we beat (or miss) the benchmark?</h3>
+    <p class="oneline">Attribution splits the difference from the benchmark into the result of choosing how much to put in each asset class (allocation) and the result of choosing which investments to buy (selection).</p>
+    <p>Performance evaluation has three steps: <b>measurement</b> (what was the return?), <b>attribution</b> (where did it come from?) and <b>appraisal</b> (was it skill, the market or luck?). The difference between portfolio and benchmark return is the <b>active return</b>.</p>
+    <div class="eg"><b>Worked example.</b> The benchmark is 70% equities (returned 8%) and 30% bonds (returned 2%), so benchmark return = 0.7×8 + 0.3×2 = <span class="mono">6.2%</span>.<br>
+    The fund held 50/50. Using the benchmark's returns, that mix would have earned 0.5×8 + 0.5×2 = 5.0%. So <b>asset allocation</b> cost 5.0 − 6.2 = <span class="mono">−1.2%</span> (it was underweight the better-performing asset).<br>
+    The fund's own equities returned 10% and its bonds 3%: actual = 0.5×10 + 0.5×3 = 6.5%. So <b>stock selection</b> added 6.5 − 5.0 = <span class="mono">+1.5%</span>.<br>
+    Total active return = 6.5 − 6.2 = +0.3%, which equals −1.2 + 1.5.</div>
+    <p>The book's approach also works in money: apply each set of weights and returns to the starting fund value and compare the end values.</p>
+    <details class="check"><summary>Check: a fund overweights the asset class that did best, but picks weak shares within it. Which effect is positive?</summary><div>Asset allocation is positive. Stock selection is negative.</div></details>
+  </article>
+
+  <article class="lesson" id="c10">
+    <div class="kicker">Lesson 10</div>
+    <h3>Risk-adjusted returns and multi-factor models</h3>
+    <p class="oneline">A higher return means little if more risk was taken to get it. Risk-adjusted ratios divide the reward by the risk, and differ only in how they measure risk.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Measure</th><th>Formula</th><th>Risk measured by</th><th>Use for</th></tr></thead>
+      <tbody>
+        <tr><td>Sharpe</td><td>(Rp − Rf) ÷ σp</td><td>Total risk (standard deviation)</td><td>Portfolios that are not fully diversified</td></tr>
+        <tr><td>Treynor</td><td>(Rp − Rf) ÷ βp</td><td>Systematic risk (beta)</td><td>Well-diversified portfolios ("reward to volatility")</td></tr>
+        <tr><td>Jensen's alpha</td><td>Rp − [Rf + βp(Rm − Rf)]</td><td>Beta, through CAPM</td><td>Return above what CAPM predicts; positive plots above the SML</td></tr>
+        <tr><td>Information ratio</td><td>Excess over benchmark ÷ tracking error</td><td>Deviation from the benchmark</td><td>Manager skill relative to the benchmark</td></tr>
+        <tr><td>Sortino</td><td>Like Sharpe</td><td>Downside deviation only</td><td>When only losses count as risk</td></tr>
+        <tr><td>Calmar</td><td>Average annual return ÷ max drawdown (3 years)</td><td>Worst fall</td><td>Hedge funds</td></tr>
+        <tr><td>Sterling</td><td>Return ÷ a drawdown-based measure</td><td>Drawdown</td><td>How efficiently risk capital is used</td></tr>
+        <tr><td>Omega</td><td>Probability-weighted gains vs losses</td><td>The whole distribution</td><td>Overcoming the flaws of Sharpe</td></tr>
+      </tbody>
+    </table></div>
+    <div class="eg"><b>Worked example.</b> A fund returns 11% with an SD of 16% and a beta of 0.8. The risk-free rate is 3% and the market returned 9%. Sharpe = 8 ÷ 16 = <span class="mono">0.5</span>. Treynor = 8 ÷ 0.8 = <span class="mono">10</span>. CAPM expected = 3 + 0.8 × 6 = 7.8%, so Jensen's alpha = <span class="mono">+3.2%</span>.</div>
+    <div class="confuse"><b>Book error:</b> the Sharpe example in section 9.1 shows the answer as "1%". Sharpe is a ratio, so (12 − 2) ÷ 10 = <b>1.0</b>.</div>
+    <h4>Multi-factor models</h4>
+    <p>CAPM uses one factor (beta). Multi-factor models use several, each with its own sensitivity:</p>
+    <div class="cols">
+      <div><b>Macroeconomic</b>Inflation, interest rates, industrial production. APT is the classic example.</div>
+      <div><b>Fundamental</b>Company attributes such as size, book-to-price and P/E. Fama-French is the example.</div>
+      <div><b>Statistical</b>Factors found from historical return patterns. The book puts Carhart (which adds momentum) here.</div>
+    </div>
+    <p>Research highlights four factors: <b>unanticipated inflation</b>, <b>changes in industrial production</b>, <b>changes in the bond default premium</b> and <b>shifts in the yield curve</b>. These models explain returns better than CAPM with fewer assumptions, but rely on the factors being uncorrelated and their relationships staying stable.</p>
+    <details class="check"><summary>Check: you want to compare two well-diversified pension funds. Sharpe or Treynor?</summary><div>Treynor. In a well-diversified fund only systematic risk (beta) remains, so that is the relevant risk measure.</div></details>
+  </article>
+
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>

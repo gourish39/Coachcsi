@@ -1,0 +1,76 @@
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions test it. In Section 6, about two in three of the book's questions are calculations, so the formulas below are worth drilling until they are automatic.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Risk-adjusted returns: Sharpe, Treynor, Jensen</td><td><span class="pill hi">Tested often</span></td><td>MCQs 37, 54, 64, 77</td></tr>
+      <tr><td>MWRR, TWRR and holding period return</td><td><span class="pill hi">Tested often</span></td><td>MCQs 26, 29, 32 · Ch-end 7</td></tr>
+      <tr><td>Averages, range and standard deviation</td><td><span class="pill hi">Tested often</span></td><td>MCQs 10, 50 · Ch-end 3</td></tr>
+      <tr><td>Correlation and covariance</td><td><span class="pill hi">Tested often</span></td><td>MCQs 43, 79</td></tr>
+      <tr><td>Performance attribution</td><td><span class="pill md">Regular</span></td><td>MCQ 27</td></tr>
+      <tr><td>Benchmarks, index weighting, GIPS</td><td><span class="pill md">Regular</span></td><td>MCQ 34 · Ch-end 8</td></tr>
+      <tr><td>Technical analysis</td><td><span class="pill md">Regular</span></td><td>MCQ 51 · Ch-end 5, 6</td></tr>
+      <tr><td>Data types, samples, charts</td><td><span class="pill md">Regular</span></td><td>MCQ 5 · Ch-end 1, 2</td></tr>
+      <tr><td>Skew, kurtosis, normal distribution</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 6.2.2</td></tr>
+      <tr><td>Regression</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 4</td></tr>
+      <tr><td>Big data and AI</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 6.3</td></tr>
+      <tr><td>Multi-factor models</td><td><span class="pill lo">Occasional</span></td><td>Ch-end 8 · syllabus 6.5.4</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Statistics formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Arithmetic mean</div><code>Σx ÷ n</code></div>
+      <div class="f"><div class="n">Geometric mean</div><code>[(1+r1)(1+r2)…(1+rn)]^(1/n) − 1</code></div>
+      <div class="f"><div class="n">Median position</div><code>Odd n: (n + 1) ÷ 2
+Even n: average of the two middle values</code></div>
+      <div class="f"><div class="n">Range / IQR</div><code>Range = Max − Min
+IQR = Q3 − Q1</code></div>
+      <div class="f"><div class="n">Variance</div><code>Population: Σ(x − μ)² ÷ n
+Sample: Σ(x − x̄)² ÷ (n − 1)</code></div>
+      <div class="f"><div class="n">Standard deviation</div><code>√Variance</code></div>
+      <div class="f"><div class="n">Normal distribution</div><code>±1σ 68.26% · ±2σ 95.5% · ±3σ 99.75%</code></div>
+      <div class="f"><div class="n">Correlation / covariance</div><code>ρ = Cov ÷ (σA × σB)
+Cov = ρ × σA × σB</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Return formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Holding period return</div><code>(D + Ve − Vs) ÷ Vs</code><div class="small">Annualise by compounding: (1 + HPR)^(12/months) − 1</div></div>
+      <div class="f"><div class="n">MWRR (simplified)</div><code>(V1 − V0 − net inflows) ÷ (V0 + Σ CF × months left ÷ 12)</code><div class="small">Withdrawals are negative cash flows</div></div>
+      <div class="f"><div class="n">TWRR</div><code>(1 + R1)(1 + R2)…(1 + Rn) − 1</code><div class="small">Each sub-period starts with the value after the cash flow</div></div>
+      <div class="f"><div class="n">Attribution</div><code>Allocation = Σ(fund wt × bmk return) − bmk return
+Selection = actual return − Σ(fund wt × bmk return)</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Risk-adjusted formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Sharpe</div><code>(Rp − Rf) ÷ σp</code></div>
+      <div class="f"><div class="n">Treynor</div><code>(Rp − Rf) ÷ βp</code></div>
+      <div class="f"><div class="n">Jensen's alpha</div><code>Rp − [Rf + βp × (Rm − Rf)]</code></div>
+      <div class="f"><div class="n">Information ratio</div><code>(Rp − Rbenchmark) ÷ Tracking error</code></div>
+      <div class="f"><div class="n">Calmar</div><code>Average annual return ÷ Max drawdown (3 yrs)</code></div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Sample vs population:</b> one wrong option nearly always uses the other divisor. Read whether the data is "a sample" or "all".</li>
+    <li><b>Median with an even count:</b> average the two middle values. Sort the data first.</li>
+    <li><b>Geometric vs arithmetic mean:</b> for returns over time the answer is the geometric mean, and it is always the lower of the two.</li>
+    <li><b>MWRR signs:</b> subtract net inflows on the top line. On the bottom line, add inflows and subtract withdrawals, each weighted by months <i>remaining</i>.</li>
+    <li><b>TWRR:</b> the second sub-period starts from the value <i>after</i> the cash flow has been added.</li>
+    <li><b>Sharpe uses standard deviation; Treynor uses beta.</b> A question giving both expects you to choose the right one.</li>
+    <li><b>Highest Jensen's alpha</b> = actual return − CAPM return. Don't simply pick the highest return.</li>
+    <li><b>Index funds</b> should have an alpha of zero or near zero (MCQ 80).</li>
+    <li><b>Price-weighted indices</b> (the Dow) give the most weight to the highest-priced shares, not the biggest companies.</li>
+    <li><b>GIPS</b> is a standard for presenting performance, not a benchmark, and it requires TWRR.</li>
+    <li><b>RSI:</b> above 70 is overbought, below 30 oversold. The RSI is an oscillator; a moving average is an overlay.</li>
+  </ul>
+
+  <div class="warnbox"><b>Workbook errors spotted in Chapter 6.</b> (1) The Sharpe example (section 9.1) gives "1%"; it is a ratio of 1.0. (2) The mode example (section 2.1) calls a set with one repeated value "bimodal"; it has a single mode. (3) Section 2.3.5 calls positive skew "leftward" while describing a long right tail. Go by the tail.</div>
