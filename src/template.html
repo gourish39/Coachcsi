@@ -1,0 +1,222 @@
+<title>{{TITLE}}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one study column, sticky tabs; formula cards set like an exam formula sheet; highlighter marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2; --warn-bg:#fff4d6; --warn:#8a5a00;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:30px 10px}
+h3{font-size:1.1rem;margin-block:20px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.hi{background:var(--accent);color:var(--accent-ink)}
+.pill.md{border:1px solid var(--accent);color:var(--accent)}
+.pill.lo{border:1px solid var(--line);color:var(--muted)}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:14px}
+.topic h3{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.topic .why{color:var(--muted);font-size:13.5px;margin:2px 0 8px}
+.topic ul{margin:6px 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-block:8px}
+.f{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;background:var(--bg)}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px}
+.eg code,.mono{font-family:var(--mono);font-size:13px}
+.warnbox{margin-top:8px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);color:var(--ink);font-size:14px}
+.warnbox b{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.timer{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.q table{font-size:13px;margin-bottom:10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-block:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.stat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 18px;margin-block:12px}
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-block:16px;scroll-margin-top:60px}
+.lesson h3{margin-top:0;font-size:1.25rem}
+.lesson .kicker{font:500 12px var(--mono);color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.oneline{font-family:var(--display);font-size:1.08rem;line-height:1.45;margin:8px 0 12px;padding-left:12px;border-left:3px solid var(--mark)}
+.lesson h4{font:600 14px var(--body);margin:16px 0 4px;letter-spacing:.01em}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-block:10px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:6px 10px;border-radius:999px;color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-block:8px}
+.cols > div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);min-width:0}
+.cols b{display:block;margin-bottom:2px}
+details.check{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.check summary{cursor:pointer;padding:9px 12px;font-weight:500}
+details.check summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.check div{padding:0 12px 10px;font-size:14px}
+.confuse{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);font-size:14px}
+.confuse b{color:var(--warn)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+{{HEADER}}
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#concepts">Concepts</a>
+  <a href="#learn">Formulas &amp; traps</a>
+  <a href="#practice">50 questions</a>
+  <a href="#method">How this was built</a>
+</div></nav>
+
+<main class="wrap">
+
+<section data-view="concepts">
+{{CONCEPTS}}
+</section>
+
+<section data-view="learn" hidden>
+{{LEARN}}
+</section>
+
+<section data-view="practice" hidden>
+  <h2>50 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <div class="controls">
+    <select id="mode" aria-label="Mode">
+      <option value="practice">Practice: instant feedback</option>
+      <option value="mock">Mock: timed, marked at the end</option>
+    </select>
+    <select id="topic" aria-label="Topic">
+      <option value="all">All topics</option>
+    </select>
+    <button id="shuffle" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset answers</button>
+    <button id="finish" class="primary" type="button" hidden>Finish and mark</button>
+    <span class="timer" id="timer" hidden></span>
+    <span class="score" id="score"></span>
+  </div>
+  <div id="result"></div>
+  <div class="stats" id="stats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section data-view="method" hidden>
+{{METHOD}}
+</section>
+</main>
+
+<script>
+{{DATA}}
+// Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
+(function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+    q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
+try{ans=JSON.parse(localStorage.getItem("{{KEY}}")||"{}")}catch(e){ans={}}
+function save(){try{localStorage.setItem("{{KEY}}",JSON.stringify(ans))}catch(e){}}
+const topicSel=document.getElementById("topic");
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v+" ("+Q.filter(q=>q.t==k).length+")";topicSel.appendChild(o)});
+function list(){const t=topicSel.value;return order.filter(i=>t==="all"||String(Q[i].t)===t)}
+function tbl(rows){
+  const head=rows[0][0]===""||rows[0].length>2;
+  if(rows[0].length===2&&rows[0][0]!==""){return `<div class="table-wrap"><table><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="table-wrap"><table><thead><tr>${rows[0].map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map((c,j)=>`<td${j?' class="num"':""}>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function show(i){return mode==="practice"?ans[i]!==undefined:marked}
+function render(){
+  const ids=list();
+  document.getElementById("qlist").innerHTML=ids.map((i,k)=>{
+    const q=Q[i],a=ans[i],rev=show(i);
+    const opts=q.o.map((t,j)=>{let c="opt";
+      if(rev){if(j===q.a)c+=" right";else if(j===a)c+=" wrong"}else if(j===a)c+=" picked";
+      const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
+      return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
+    const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+  stats();
+}
+function stats(){
+  let html="",n=0,c=0;
+  Object.keys(T).forEach(k=>{let tn=0,tc=0;Q.forEach((q,i)=>{if(q.t==k&&ans[i]!==undefined&&(mode==="practice"||marked)){tn++;if(ans[i]===q.a)tc++}});n+=tn;c+=tc;
+    html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
+  document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
+  const answered=Object.keys(ans).length;
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+}
+function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+  const tEl=document.getElementById("timer");tEl.hidden=false;
+  tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
+  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
+  const c=Q.filter((q,i)=>ans[i]===q.a).length;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
+document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
+  ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
+document.getElementById("mode").addEventListener("change",e=>{mode=e.target.value;
+  if(mode==="mock"){topicSel.value="all";topicSel.disabled=true;startMock()}
+  else{clearInterval(tick);marked=false;topicSel.disabled=false;document.getElementById("timer").hidden=true;document.getElementById("finish").hidden=true;document.getElementById("result").innerHTML="";
+    try{ans=JSON.parse(localStorage.getItem("{{KEY}}")||"{}")}catch(e){ans={}}render()}});
+topicSel.addEventListener("change",render);
+document.getElementById("finish").addEventListener("click",finish);
+document.getElementById("shuffle").addEventListener("click",()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()});
+document.getElementById("reset").addEventListener("click",()=>{if(mode==="mock"){startMock();return}ans={};save();render()});
+const VIEWS=["concepts","learn","practice","method"];
+function route(){const h=(location.hash||"#concepts").slice(1);
+  const lesson=/^c\d+$/.test(h)?document.getElementById(h):null;
+  const v=lesson?"concepts":(VIEWS.includes(h)?h:"concepts");
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  return lesson}
+window.addEventListener("hashchange",()=>{const l=route();if(l)l.scrollIntoView();else window.scrollTo(0,0)});
+route();render();
+</script>

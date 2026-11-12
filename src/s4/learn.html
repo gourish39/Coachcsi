@@ -1,0 +1,94 @@
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions (the 80 practice questions and the end-of-chapter questions) test it. Section 4 carries about 21 marks, so the <span class="pill hi">Tested often</span> rows alone are worth about 12 of them.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Bond yields, yield curve, credit ratings</td><td><span class="pill hi">Tested often</span></td><td>MCQs 15, 62, 65 · Ch-end 7</td></tr>
+      <tr><td>Convertibles and conversion premium</td><td><span class="pill hi">Tested often</span></td><td>MCQs 38, 55 · Ch-end 8</td></tr>
+      <tr><td>Corporate actions: TERP, rights choices, IPO methods</td><td><span class="pill hi">Tested often</span></td><td>MCQs 24, 30 · Ch-end 5, 10</td></tr>
+      <tr><td>Share classes, preference shares, ranking</td><td><span class="pill hi">Tested often</span></td><td>MCQs 40, 60, 66, 69 · Ch-end 1, 2, 6</td></tr>
+      <tr><td>Bond types: STRIPS, index-linked, agency, PIBS</td><td><span class="pill md">Regular</span></td><td>MCQs 31, 49, 52, 75</td></tr>
+      <tr><td>Investor ratios: EPS, P/E, yield, cover, Gordon</td><td><span class="pill md">Regular</span></td><td>MCQs 7, 39 · syllabus 4.1.2–4.1.4</td></tr>
+      <tr><td>Derivatives: option styles, Greeks, volatility</td><td><span class="pill md">Regular</span></td><td>MCQ 67 · Ch-end 9</td></tr>
+      <tr><td>Depositary receipts</td><td><span class="pill md">Regular</span></td><td>MCQ 45 · Ch-end 3</td></tr>
+      <tr><td>VCT, EIS, SEIS, private equity</td><td><span class="pill md">Regular</span></td><td>MCQs 9, 13, 76 · Ch-end 4</td></tr>
+      <tr><td>Swaps and FX forwards</td><td><span class="pill md">Regular</span></td><td>MCQs 42, 68</td></tr>
+      <tr><td>Money market instruments</td><td><span class="pill lo">Occasional</span></td><td>MCQ 28</td></tr>
+      <tr><td>Duration and accrued interest calculations</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 4.6.6, 4.6.10</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Equity formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">EPS</div><code>(Net income − Pref dividends) ÷ Ordinary shares</code></div>
+      <div class="f"><div class="n">P/E</div><code>Share price ÷ EPS</code><div class="small">PEG = P/E ÷ growth %; below 1 is attractive</div></div>
+      <div class="f"><div class="n">Dividend yield</div><code>Dividend per share ÷ Share price</code></div>
+      <div class="f"><div class="n">Dividend cover</div><code>EPS ÷ Dividend per share</code><div class="small">2× prudent · below 1.5× weak · below 1× uncovered</div></div>
+      <div class="f"><div class="n">Price to book</div><code>Share price ÷ NAV per share</code></div>
+      <div class="f"><div class="n">Gordon growth</div><code>P = D1 ÷ (r − g)
+D1 = D0 × (1 + g)</code></div>
+      <div class="f"><div class="n">EBIT / EBITDA</div><code>EBIT = Net income + Interest + Tax
+EBITDA = EBIT + Depreciation + Amortisation</code></div>
+      <div class="f"><div class="n">Convertible preference premium</div><code>(Prefs needed per ordinary × Pref price) ÷ Ordinary price − 1</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Corporate action formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">TERP</div><code>(Old shares × Price + New shares × Subscription) ÷ Total shares</code></div>
+      <div class="f"><div class="n">Rights premium (nil-paid value)</div><code>TERP − Subscription price</code></div>
+      <div class="f"><div class="n">Bonus or split</div><code>Old price × Old shares ÷ New shares</code></div>
+      <div class="f"><div class="n">Consolidation</div><code>Old price × Shares combined</code></div>
+      <div class="f"><div class="n">Scrip dividend ratio</div><code>Share price ÷ Dividend per share</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Bond formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Flat yield</div><code>Coupon ÷ Clean price</code></div>
+      <div class="f"><div class="n">GRY (approx.)</div><code>Flat yield + [(100 − Price) ÷ Years] ÷ Price</code></div>
+      <div class="f"><div class="n">NRY (approx.)</div><code>Flat yield × (1 − tax) + [(100 − Price) ÷ Years] ÷ Price</code></div>
+      <div class="f"><div class="n">Real return</div><code>Simple: Nominal − Inflation
+Fisher: (1 + N) ÷ (1 + I) − 1</code></div>
+      <div class="f"><div class="n">Modified duration</div><code>Macaulay ÷ (1 + GRY)
+%ΔPrice ≈ −MD × Δyield</code></div>
+      <div class="f"><div class="n">Accrued interest</div><code>Nominal × (Coupon ÷ n) × (Days accrued ÷ Days in period)</code><div class="small">Cum-interest: add to clean · Ex-interest: deduct</div></div>
+      <div class="f"><div class="n">Index-linked payment</div><code>Coupon × (Lagged RPI ÷ Base RPI)</code></div>
+      <div class="f"><div class="n">Convertible bond premium</div><code>Bond price ÷ (Shares per £100 × Share price) − 1
+Conversion ratio = Nominal ÷ Conversion price</code></div>
+      <div class="f"><div class="n">Spread</div><code>Bond yield − Benchmark yield (in basis points)</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Derivative formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Delta</div><code>Δ Premium ÷ Δ Underlying</code><div class="small">Position delta = (±1 for long/short) × option delta</div></div>
+      <div class="f"><div class="n">Intrinsic / time value</div><code>Call IV = Price − Strike (if positive)
+Put IV = Strike − Price (if positive)
+Time value = Premium − IV</code></div>
+      <div class="f"><div class="n">Quality spread differential</div><code>Fixed spread − Floating spread</code></div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Gordon:</b> using D0 instead of D1. If you're told the dividend "just paid", grow it first.</li>
+    <li><b>Price changes push ratios in opposite directions.</b> If the share price falls, P/E falls and dividend yield rises (MCQ 39).</li>
+    <li><b>The two conversion formulas run in opposite directions.</b> A convertible bond's ratio is <i>shares received per £100</i>. A convertible preference share's ratio is <i>preference shares needed for one ordinary share</i>. Read which way the question states it.</li>
+    <li><b>Rights vs open offer:</b> rights can be sold (renounced); an open-offer entitlement cannot. The open offer discount is capped at 10%.</li>
+    <li><b>Placing</b> is the cheapest way to float. An <b>offer for subscription</b> needs a full prospectus, advertising and underwriting.</li>
+    <li><b>Preference shareholders in a liquidation</b> get back nominal value at most, after all creditors are paid.</li>
+    <li><b>Callable bonds pay more yield and putable bonds pay less.</b> The yield follows whoever holds the option.</li>
+    <li><b>Duration goes up</b> with a lower coupon, longer maturity and lower yield.</li>
+    <li><b>UK debentures are secured; US debentures are unsecured.</b></li>
+    <li><b>Index-linked lag:</b> 8 months for gilts issued before Sept 2005, 3 months otherwise.</li>
+    <li><b>Warrants vs convertibles:</b> exercising a warrant leaves the bond in issue; converting a convertible replaces it.</li>
+    <li><b>Currency swaps exchange principal at the start and end; interest rate swaps never do.</b></li>
+    <li><b>Commercial paper</b> runs 8 to 365 days. <b>Time deposits</b> are not negotiable.</li>
+  </ul>
+
+  <div class="warnbox"><b>Workbook errors spotted in Chapter 4.</b> (1) Section 10.6.4 says selling rights earns "£3.50 per right". That is the subscription price; a nil-paid right is worth the premium (£0.42 in that example). (2) The variance swap example gives a pay-off of $125,000, but $1m × (225 − 100) is $125m as printed. Learn the formula and don't rely on that example's figure. (3) Section 9.1.1 calls a floating-for-floating swap a "basic" swap; the syllabus term is <b>basis</b> swap.</div>

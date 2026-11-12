@@ -1,0 +1,719 @@
+<title>Section 4 Securities Valuation Module</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one study column, sticky tabs; formula cards set like an exam formula sheet; highlighter marks what to memorise. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --ink:#14232e; --muted:#5a6b76; --line:#d7dfe4;
+  --accent:#1c5d7a; --accent-ink:#ffffff; --mark:#ffe680; --mark-ink:#14232e;
+  --good:#1f7a4d; --good-bg:#e3f3ea; --bad:#b03a2e; --bad-bg:#f8e5e2; --warn-bg:#fff4d6; --warn:#8a5a00;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#16222a; --ink:#e4ecf0; --muted:#97a9b4; --line:#2a3a44;
+  --accent:#6fb6d6; --accent-ink:#0f171c; --mark:#5c4d10; --mark-ink:#fff4c2;
+  --good:#6fd39f; --good-bg:#16352a; --bad:#f08c80; --bad-bg:#3d1f1b; --warn-bg:#3a2e10; --warn:#f2c86b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:28px 12px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem;margin-block:30px 10px}
+h3{font-size:1.1rem;margin-block:20px 6px}
+.lede{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:500 12px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px;color:var(--muted)}
+.chip b{color:var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{flex:none;padding:12px;color:var(--muted);text-decoration:none;font-weight:500;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:8px 60px}
+p,li{max-width:68ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+td.num,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.hi{background:var(--accent);color:var(--accent-ink)}
+.pill.md{border:1px solid var(--accent);color:var(--accent)}
+.pill.lo{border:1px solid var(--line);color:var(--muted)}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:14px}
+.topic h3{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.topic .why{color:var(--muted);font-size:13.5px;margin:2px 0 8px}
+.topic ul{margin:6px 0;padding-left:20px}
+.fgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-block:8px}
+.f{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;background:var(--bg)}
+.f .n{font-weight:600;font-size:13px}
+.f code{display:block;font:13px/1.5 var(--mono);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px}
+.eg code,.mono{font-family:var(--mono);font-size:13px}
+.warnbox{margin-top:8px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);color:var(--ink);font-size:14px}
+.warnbox b{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-block:12px}
+select,button{font:500 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.score{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.timer{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-block:12px}
+.q .meta{font:500 11.5px var(--mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.q .stem{margin:6px 0 10px;white-space:pre-line}
+.q table{font-size:13px;margin-bottom:10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;text-align:left;width:100%;padding:9px 12px;border-radius:6px;font-weight:400;line-height:1.45}
+.opt .l{font:600 13px var(--mono);color:var(--muted)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt[disabled]{cursor:default}
+.ex{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);font-size:14px;white-space:pre-line}
+.verdict{font-weight:600}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-block:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.stat b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 18px;margin-block:12px}
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-block:16px;scroll-margin-top:60px}
+.lesson h3{margin-top:0;font-size:1.25rem}
+.lesson .kicker{font:500 12px var(--mono);color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.oneline{font-family:var(--display);font-size:1.08rem;line-height:1.45;margin:8px 0 12px;padding-left:12px;border-left:3px solid var(--mark)}
+.lesson h4{font:600 14px var(--body);margin:16px 0 4px;letter-spacing:.01em}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-block:10px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:6px 10px;border-radius:999px;color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-block:8px}
+.cols > div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);min-width:0}
+.cols b{display:block;margin-bottom:2px}
+details.check{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.check summary{cursor:pointer;padding:9px 12px;font-weight:500}
+details.check summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.check div{padding:0 12px 10px;font-size:14px}
+.confuse{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--warn-bg);font-size:14px}
+.confuse b{color:var(--warn)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background .15s}}
+</style>
+
+<header class="top wrap">
+  <h1>Section 4: Securities Valuation</h1>
+  <p class="lede">A module for Element 4 of the CISI Investment Management exam, built from Chapter 4 of the Edition 4 workbook (plus the investor ratios taught in Chapter 3). This is the biggest section of the exam, so it has the most lessons.</p>
+  <div class="facts">
+    <span class="chip">About <b>21</b> of 80 exam questions</span>
+    <span class="chip"><b>12</b> concept lessons</span>
+    <span class="chip"><b>50</b> practice questions</span>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#concepts">Concepts</a>
+  <a href="#learn">Formulas &amp; traps</a>
+  <a href="#practice">50 questions</a>
+  <a href="#method">How this was built</a>
+</div></nav>
+
+<main class="wrap">
+
+<section data-view="concepts">
+  <h2>Understand the concepts first</h2>
+  <p>Section 4 is the biggest part of the exam. It covers the instruments themselves: shares, bonds, money market securities, hybrids, derivatives and swaps, and how to value each one. Each lesson starts with the core idea in one sentence, then explains it, works an example, and ends with self-checks you can tap to reveal. Allow about 4 hours.</p>
+  <nav class="toc" aria-label="Lessons">
+    <a href="#c1">1. Shares</a>
+    <a href="#c2">2. Valuing shares</a>
+    <a href="#c3">3. DRs &amp; unlisted</a>
+    <a href="#c4">4. Corporate actions</a>
+    <a href="#c5">5. Money markets</a>
+    <a href="#c6">6. How bonds work</a>
+    <a href="#c7">7. Types of bond</a>
+    <a href="#c8">8. Corporate debt</a>
+    <a href="#c9">9. Bond yields &amp; risk</a>
+    <a href="#c10">10. Hybrids</a>
+    <a href="#c11">11. Derivatives</a>
+    <a href="#c12">12. Swaps</a>
+  </nav>
+
+  <article class="lesson" id="c1">
+    <div class="kicker">Lesson 1</div>
+    <h3>Shares: owning a slice of the company</h3>
+    <p class="oneline">Ordinary shareholders own the company and take the most risk: they are paid last, but they get everything left over.</p>
+    <h4>Ordinary shares</h4>
+    <p>Ordinary shares are the company's <b>risk capital</b>. If the company does well, shareholders share in the success through dividends and a rising share price. If it fails, they are paid only after everyone else, and can lose everything. Over the long run that risk has been well rewarded, but in the short run shares are the most volatile of the main asset classes.</p>
+    <p>Each share has a <b>nominal (par) value</b>, such as £1 or 25p. It matters only in two places: new shares cannot be issued below it, and it affects shareholders' rights in a liquidation. It has nothing to do with the market price. US "common stock" usually has no par value. <b>Limited liability</b> means shareholders can lose what they paid in but owe nothing more, except any unpaid amount on <b>partly paid</b> shares.</p>
+    <div class="cols">
+      <div><b>Non-voting ("A") shares</b>Same dividend, no vote. Usually trade at a discount to voting shares. Used by founders to keep control.</div>
+      <div><b>Deferred (founders') shares</b>Extra voting power, but the dividend is deferred for a set time or until a condition is met.</div>
+      <div><b>Redeemable ("B"/"C") shares</b>Issued to return capital to shareholders tax-efficiently, with a choice of redemption dates.</div>
+    </div>
+    <h4>Preference shares</h4>
+    <p>Preference shareholders come <b>before</b> ordinary shareholders for dividends and for repayment in a liquidation, but usually have no vote (unless their dividend is in arrears). The dividend is normally fixed as a percentage of nominal value: a 6% £1 preference share pays 6p. Most are <b>cumulative</b>: any missed dividends must be paid in full before ordinary shareholders get anything. Variants are <b>participating</b> (an extra share of profits when ordinary dividends are high), <b>redeemable</b> (with a date in the name) and <b>convertible</b> (they can be swapped into ordinary shares).</p>
+    <h4>Shareholder rights</h4>
+    <p>Ordinary shareholders can attend and vote at the AGM and EGMs (in person or by proxy, usually one vote per share), receive the annual report, vote on the proposed dividend, and have <b>pre-emption rights</b>: the right to be offered new shares before outsiders.</p>
+    <h4>Ranking in liquidation (Insolvency Act 1986)</h4>
+    <div class="table-wrap"><table><tbody>
+      <tr><td class="num">1</td><td>Loans and bonds secured by a fixed charge</td></tr>
+      <tr><td class="num">2</td><td>Preferential creditors</td></tr>
+      <tr><td class="num">3</td><td>Loans and bonds secured by a floating charge</td></tr>
+      <tr><td class="num">4</td><td>Unsecured loans, bonds and other creditors</td></tr>
+      <tr><td class="num">5</td><td>Subordinated loan stock</td></tr>
+      <tr><td class="num">6</td><td>Preference shares (they get back nominal value if funds allow)</td></tr>
+      <tr><td class="num">7</td><td>Ordinary shares (whatever is left)</td></tr>
+    </tbody></table></div>
+    <details class="check"><summary>Check: what does "cumulative" mean on a preference share?</summary><div>Any unpaid dividends from earlier years build up as arrears and must be paid in full before ordinary shareholders can receive a dividend.</div></details>
+    <details class="check"><summary>Check: who is paid first in a liquidation, subordinated loan stock holders or preference shareholders?</summary><div>Subordinated loan stock holders. Even subordinated debt ranks ahead of all shares.</div></details>
+  </article>
+
+  <article class="lesson" id="c2">
+    <div class="kicker">Lesson 2</div>
+    <h3>Valuing shares: earnings, dividends and assets</h3>
+    <p class="oneline">Every valuation ratio compares the share price with something the share gives you: its earnings, its dividends or its assets.</p>
+    <h4>Earnings measures</h4>
+    <p><b>EPS</b> is profit belonging to ordinary shareholders (net income minus preference dividends) per ordinary share. <b>Diluted EPS</b> assumes every convertible, warrant and option turns into shares, so it is the worst case. <b>EBIT</b> is profit before interest and tax (operating profit). <b>EBITDA</b> also adds back depreciation and amortisation. It strips out financing, tax and accounting choices, which makes it useful for comparing companies internationally and in asset-heavy industries.</p>
+    <h4>P/E ratio</h4>
+    <p>P/E = share price ÷ EPS: how many years of current earnings you are paying for. A high P/E means investors expect strong growth, or the share is overvalued. A low P/E means low expected growth, or the share is undervalued. A P/E can also be high because profits have temporarily fallen or the company is a takeover target. <b>Historic</b> P/E uses last year's EPS; <b>prospective</b> (forward) P/E uses forecast EPS. The <b>PEG ratio</b> divides P/E by expected growth: below 1 looks attractive, above 1 unfavourable.</p>
+    <h4>Dividend measures</h4>
+    <p><b>Dividend yield</b> = dividend per share ÷ price. A high yield can mean a strong cash-generating business (such as a utility, a "bond proxy"), or a share price that has fallen because the company is seen as risky. <b>Dividend cover</b> = EPS ÷ dividend per share: how many times profit could pay the dividend. 2× or more is prudent, below 1.5× is less sustainable, and below 1× means the dividend is being paid partly from past reserves (uncovered).</p>
+    <h4>Gordon's growth model</h4>
+    <p>A share is worth its future dividends discounted back to today. If the dividend grows at a steady rate <i>g</i> forever and investors require a return <i>r</i>, the price is <b>P = D1 ÷ (r − g)</b>, where <b>D1 is next year's dividend</b>. If you are given the dividend just paid (D0), grow it first: D1 = D0 × (1 + g). With no growth the formula becomes simply D ÷ r. The book's example: a 10p dividend with no growth and an 11% required return gives a price of 91p.</p>
+    <h4>Price to book</h4>
+    <p>Price ÷ net asset value per share. Above 1 means the market values the company above its accounting net assets.</p>
+    <details class="check"><summary>Check: a company has just paid a 20p dividend, expects 5% growth, and investors want 12%. What is the share worth?</summary><div>D1 = 20 × 1.05 = 21p. P = 21 ÷ (0.12 − 0.05) = 300p.</div></details>
+    <details class="check"><summary>Check: a share's P/E is 18 and earnings are expected to grow 12% a year. Is it attractive on the PEG measure?</summary><div>PEG = 18 ÷ 12 = 1.5. That is above 1, so it is considered unfavourable.</div></details>
+  </article>
+
+  <article class="lesson" id="c3">
+    <div class="kicker">Lesson 3</div>
+    <h3>Depositary receipts and unlisted investments</h3>
+    <p class="oneline">A depositary receipt lets you own a foreign company's shares through a local, local-currency certificate. Unlisted investments trade liquidity for growth potential and tax breaks.</p>
+    <h4>Depositary receipts</h4>
+    <p>A bank holds the foreign shares and issues receipts against them. <b>ADRs</b> trade in the US in US dollars, with the depositary bank as the registered shareholder. ADRs have existed since 1927; BP, Shell and Vodafone have them. <b>GDRs</b> are issued outside the US, often by Asian and emerging-market companies, sometimes to build a presence in a new market as much as to raise money.</p>
+    <ul>
+      <li><b>Sponsored</b> programmes have one depositary appointed by the company, which gives the company control and lets it raise capital. <b>Unsponsored</b> programmes are set up by banks without the company's agreement and are now little used.</li>
+      <li><b>Holders' rights:</b> dividends are converted into the DR currency after fees, and holders can usually vote through the depositary. They <b>cannot take part directly in rights issues</b>; the depositary sells the rights and passes on the cash.</li>
+      <li><b>Price</b> ≈ underlying share price × DR ratio, adjusted for the exchange rate.</li>
+      <li><b>London GDR listing:</b> freely transferable, at least £30m in total value, and at least 10% of the GDRs in public hands.</li>
+    </ul>
+    <h4>Venture capital and private equity</h4>
+    <div class="cols">
+      <div><b>VCT</b>A listed trust investing in small, higher-risk companies. It needs HMRC approval and pays no corporation tax on its gains.</div>
+      <div><b>EIS</b>Tax relief for investing in new shares of a small unquoted company. The company needs gross assets up to £15m before and £16m after the issue, fewer than 250 staff, and less than 7 years' trading. Shares must be held at least 3 years, and the investor must not be connected to the company when subscribing.</div>
+      <div><b>SEIS</b>For very early-stage companies: gross assets up to £350,000, fewer than 25 staff, less than 3 years' trading, and under £250,000 raised.</div>
+    </div>
+    <p><b>Private equity</b> includes leveraged buyouts, management buyouts, distressed investing and mezzanine finance. Institutions like it for its <b>low correlation with listed markets</b> and historically high returns. It is high-risk, long-term and illiquid, so it must be well diversified. Unlike a bank, a private equity investor stays committed when a company struggles. It exits through a trade sale or a flotation.</p>
+    <details class="check"><summary>Check: an ADR holder's company announces a rights issue. What happens?</summary><div>The ADR holder can't take up the rights directly. The depositary bank sells the rights and distributes the proceeds.</div></details>
+  </article>
+
+  <article class="lesson" id="c4">
+    <div class="kicker">Lesson 4</div>
+    <h3>Corporate actions: changing the share capital</h3>
+    <p class="oneline">Some corporate actions just cut the same cake into more or fewer slices. Others bring in new money. The share price adjusts so that the value you hold stays the same.</p>
+    <h4>Three types</h4>
+    <div class="cols">
+      <div><b>Mandatory</b>Happens automatically, such as a cash dividend.</div>
+      <div><b>Mandatory with options</b>A default applies unless you choose otherwise, such as a rights issue.</div>
+      <div><b>Voluntary</b>You must decide, such as accepting a takeover bid.</div>
+    </div>
+    <h4>Dividends</h4>
+    <p>Dividends can only come from <b>realised</b> profits; an unrealised gain such as a revalued building cannot be paid out. <b>Interim</b> dividends follow the half-year results. The <b>final</b> dividend is approved at the AGM. The key dates are: <b>ex-dividend date</b> (buy on or after it and you don't get the dividend; in the UK usually a Wednesday), <b>record date</b> (who is on the register, usually two business days later on a Friday) and <b>payment date</b> (aim: within 30 business days of the record date). In theory the price falls by the dividend on the ex-dividend date.</p>
+    <div class="cols">
+      <div><b>Scrip (stock) dividend</b>The company issues <b>new</b> shares instead of cash, so it keeps the cash. Shareholders pay no dealing costs but are diluted. The ratio is share price ÷ dividend: a 200p share with an 8p dividend gives 1 new share for every 25 held. It is taxed like the cash dividend.</div>
+      <div><b>DRIP (dividend reinvestment plan)</b>The company pays the cash dividend and uses it to buy <b>existing</b> shares in the market for you, at bulk commission rates. No dilution, but it can take up to three weeks.</div>
+    </div>
+    <h4>Bonus issues, splits and consolidations: same cake, different slices</h4>
+    <p>No money changes hands, so the company is worth the same and the price adjusts to the number of shares.</p>
+    <ul>
+      <li><b>Bonus (capitalisation/scrip) issue, 1-for-4:</b> 4 shares become 5, so a 500p share becomes 500 × 4 ÷ 5 = 400p. Reserves are turned into share capital, and nominal value is unchanged.</li>
+      <li><b>Share split:</b> each share is divided into several, each with a lower nominal value. Splitting 1 into 4 turns 800p into 200p. It makes the shares cheaper to trade.</li>
+      <li><b>Consolidation (reverse split):</b> shares are combined, raising the price and the nominal value. 10 into 1 turns 8p into 80p. It is used when the price has fallen to or below nominal value, which would stop the company issuing new shares.</li>
+    </ul>
+    <h4>Rights issues: new money from existing shareholders</h4>
+    <p>Existing shareholders are offered new shares in proportion to their holdings, at a discount. The new shares rank equally (<i>pari passu</i>) with the old. The price falls to the <b>theoretical ex-rights price (TERP)</b>: the total value of old shares plus the new cash, divided by the new number of shares.</p>
+    <div class="eg"><b>Book example.</b> 1m shares at £4. 1-for-5 at £3.50. Value = £4m + 200,000 × £3.50 = £4.7m over 1.2m shares, so TERP = <span class="mono">£3.92</span>. The nil-paid right is worth TERP − subscription price = <span class="mono">£0.42</span>.</div>
+    <p>A shareholder can: <b>take up</b> the rights in full; <b>sell</b> the rights (they are renounceable); <b>sell some to fund the rest</b> ("tail-swallowing"); or <b>do nothing</b>, in which case the company sells the rights and pays over the proceeds.</p>
+    <div class="confuse"><b>Book error:</b> section 10.6.4 says someone selling their rights "would receive £3.50 per right". That is the subscription price. A nil-paid right is worth the rights premium, about <b>£0.42</b>.</div>
+    <h4>Open offers and new issues</h4>
+    <ul>
+      <li><b>Open offer:</b> like a rights issue, but the entitlement <b>cannot be sold</b>, so it simply lapses if unused. That dilutes non-takers, so the listing rules cap the discount at <b>10%</b>.</li>
+      <li><b>IPO methods:</b> an <b>offer for subscription</b> means the company sells new shares directly to the public with a full prospectus, a national newspaper advert and underwriting. In an <b>offer for sale</b>, an issuing house buys the shares and sells them on to the public. A <b>placing</b> sells shares to selected institutions through a broker; with a lighter prospectus and no underwriting or advertising it is the <b>cheapest</b> method, and preferred for smaller markets.</li>
+    </ul>
+    <details class="check"><summary>Check: a 1-for-3 rights issue at 240p when the shares are 300p. What is the TERP?</summary><div>(3 × 300 + 240) ÷ 4 = 1,140 ÷ 4 = 285p.</div></details>
+    <details class="check"><summary>Check: why might a company with a 5p share price and 50p nominal value consolidate?</summary><div>New shares cannot be issued below nominal value. Consolidating raises the price (and the nominal value), makes the shares more marketable, and prepares the way for a rights issue.</div></details>
+  </article>
+
+  <article class="lesson" id="c5">
+    <div class="kicker">Lesson 5</div>
+    <h3>Money markets: borrowing and lending for up to a year</h3>
+    <p class="oneline">Money market instruments are short, high-quality and liquid, so they are the nearest thing to cash with a return.</p>
+    <p>Maturities run up to a year, and three months or less is common. Issuers are highly creditworthy, so risk is low. Banks are the main investors. The return comes either as <b>interest</b> (yield-basis instruments) or as the gap between the discounted purchase price and par (<b>discount-basis</b> instruments, where in many countries the gain is taxed as income).</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Instrument</th><th>Issuer</th><th>Key features</th></tr></thead>
+      <tbody>
+        <tr><td>Time deposit</td><td>Banks</td><td>Up to a year, <b>not negotiable</b>, rate tied to SONIA, €STR or SOFR</td></tr>
+        <tr><td>Treasury bill</td><td>Government</td><td>Issued at a discount; the risk-free benchmark. UK: weekly auctions, usually 91 days</td></tr>
+        <tr><td>Certificate of deposit</td><td>Banks</td><td>Negotiable fixed-rate deposit, up to 5 years</td></tr>
+        <tr><td>Commercial paper</td><td>Companies</td><td>Unsecured, issued at a discount, <b>8 to 365 days</b>; yields more than T-bills</td></tr>
+        <tr><td>Bill of exchange</td><td>Companies</td><td>A traded invoice. A bank guarantee turns it into a <b>banker's acceptance</b></td></tr>
+      </tbody>
+    </table></div>
+    <details class="check"><summary>Check: how is the return on a T-bill paid?</summary><div>As a capital gain. It is bought at a discount and repaid at par, with no coupon.</div></details>
+  </article>
+
+  <article class="lesson" id="c6">
+    <div class="kicker">Lesson 6</div>
+    <h3>How bonds work</h3>
+    <p class="oneline">A bond is a tradable loan. When interest rates rise, existing bonds with lower coupons become less attractive, so their prices fall.</p>
+    <h4>The parts of a bond</h4>
+    <ul>
+      <li><b>Nominal value</b> (par): £100 on UK bonds, $1,000 on US bonds. This is what is repaid at maturity.</li>
+      <li><b>Coupon</b>: interest as a % of nominal, usually paid every six months on gilts. Coupons are paid gross and taxed as income.</li>
+      <li><b>Maturity</b>: most bonds repay in one go (a "bullet"). UK classes are: DMO shorts under 7 years, mediums 7–15, longs over 15. The FT uses under 5, 5–15 and over 15.</li>
+      <li><b>Price</b>: quoted per £100 nominal, above par (a premium) or below (a discount). The <b>clean price</b> excludes accrued interest; the <b>dirty price</b> is what you actually pay (clean + accrued).</li>
+    </ul>
+    <h4>Why prices and yields move in opposite directions</h4>
+    <p>Suppose you hold a 5% bond and new bonds now pay 6%. Nobody will pay par for your 5% bond, so its price must fall until its overall return matches 6%. A bond's price is just its future cash flows discounted at today's rates: higher rates mean lower present values.</p>
+    <h4>Early redemption features</h4>
+    <div class="cols">
+      <div><b>Callable</b>The issuer can repay early, usually when rates fall, which leaves investors reinvesting at lower rates. Investors want a <b>higher</b> yield in return.</div>
+      <div><b>Putable</b>The investor can demand early repayment, which protects them. These bonds offer a <b>lower</b> yield.</div>
+      <div><b>Perpetual (undated)</b>No maturity date. The coupon is paid forever unless the issuer chooses to repay.</div>
+    </div>
+    <h4>Accrued interest</h4>
+    <p>Coupons are paid to whoever holds the bond on the payment date, so a buyer pays the seller for the interest earned since the last coupon. Gilts use <b>actual/actual</b>: Nominal × (coupon ÷ payments per year) × (days accrued ÷ days in the coupon period). If a bond trades <b>ex-interest</b>, the buyer won't receive the next coupon, so the seller owes the buyer "rebate interest" and it is <b>deducted</b> from the clean price.</p>
+    <details class="check"><summary>Check: why does a callable bond pay a higher yield than a similar non-callable bond?</summary><div>The issuer will tend to call it when rates have fallen, forcing investors to reinvest at lower rates. The higher yield compensates for that reinvestment risk.</div></details>
+  </article>
+
+  <article class="lesson" id="c7">
+    <div class="kicker">Lesson 7</div>
+    <h3>Types of bond: who issues them and how they pay</h3>
+    <p class="oneline">The issuer sets the credit risk, and the coupon structure sets how the bond reacts to rates and inflation.</p>
+    <h4>By issuer</h4>
+    <ul>
+      <li><b>Government (sovereign):</b> the largest market. Often called "risk-free", but really minimal risk: governments do default (Argentina has done so nine times), and bonds in a foreign currency add the risk that the government can't get that currency. Issued through agencies such as the UK DMO, usually by auction.</li>
+      <li><b>Supranational:</b> issued by bodies such as the IMF, World Bank, EIB and Asian Development Bank.</li>
+      <li><b>Agency:</b> US government-sponsored agencies such as Fannie Mae, Freddie Mac and the Federal Home Loan Banks.</li>
+      <li><b>Local authority / municipal:</b> US "munis" fund local projects and are often tax-advantaged for local residents.</li>
+    </ul>
+    <h4>By coupon type</h4>
+    <div class="cols">
+      <div><b>Floating rate notes</b>The coupon resets every 1–6 months against SONIA, €STR or SOFR. Little interest-rate risk, so popular when rates are expected to rise.</div>
+      <div><b>Index-linked</b>Coupon and principal rise with inflation (RPI in the UK). The lag is <b>8 months</b> for gilts issued before Sept 2005 and <b>3 months</b> afterwards. Coupon paid = coupon × (lagged RPI ÷ base RPI).</div>
+      <div><b>Zero coupon</b>No coupons. Bought at a deep discount; the whole return is the rise to par, and in many countries it is taxed as income.</div>
+    </div>
+    <p>Two points on index-linked bonds. With <b>zero inflation</b> the index ratio stays at 1, so you just receive the stated (real) coupon. Some markets have no deflation floor, so principal can be repaid below par if prices fall. Inflation protection isn't perfect: in 2021–23, index-linked prices still fell as investors expected sharp rate rises.</p>
+    <h4>STRIPS</h4>
+    <p>A conventional government bond can be stripped into each coupon and the principal, and each piece trades as a separate zero coupon bond. A 3-year gilt gives <b>7 strips</b> (6 coupons + 1 principal). They let investors match a known future liability exactly, and they provide the capital-protection part of structured products. UK individuals pay income tax on the annual change in value, and strips can be held in an ISA.</p>
+    <details class="check"><summary>Check: a 2% index-linked gilt pays semi-annually. Base RPI is 250 and the lagged RPI is 300. What is the next coupon per £100?</summary><div>Half-year coupon is £1.00. Index ratio = 300 ÷ 250 = 1.2, so the payment is £1.20.</div></details>
+  </article>
+
+  <article class="lesson" id="c8">
+    <div class="kicker">Lesson 8</div>
+    <h3>Corporate debt: security, seniority and risk</h3>
+    <p class="oneline">The more security and seniority a corporate bond has, the safer it is and the lower the yield it pays.</p>
+    <p>Debt is usually cheaper than equity for a company: lenders take less risk (interest comes before dividends, and lenders are repaid first in a liquidation), and interest is tax-deductible. But interest must be paid whatever happens.</p>
+    <h4>Secured debt</h4>
+    <div class="cols">
+      <div><b>Fixed charge</b>On specific, permanent assets such as a building. Ranks <b>first</b>.</div>
+      <div><b>Floating charge</b>On changing assets such as stock and receivables, which the company can still trade. Ranks after fixed charges and preferential creditors.</div>
+    </div>
+    <p>A trustee watches over the deed and can appoint a receiver if terms are breached. <b>Debenture</b> means different things: in the UK it is <b>secured</b> on specific assets and must be registered at Companies House (unsecured debt there is "loan stock"). In the US a debenture is <b>unsecured</b>.</p>
+    <h4>Unsecured debt, from most to least junior</h4>
+    <ul>
+      <li><b>Income bonds:</b> the most junior bonds. Interest is only paid if the issuer earns a set level of income.</li>
+      <li><b>Subordinated bonds:</b> repaid only after other creditors, so they pay higher interest.</li>
+      <li><b>High-yield (junk):</b> rated below BBB/Baa3, with higher coupons for higher default risk.</li>
+      <li><b>Mini bonds:</b> unlisted, sold to retail investors, held to maturity (3–5 years), illiquid, and not necessarily covered by the FSCS.</li>
+      <li><b>Speculative illiquid securities:</b> hard to price and trade, aimed at specialist institutions.</li>
+    </ul>
+    <p><b>PIBS</b> are irredeemable, non-cumulative bonds from building societies that rank behind all other creditors. If the society demutualises they become perpetual subordinated bonds (PSBs).</p>
+    <h4>Securitisation</h4>
+    <p>Many small, illiquid loans (mortgages, credit card debt, receivables) are pooled, usually in an SPV, and bonds are issued backed by their cash flows. These are <b>asset-backed securities</b>; mortgage-backed securities are the biggest market. They turn illiquid assets into tradable ones and widen investors' choice. MBS were at the centre of the 2007–08 crisis, and rules are now stricter. The participants are the issuer, the underwriter (manages the issue), the debenture trustee (enforces the terms) and brokers/dealers (secondary trading).</p>
+    <h4>Credit ratings</h4>
+    <p>Investment grade is <b>BBB−/Baa3 and above</b> (Fitch, S&amp;P / Moody's). Below that is high yield. A lower rating means investors demand a higher yield. The gap over a government bond is the <b>credit spread</b>.</p>
+    <details class="check"><summary>Check: in the US, is a debenture secured?</summary><div>No. In the US a debenture is unsecured and backed only by the issuer's creditworthiness. In the UK it is secured on specific assets.</div></details>
+  </article>
+
+  <article class="lesson" id="c9">
+    <div class="kicker">Lesson 9</div>
+    <h3>Bond yields, the yield curve and duration</h3>
+    <p class="oneline">Flat yield shows only income. Redemption yield adds the gain or loss to maturity. Duration tells you how much the price moves when rates change.</p>
+    <h4>Yield measures</h4>
+    <ul>
+      <li><b>Flat yield</b> = coupon ÷ clean price. It ignores any gain or loss to redemption, so it is most useful when the yield curve is flat.</li>
+      <li><b>Gross redemption yield (GRY)</b> adds the annual gain or loss to par. Strictly it is the bond's IRR. A quick approximation: flat yield + [(100 − price) ÷ years] ÷ price. It assumes you hold to maturity and reinvest coupons at the same rate (the latter is <b>reinvestment risk</b>). Being gross, it suits non-taxpayers such as pension funds.</li>
+      <li><b>Net redemption yield (NRY)</b> taxes the coupon but not the gain, so taxpayers prefer low-coupon bonds bought below par.</li>
+      <li><b>Real return:</b> roughly nominal − inflation. More precisely, using Fisher: (1 + nominal) ÷ (1 + inflation) − 1.</li>
+    </ul>
+    <div class="eg"><b>Book example.</b> An 8% bond at 150.95 has a flat yield of 5.30% but a GRY of only 1.92%, because it loses about 51 points by maturity. A 3¾% bond at 112.41 yields 3.34% flat but 2.30% GRY, so it is the better overall return.</div>
+    <h4>The yield curve</h4>
+    <div class="cols">
+      <div><b>Normal (upward)</b>Longer bonds yield more to compensate for tying up money for longer. Signals an expanding economy.</div>
+      <div><b>Inverted</b>Short yields are above long yields. The market expects rates to fall, and it is a reliable warning of recession.</div>
+      <div><b>Flat</b>Similar yields across maturities. Signals uncertainty.</div>
+    </div>
+    <p>Two theories explain the shape. <b>Liquidity preference</b> says investors want extra yield for locking money away longer. <b>Expectations theory</b> says the curve reflects expected future rates.</p>
+    <h4>Duration</h4>
+    <p><b>Macaulay duration</b> is the weighted average time until you receive the bond's cash flows, weighted by present value. A zero coupon bond's duration equals its maturity. <b>Modified duration</b> = Macaulay ÷ (1 + GRY), and it gives the approximate % price change for a 1% change in yield. Price sensitivity is <b>higher</b> when the coupon is lower, the maturity is longer and the yield is lower.</p>
+    <div class="eg"><b>Book example.</b> A 3-year 7% bond on an 8% GRY has a Macaulay duration of 2.81 years. Modified duration = 2.81 ÷ 1.08 = 2.60, so a 1% rise in yield cuts the price by about 2.6%.</div>
+    <h4>Spreads and benchmarks</h4>
+    <p>A corporate bond yielding 6% against a government bond on 4.2% has a spread of <b>180 basis points</b>. New issues are priced off a benchmark: usually the government bond of matching maturity, but a benchmark curve where the bond has put or call features. Swap rates are also used. The <b>swap spread</b> (swap rate − government yield) is normally positive; it unusually inverted in 2010.</p>
+    <details class="check"><summary>Check: which has the higher duration, a 2% 20-year bond or an 8% 5-year bond?</summary><div>The 2% 20-year bond, because its coupon is lower and its maturity longer.</div></details>
+  </article>
+
+  <article class="lesson" id="c10">
+    <div class="kicker">Lesson 10</div>
+    <h3>Hybrids: convertibles, CoCos and mezzanine</h3>
+    <p class="oneline">A hybrid sits between debt and equity. It pays like a bond, but can share in the upside, or be forced to absorb losses, like a share.</p>
+    <h4>Convertible bonds</h4>
+    <p>The holder can keep the bond (coupons, then repayment) or convert it into a fixed number of shares. Because of that option, convertibles pay a <b>lower coupon</b> than ordinary bonds. They behave partly like bonds (sensitive to rates) and partly like shares, and are often subordinated.</p>
+    <ul>
+      <li><b>Conversion ratio</b> = nominal ÷ conversion price. £100 nominal with a conversion price of £4 gives 25 shares.</li>
+      <li><b>Conversion premium</b> = bond price ÷ (ratio × share price) − 1. Book example: a bond at £120 converting into 18 shares at £5.75 has conversion value £103.50, a premium of 15.9%, so it is not worth converting.</li>
+      <li>A <b>high premium</b> means the convertible behaves like a bond. A <b>low premium</b> means it moves with the shares. A <b>discount</b> means converting is worthwhile.</li>
+      <li><b>For the issuer:</b> cheap finance with tax-deductible interest, but it dilutes EPS and control. <b>For the investor:</b> upside if the company prospers, while ranking ahead of shareholders if it fails.</li>
+      <li>Rights or bonus issues lower the conversion price and raise the ratio, so holders aren't disadvantaged.</li>
+    </ul>
+    <h4>CoCos (contingent convertibles)</h4>
+    <p>These convert automatically when a trigger is hit, typically when a bank's <b>CET1 capital ratio</b> falls below a threshold. That recapitalises the bank in a crisis, at the bondholders' expense.</p>
+    <h4>Mezzanine finance</h4>
+    <p>Mezzanine sits <b>between senior debt and equity</b>: usually unsecured debt or preferred stock, often with warrants or a conversion option (an "equity kicker"). Investors expect roughly <b>10–30%</b> a year. Interest may be <b>payment-in-kind (PIK)</b>, which rolls up into the principal, and principal is often only due at maturity. It is cheaper than equity for the issuer but costlier than secured debt, adds leverage and may dilute shareholders. It is used for buyouts, recapitalisations and expansion, and is common in private equity.</p>
+    <details class="check"><summary>Check: a convertible trades at £112 and converts into 25 shares priced at £4.00. What is the conversion premium?</summary><div>Conversion value = 25 × £4 = £100. Premium = 112 ÷ 100 − 1 = 12%.</div></details>
+  </article>
+
+  <article class="lesson" id="c11">
+    <div class="kicker">Lesson 11</div>
+    <h3>Derivatives: options, warrants, futures and forwards</h3>
+    <p class="oneline">An option gives a right. A future or forward is an obligation. All of them let you hedge or take a view without owning the asset.</p>
+    <h4>Options</h4>
+    <p>A <b>call</b> is the right to buy and a <b>put</b> is the right to sell, at the <b>strike price</b>. The <b>buyer (holder, long)</b> pays a premium and can lose only that. The <b>seller (writer, short)</b> takes the obligation. <b>Intrinsic value</b> is what you'd gain by exercising now; anything above that is <b>time (extrinsic) value</b>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>Call</th><th>Put</th></tr></thead>
+      <tbody>
+        <tr><td>In the money</td><td>Strike below the price</td><td>Strike above the price</td></tr>
+        <tr><td>Out of the money</td><td>Strike above the price</td><td>Strike below the price</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Exercise styles:</b> American (any day), European (expiry only), Bermudan (set dates, often monthly), Asian (pay-off based on the <i>average</i> price). Options are used for hedging, arbitrage, speculation and income (for example selling calls on shares you own).</p>
+    <h4>Warrants</h4>
+    <p>Like a call (or put) on a company's shares, but usually <b>issued by the company itself</b> and often attached to a bond to lower its coupon. Unlike a convertible, the <b>bond stays in issue</b> when the warrant is exercised. Holders get no dividends until they exercise.</p>
+    <h4>Futures vs forwards</h4>
+    <div class="cols">
+      <div><b>Futures</b>Exchange-traded with standardised contract specifications (only the price is negotiated). Fungible, liquid, marked to market daily, and closed out with an opposite trade. Financial futures settle in cash.</div>
+      <div><b>Forwards</b>OTC and fully customisable (size, date, grade), usually with banks. Usually not marked to market daily. Less liquid, more counterparty risk, less regulation.</div>
+    </div>
+    <h4>The Greeks</h4>
+    <ul>
+      <li><b>Delta:</b> change in premium ÷ change in the underlying. Deep ITM ±1, ATM about ±0.5, far OTM 0. Calls are positive, puts negative. A short position flips the sign: being short an ATM put gives delta (−1) × (−0.5) = +0.5.</li>
+      <li><b>Gamma:</b> how fast delta changes. Highest ATM near expiry. Long options have positive gamma.</li>
+      <li><b>Vega:</b> sensitivity to a 1% change in implied volatility. Positive for long calls and puts, highest ATM.</li>
+      <li><b>Theta:</b> time decay. Negative for long options and positive for short options, and it accelerates near expiry.</li>
+    </ul>
+    <h4>Volatility</h4>
+    <p><b>Historic</b> volatility is measurable but backward-looking. <b>Future</b> volatility is what you'd really like to know, but can't. <b>Implied</b> volatility is worked backwards from the option's market price using a pricing model. Black-Scholes prices European options only; the binomial model handles American options. A <b>volatility smile</b> means implied volatility is higher for deep ITM/OTM strikes; equity markets often show a "smirk" with higher implied volatility on OTM puts. The <b>VIX</b> is the 30-day implied volatility of S&amp;P 500 options: the "fear gauge".</p>
+    <details class="check"><summary>Check: a call with a 450p strike costs 42p and the share is 480p. What are its intrinsic and time values?</summary><div>Intrinsic = 480 − 450 = 30p. Time value = 42 − 30 = 12p.</div></details>
+  </article>
+
+  <article class="lesson" id="c12">
+    <div class="kicker">Lesson 12</div>
+    <h3>Swaps: exchanging one stream of payments for another</h3>
+    <p class="oneline">A swap lets two parties trade cash flows, such as fixed for floating interest or an index return for interest, to reshape their risk without moving the underlying loan or asset.</p>
+    <h4>Interest rate swaps</h4>
+    <p>Two parties exchange interest payments in the same currency on a <b>notional</b> amount that is <b>never exchanged</b>. Terms run up to about 25 years. A company with a floating-rate loan that fears rising rates pays fixed and receives floating, so its cost is effectively fixed.</p>
+    <div class="cols">
+      <div><b>Vanilla (coupon) swap</b>Fixed for floating. The most common.</div>
+      <div><b>Basis swap</b>Floating for floating, using two different reference rates.</div>
+      <div><b>Swaption</b>An option, bought for a premium, to enter a swap later.</div>
+    </div>
+    <h4>Quality spread differential</h4>
+    <p>Two borrowers with different credit ratings pay different spreads in the fixed and floating markets. The difference between the two spreads is the <b>QSD</b>: the saving a swap can share between them if each borrows where it has the comparative advantage. For example: A pays 4.0% fixed or SONIA + 0.2%; B pays 5.5% fixed or SONIA + 0.7%. The QSD is (5.5 − 4.0) − (0.7 − 0.2) = <b>1.0%</b>.</p>
+    <h4>Currency and FX</h4>
+    <div class="cols">
+      <div><b>Currency swap</b>Interest in two currencies, with the <b>principal exchanged at the start and end</b> at a rate agreed upfront. That means more credit risk than an interest rate swap. Used for hedging and financing.</div>
+      <div><b>FX swap</b>Buy a currency spot and sell it forward at the same time. Short-term, principal only. Used for liquidity and short-term hedging.</div>
+      <div><b>FX forward</b>An exchange rate fixed today for settlement after T+2. The forward rate reflects the <b>interest rate differential</b>, so the market is used to speculate on changes in that differential.</div>
+    </div>
+    <h4>Equity and other swaps</h4>
+    <ul>
+      <li><b>Equity forward:</b> a single payment at maturity of an index's return against a fixed rate.</li>
+      <li><b>Equity swap:</b> periodic payments of that kind. It gives index exposure without buying the shares, access to illiquid markets, and longer terms than exchange-traded derivatives. If the index falls, you pay both the interest and the loss.</li>
+      <li><b>Index swap:</b> like an equity swap but on any index, such as bonds or commodities.</li>
+      <li><b>Volatility and variance swaps:</b> a pure bet on volatility with no exposure to the asset's direction. Buy if you expect volatility to rise. The pay-off = notional × (realised − strike), using volatility or variance (volatility squared).</li>
+      <li><b>Bullet swap:</b> settled in one payment at the end rather than periodically.</li>
+    </ul>
+    <details class="check"><summary>Check: what is exchanged in a currency swap that is not exchanged in an interest rate swap?</summary><div>The principal, at the start and at the end.</div></details>
+  </article>
+
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
+
+</section>
+
+<section data-view="learn" hidden>
+  <h2>What gets tested, in priority order</h2>
+  <p>Each topic is ranked by how often the workbook's own questions (the 80 practice questions and the end-of-chapter questions) test it. Section 4 carries about 21 marks, so the <span class="pill hi">Tested often</span> rows alone are worth about 12 of them.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Topic</th><th>Priority</th><th>Where the book tests it</th></tr></thead>
+    <tbody>
+      <tr><td>Bond yields, yield curve, credit ratings</td><td><span class="pill hi">Tested often</span></td><td>MCQs 15, 62, 65 · Ch-end 7</td></tr>
+      <tr><td>Convertibles and conversion premium</td><td><span class="pill hi">Tested often</span></td><td>MCQs 38, 55 · Ch-end 8</td></tr>
+      <tr><td>Corporate actions: TERP, rights choices, IPO methods</td><td><span class="pill hi">Tested often</span></td><td>MCQs 24, 30 · Ch-end 5, 10</td></tr>
+      <tr><td>Share classes, preference shares, ranking</td><td><span class="pill hi">Tested often</span></td><td>MCQs 40, 60, 66, 69 · Ch-end 1, 2, 6</td></tr>
+      <tr><td>Bond types: STRIPS, index-linked, agency, PIBS</td><td><span class="pill md">Regular</span></td><td>MCQs 31, 49, 52, 75</td></tr>
+      <tr><td>Investor ratios: EPS, P/E, yield, cover, Gordon</td><td><span class="pill md">Regular</span></td><td>MCQs 7, 39 · syllabus 4.1.2–4.1.4</td></tr>
+      <tr><td>Derivatives: option styles, Greeks, volatility</td><td><span class="pill md">Regular</span></td><td>MCQ 67 · Ch-end 9</td></tr>
+      <tr><td>Depositary receipts</td><td><span class="pill md">Regular</span></td><td>MCQ 45 · Ch-end 3</td></tr>
+      <tr><td>VCT, EIS, SEIS, private equity</td><td><span class="pill md">Regular</span></td><td>MCQs 9, 13, 76 · Ch-end 4</td></tr>
+      <tr><td>Swaps and FX forwards</td><td><span class="pill md">Regular</span></td><td>MCQs 42, 68</td></tr>
+      <tr><td>Money market instruments</td><td><span class="pill lo">Occasional</span></td><td>MCQ 28</td></tr>
+      <tr><td>Duration and accrued interest calculations</td><td><span class="pill lo">Occasional</span></td><td>Syllabus 4.6.6, 4.6.10</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="topic">
+    <h3>Equity formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">EPS</div><code>(Net income − Pref dividends) ÷ Ordinary shares</code></div>
+      <div class="f"><div class="n">P/E</div><code>Share price ÷ EPS</code><div class="small">PEG = P/E ÷ growth %; below 1 is attractive</div></div>
+      <div class="f"><div class="n">Dividend yield</div><code>Dividend per share ÷ Share price</code></div>
+      <div class="f"><div class="n">Dividend cover</div><code>EPS ÷ Dividend per share</code><div class="small">2× prudent · below 1.5× weak · below 1× uncovered</div></div>
+      <div class="f"><div class="n">Price to book</div><code>Share price ÷ NAV per share</code></div>
+      <div class="f"><div class="n">Gordon growth</div><code>P = D1 ÷ (r − g)
+D1 = D0 × (1 + g)</code></div>
+      <div class="f"><div class="n">EBIT / EBITDA</div><code>EBIT = Net income + Interest + Tax
+EBITDA = EBIT + Depreciation + Amortisation</code></div>
+      <div class="f"><div class="n">Convertible preference premium</div><code>(Prefs needed per ordinary × Pref price) ÷ Ordinary price − 1</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Corporate action formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">TERP</div><code>(Old shares × Price + New shares × Subscription) ÷ Total shares</code></div>
+      <div class="f"><div class="n">Rights premium (nil-paid value)</div><code>TERP − Subscription price</code></div>
+      <div class="f"><div class="n">Bonus or split</div><code>Old price × Old shares ÷ New shares</code></div>
+      <div class="f"><div class="n">Consolidation</div><code>Old price × Shares combined</code></div>
+      <div class="f"><div class="n">Scrip dividend ratio</div><code>Share price ÷ Dividend per share</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Bond formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Flat yield</div><code>Coupon ÷ Clean price</code></div>
+      <div class="f"><div class="n">GRY (approx.)</div><code>Flat yield + [(100 − Price) ÷ Years] ÷ Price</code></div>
+      <div class="f"><div class="n">NRY (approx.)</div><code>Flat yield × (1 − tax) + [(100 − Price) ÷ Years] ÷ Price</code></div>
+      <div class="f"><div class="n">Real return</div><code>Simple: Nominal − Inflation
+Fisher: (1 + N) ÷ (1 + I) − 1</code></div>
+      <div class="f"><div class="n">Modified duration</div><code>Macaulay ÷ (1 + GRY)
+%ΔPrice ≈ −MD × Δyield</code></div>
+      <div class="f"><div class="n">Accrued interest</div><code>Nominal × (Coupon ÷ n) × (Days accrued ÷ Days in period)</code><div class="small">Cum-interest: add to clean · Ex-interest: deduct</div></div>
+      <div class="f"><div class="n">Index-linked payment</div><code>Coupon × (Lagged RPI ÷ Base RPI)</code></div>
+      <div class="f"><div class="n">Convertible bond premium</div><code>Bond price ÷ (Shares per £100 × Share price) − 1
+Conversion ratio = Nominal ÷ Conversion price</code></div>
+      <div class="f"><div class="n">Spread</div><code>Bond yield − Benchmark yield (in basis points)</code></div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3>Derivative formulas</h3>
+    <div class="fgroup">
+      <div class="f"><div class="n">Delta</div><code>Δ Premium ÷ Δ Underlying</code><div class="small">Position delta = (±1 for long/short) × option delta</div></div>
+      <div class="f"><div class="n">Intrinsic / time value</div><code>Call IV = Price − Strike (if positive)
+Put IV = Strike − Price (if positive)
+Time value = Premium − IV</code></div>
+      <div class="f"><div class="n">Quality spread differential</div><code>Fixed spread − Floating spread</code></div>
+    </div>
+  </div>
+
+  <h2>Traps the wrong answers rely on</h2>
+  <ul>
+    <li><b>Gordon:</b> using D0 instead of D1. If you're told the dividend "just paid", grow it first.</li>
+    <li><b>Price changes push ratios in opposite directions.</b> If the share price falls, P/E falls and dividend yield rises (MCQ 39).</li>
+    <li><b>The two conversion formulas run in opposite directions.</b> A convertible bond's ratio is <i>shares received per £100</i>. A convertible preference share's ratio is <i>preference shares needed for one ordinary share</i>. Read which way the question states it.</li>
+    <li><b>Rights vs open offer:</b> rights can be sold (renounced); an open-offer entitlement cannot. The open offer discount is capped at 10%.</li>
+    <li><b>Placing</b> is the cheapest way to float. An <b>offer for subscription</b> needs a full prospectus, advertising and underwriting.</li>
+    <li><b>Preference shareholders in a liquidation</b> get back nominal value at most, after all creditors are paid.</li>
+    <li><b>Callable bonds pay more yield and putable bonds pay less.</b> The yield follows whoever holds the option.</li>
+    <li><b>Duration goes up</b> with a lower coupon, longer maturity and lower yield.</li>
+    <li><b>UK debentures are secured; US debentures are unsecured.</b></li>
+    <li><b>Index-linked lag:</b> 8 months for gilts issued before Sept 2005, 3 months otherwise.</li>
+    <li><b>Warrants vs convertibles:</b> exercising a warrant leaves the bond in issue; converting a convertible replaces it.</li>
+    <li><b>Currency swaps exchange principal at the start and end; interest rate swaps never do.</b></li>
+    <li><b>Commercial paper</b> runs 8 to 365 days. <b>Time deposits</b> are not negotiable.</li>
+  </ul>
+
+  <div class="warnbox"><b>Workbook errors spotted in Chapter 4.</b> (1) Section 10.6.4 says selling rights earns "£3.50 per right". That is the subscription price; a nil-paid right is worth the premium (£0.42 in that example). (2) The variance swap example gives a pay-off of $125,000, but $1m × (225 − 100) is $125m as printed. Learn the formula and don't rely on that example's figure. (3) Section 9.1.1 calls a floating-for-floating swap a "basic" swap; the syllabus term is <b>basis</b> swap.</div>
+
+</section>
+
+<section data-view="practice" hidden>
+  <h2>50 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <div class="controls">
+    <select id="mode" aria-label="Mode">
+      <option value="practice">Practice: instant feedback</option>
+      <option value="mock">Mock: timed, marked at the end</option>
+    </select>
+    <select id="topic" aria-label="Topic">
+      <option value="all">All topics</option>
+    </select>
+    <button id="shuffle" type="button">Shuffle</button>
+    <button id="reset" type="button">Reset answers</button>
+    <button id="finish" class="primary" type="button" hidden>Finish and mark</button>
+    <span class="timer" id="timer" hidden></span>
+    <span class="score" id="score"></span>
+  </div>
+  <div id="result"></div>
+  <div class="stats" id="stats"></div>
+  <div id="qlist"></div>
+</section>
+
+<section data-view="method" hidden>
+  <h2>How this was built</h2>
+  <ul>
+    <li>I read Chapter 4 of the Edition 4 workbook (June 2025) and the investor-ratio sections of Chapter 3 (3.6), which the syllabus counts under Element 4.</li>
+    <li>I matched each Element 4 learning objective against the book's 80 practice questions and the Chapter 4 end-of-chapter questions to set the priority labels.</li>
+    <li>Real CISI exam questions are confidential and not published. These 50 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
+    <li>Market-activity topics such as exchanges, VWAP and FX risk are printed at the end of Chapter 4, but the syllabus counts them under Element 2, so they are in the Section 2 module.</li>
+  </ul>
+
+</section>
+</main>
+
+<script>
+const T={1:"Shares & valuation",2:"DRs & unlisted",3:"Corporate actions",4:"Money markets & bond types",5:"Corporate debt",6:"Yields & pricing",7:"Hybrids",8:"Derivatives & swaps"};
+const Q=[
+// 1 Shares & valuation (8)
+{t:1,c:1,q:"A company's net income is £9m, it pays preference dividends of £1m, and it has 40 million ordinary shares. What is its EPS?",o:["20p","22.5p","25p","2.5p"],a:0,x:"EPS = (9 − 1) ÷ 40 = £0.20 = 20p. 22.5p ignores the preference dividend. (Ch 3 §3.6.1)"},
+{t:1,c:1,q:"A share trades at 360p and has EPS of 24p. Analysts forecast next year's EPS at 30p. What are its historic and prospective P/E ratios?",o:["15× and 12×","12× and 15×","15× and 15×","6.7% and 8.3%"],a:0,x:"Historic P/E = 360 ÷ 24 = 15×. Prospective P/E = 360 ÷ 30 = 12×. 6.7% and 8.3% are the earnings yields. (Ch 3 §3.6.2)"},
+{t:1,c:1,q:"A share has a P/E of 18 and earnings are expected to grow 12% a year. What is its PEG ratio, and how is it viewed?",o:["0.67, attractive","1.5, unfavourable","1.5, attractive","2.16, unfavourable"],a:1,x:"PEG = 18 ÷ 12 = 1.5. Below 1 is considered attractive and above 1 unfavourable. (Ch 3 §3.6.2)"},
+{t:1,c:1,q:"A company has just paid a dividend of 20p. Dividends are expected to grow at 5% a year and investors require a 12% return. What is the share's value under Gordon's growth model?",o:["167p","285.7p","300p","175p"],a:2,x:"D1 = 20 × 1.05 = 21p. P = 21 ÷ (0.12 − 0.05) = 300p. Using D0 gives 285.7p. (Ch 3 §3.6.3)"},
+{t:1,c:1,q:"A company reports net income of £50m, interest of £10m, tax of £15m and depreciation and amortisation of £25m. What is its EBITDA?",o:["£75m","£90m","£100m","£65m"],a:2,x:"EBITDA = 50 + 10 + 15 + 25 = £100m. EBIT would be £75m. (Ch 3 §3.6.1)"},
+{t:1,c:1,q:"A company's convertible preference shares are priced at 90p. Six preference shares convert into one ordinary share, which trades at 500p. What is the conversion premium or discount?",o:["8% discount","8% premium","10% premium","5.6% premium"],a:1,x:"(6 × 90) ÷ 500 − 1 = 540 ÷ 500 − 1 = +8%, a premium. Buying the preference shares is the dearer route, so conversion isn't worthwhile. (Ch 4 §2.2.2)"},
+{t:1,c:0,q:"What does it mean when preference shares are described as cumulative?",o:["They can be converted into ordinary shares","Any unpaid dividends must be paid in full before ordinary shareholders receive a dividend","They carry full voting rights","Their dividend rises with ordinary dividends"],a:1,x:"Cumulative means arrears of dividend build up and rank ahead of any ordinary dividend. A dividend that rises with ordinary dividends describes participating preference shares. (Ch 4 §2.2.2)"},
+{t:1,c:0,q:"A company is liquidated. Which of these is paid first?",o:["Preference shareholders","Subordinated loan stock holders","Ordinary shareholders","They all rank equally"],a:1,x:"Under the Insolvency Act 1986 order, subordinated loan stock (5th) ranks ahead of preference shares (6th) and ordinary shares (7th). (Ch 4 §2.2.6)"},
+// 2 DRs & unlisted (5)
+{t:2,c:0,q:"Which statement about American depositary receipts (ADRs) is correct?",o:["They are denominated in the issuer's home currency","The depositary bank is the registered holder of the underlying shares","ADR holders take up rights issues directly","They can only trade on Nasdaq"],a:1,x:"ADRs are dollar-denominated and the depositary bank is the registered shareholder. Holders can't take part in rights issues directly. ADRs trade on the NYSE, NYSE American and Nasdaq, and there is a market on the LSE. (Ch 4 §3.1.1, §3.4)"},
+{t:2,c:0,q:"What is the key feature of a sponsored depositary receipt programme?",o:["Several banks issue receipts without the company's involvement","One depositary is appointed by the company under a deposit agreement, giving the company control","It can only be listed in the US","It never pays dividends"],a:1,x:"Sponsored programmes use one depositary appointed by the company, which gives it control and lets it raise capital. Unsponsored programmes are set up by banks without the company's agreement and are now little used. (Ch 4 §3.2)"},
+{t:2,c:0,q:"To qualify for EIS tax reliefs, which condition must the investor's shares meet?",o:["They must be listed on the Main Market","They must be new ordinary shares not redeemable for at least three years","They must be preference shares","They must be bought from an existing shareholder"],a:1,x:"'Eligible shares' are new ordinary shares not redeemable for at least three years. The investor must also be a 'qualifying individual', not connected with the company when subscribing. (Ch 4 §4.2)"},
+{t:2,c:0,q:"Which of these companies could qualify for EIS but NOT for SEIS?",o:["A two-year-old company with 15 employees and £300,000 gross assets","A five-year-old company with 120 employees and £8m gross assets","A one-year-old start-up with 5 employees","A company that has raised £100,000 under SEIS"],a:1,x:"SEIS needs under 25 employees, gross assets up to £350,000 and under 3 years' trading. A 5-year-old company with 120 staff and £8m of assets is within EIS limits (under 250 staff, up to £15m assets, under 7 years) but too big for SEIS. (Ch 4 §4.2, §4.3)"},
+{t:2,c:0,q:"Why has private equity become popular with institutional investors?",o:["It is highly liquid","Its low correlation with listed equity markets and historically above-average returns","It is regulated like a UCITS fund","It guarantees capital"],a:1,x:"The workbook cites low correlation with broad equity markets and historically higher returns. It is also high-risk, illiquid and long-term. (Ch 4 §4.4)"},
+// 3 Corporate actions (7)
+{t:3,c:1,q:"A share trades at 400p. The company makes a 1-for-5 rights issue at 350p. What is the theoretical ex-rights price (TERP)?",o:["375p","380p","392p","395p"],a:2,x:"(5 × 400 + 1 × 350) ÷ 6 = 2,350 ÷ 6 = 391.7p ≈ 392p. (Ch 4 §10.6.4)"},
+{t:3,c:1,q:"Using the same rights issue (TERP 392p, subscription price 350p), what is the theoretical value of one nil-paid right?",o:["42p","50p","350p","8p"],a:0,x:"Rights premium = TERP − subscription price = 392 − 350 = 42p. A right is not worth the 350p subscription price (see the workbook error note). (Ch 4 §10.6.4)"},
+{t:3,c:0,q:"Under the ECSDA classification, a rights issue is which type of corporate action?",o:["Mandatory","Mandatory with options","Voluntary","Non-standard"],a:1,x:"A default applies (the rights lapse and are sold for you) unless you choose another option. A cash dividend is mandatory; a takeover bid is voluntary. (Ch 4 §10)"},
+{t:3,c:0,q:"How does an open offer differ from a rights issue?",o:["Open offers are made to the general public","The entitlement under an open offer cannot be sold, and the listing rules cap its discount at 10%","Open offers are always at a premium","Rights issues cannot be underwritten"],a:1,x:"An open-offer entitlement is not transferable; if unused, it lapses. Because that dilutes non-takers, the discount is limited to 10%. (Ch 4 §10.4)"},
+{t:3,c:1,q:"A company splits each share into four. Before the split the shares traded at 800p. What is the theoretical price afterwards?",o:["160p","200p","640p","3,200p"],a:1,x:"Value is unchanged and spread over four times as many shares: 800 ÷ 4 = 200p. Nominal value also falls to a quarter. (Ch 4 §10.2.2)"},
+{t:3,c:0,q:"Why might a company whose shares trade at 5p, with a nominal value of 50p, carry out a share consolidation?",o:["To reduce its share price","Because new shares cannot be issued below nominal value, and a higher price makes future fundraising possible","To pay a larger dividend","To avoid paying tax"],a:1,x:"Consolidating (for example 10 into 1) raises the price and nominal value, makes the shares more marketable, and prepares for a later rights issue. (Ch 4 §10.2.3)"},
+{t:3,c:0,q:"An investor buys shares on the ex-dividend date. What happens to the next dividend?",o:["The buyer receives it","The seller receives it","It is split between buyer and seller","It is cancelled"],a:1,x:"From the ex-dividend date the shares trade without the right to the next dividend, so the seller keeps it. In the UK the ex-dividend date is usually a Wednesday and the record date two business days later. (Ch 4 §10.1.2)"},
+// 4 Money markets & bond types (7)
+{t:4,c:0,q:"Which money market instruments are quoted on a discount basis?",o:["Time deposits and CDs","T-bills, bills of exchange and most commercial paper","Only certificates of deposit","Repos only"],a:1,x:"Discount instruments are issued below par and repaid at par (T-bills, bills of exchange, most CP). Time deposits and CDs are yield-basis instruments. (Ch 4 §5.4)"},
+{t:4,c:0,q:"What is a banker's acceptance?",o:["A bank's own certificate of deposit","A bill of exchange guaranteed by a bank, which reduces its credit risk and discount","A government T-bill","An overdraft facility"],a:1,x:"When an eligible bank guarantees payment of a bill of exchange at maturity, it becomes a banker's acceptance and can be sold at a smaller discount. (Ch 4 §5.2)"},
+{t:4,c:0,q:"Under the UK Debt Management Office convention, a gilt with six years to redemption is classed as:",o:["A short","A medium","A long","An ultra-short"],a:0,x:"The DMO classes under 7 years as shorts, 7 to 15 as mediums and over 15 as longs. (The FT uses under 5, 5 to 15 and over 15.) (Ch 4 §6.1.3)"},
+{t:4,c:0,q:"Compared with an otherwise identical non-callable bond, a callable bond will usually offer:",o:["A lower yield, because the investor holds an option","A higher yield, to compensate for the risk of being redeemed early when rates fall","The same yield","A floating coupon"],a:1,x:"The issuer holds the option to call. It will tend to call when rates have fallen, leaving investors to reinvest at lower rates, so they demand a higher yield. Putable bonds offer lower yields. (Ch 4 §6.1.3)"},
+{t:4,c:1,q:"A 2% index-linked gilt pays coupons semi-annually. The base RPI is 250 and the lagged RPI for the next payment is 300. What is the next coupon per £100 nominal?",o:["£1.00","£1.20","£2.40","£1.67"],a:1,x:"Half-year coupon = £1.00. Index ratio = 300 ÷ 250 = 1.2. Payment = £1.00 × 1.2 = £1.20. (Ch 4 §6.1.4)"},
+{t:4,c:0,q:"Which statement about UK gilt STRIPS is correct?",o:["A three-year gilt produces four strips","Gains are taxed as income each year, and strips can be held in an ISA","Strips pay a coupon twice a year","Index-linked gilts are the main source of strips"],a:1,x:"A 3-year gilt gives 7 strips (6 coupons + principal), each a zero coupon bond. Individuals are taxed annually as if they had sold and rebought, and strips are ISA-eligible. Conventional fixed-coupon gilts are the ones stripped. (Ch 4 §6.2.3)"},
+{t:4,c:0,q:"Bonds issued by the Federal National Mortgage Association (Fannie Mae) are best described as:",o:["Supranational bonds","Agency bonds issued by a government-sponsored agency","Municipal bonds","Sovereign bonds"],a:1,x:"Fannie Mae, Freddie Mac and the Federal Home Loan Banks are US government-sponsored agencies, so their bonds are agency bonds. Supranationals include the World Bank and the Asian Development Bank. (Ch 4 §6.2.2)"},
+// 5 Corporate debt (5)
+{t:5,c:0,q:"How does a floating charge differ from a fixed charge?",o:["A floating charge ranks ahead of a fixed charge","A floating charge covers changing assets such as stock and receivables, which the company can still deal in, and it ranks after a fixed charge","A floating charge is unsecured","Fixed charges only apply to government bonds"],a:1,x:"A fixed charge attaches to specific permanent assets. A floating charge covers circulating assets the company can still trade. In a liquidation, fixed charge holders come first. (Ch 4 §6.3.4)"},
+{t:5,c:0,q:"In the UK and the US respectively, a debenture is:",o:["Unsecured; secured","Secured on specific assets; unsecured","Secured in both","A type of share in both"],a:1,x:"A UK debenture is secured and registered at Companies House (unsecured UK debt is 'loan stock'). A US debenture is unsecured. (Ch 4 §6.3.5)"},
+{t:5,c:0,q:"Which type of bond pays interest only if the issuer earns a specified level of income?",o:["Subordinated bond","Income bond","Mini bond","Debenture"],a:1,x:"Income bonds are the most junior type of bond; the issuer is not bound to pay interest unless the income test is met. (Ch 4 §6.3.4)"},
+{t:5,c:0,q:"Which statement about mini bonds is correct?",o:["They are listed and highly liquid","They are unlisted, generally held to maturity, and may not be protected by the FSCS","They are issued by governments","They are always secured"],a:1,x:"Mini bonds are unlisted debt sold to retail investors, typically for 3 to 5 years. They are illiquid, high-risk and not necessarily FSCS-protected. (Ch 4 §6.3.4)"},
+{t:5,c:0,q:"What is the main advantage of securitisation into asset-backed securities?",o:["It removes all credit risk","It turns illiquid assets such as mortgages and receivables into tradable securities","It guarantees a AAA rating","It avoids the need for a trustee"],a:1,x:"Securitisation pools future cash flows from many assets and issues bonds against them. This makes illiquid assets tradable and widens investors' choice. MBS are the largest market. (Ch 4 §6.3.6)"},
+// 6 Yields & pricing (9)
+{t:6,c:1,q:"A bond with a 4.5% coupon is priced at £90. What is its flat yield?",o:["4.05%","4.5%","5.0%","5.5%"],a:2,x:"Flat yield = 4.5 ÷ 90 = 5.0%. (Ch 4 §6.4.1)"},
+{t:6,c:1,q:"A 6% bond is priced at 104 with four years to redemption at par. Using the simplified formula, what is its approximate GRY?",o:["4.81%","5.77%","6.73%","5.00%"],a:0,x:"Flat yield = 6 ÷ 104 = 5.77%. Annual loss to par = (100 − 104) ÷ 4 = −1, and −1 ÷ 104 = −0.96%. GRY ≈ 5.77 − 0.96 = 4.81%. (Ch 4 §6.4.3)"},
+{t:6,c:1,q:"A 3% bond is priced at 92 with eight years to redemption. For an investor paying 40% income tax (and no tax on the gain), what is the approximate net redemption yield?",o:["1.96%","2.61%","3.04%","4.35%"],a:2,x:"Net flat yield = (3 ÷ 92) × 0.6 = 1.96%. Untaxed gain = (8 ÷ 8) ÷ 92 = 1.09%. NRY ≈ 3.04%. The gross GRY is 4.35%; taxing everything gives 2.61%. (Ch 4 §6.4.4)"},
+{t:6,c:1,q:"A bond returns 6% in a year when inflation is 4%. What is the real return using the Fisher equation?",o:["2.00%","1.92%","2.08%","10.24%"],a:1,x:"(1.06 ÷ 1.04) − 1 = 1.92%. The simple approximation gives 2%. (Ch 4 §6.4.2)"},
+{t:6,c:1,q:"A bond has a Macaulay duration of 8.4 years and a GRY of 5%. If its yield rises by 0.5%, its price will change by approximately:",o:["−4.2%","−4.0%","−8.0%","+4.0%"],a:1,x:"Modified duration = 8.4 ÷ 1.05 = 8.0. %ΔP ≈ −8.0 × 0.5% = −4.0%. (Ch 4 §6.5.2)"},
+{t:6,c:1,q:"An investor buys £50,000 nominal of a 6% bond that pays semi-annually, cum-interest. 30 days have accrued in a 182-day coupon period. How much accrued interest does the buyer pay?",o:["£123.63","£246.58","£247.25","£494.51"],a:2,x:"50,000 × (6% ÷ 2) × (30 ÷ 182) = 1,500 × 0.16484 = £247.25, added to the clean price because it is cum-interest. (Ch 4 §6.7.5)"},
+{t:6,c:0,q:"A bond trades ex-interest. How is the accrued (rebate) interest treated?",o:["It is added to the clean price","It is deducted from the clean price, because the buyer will not receive the next coupon","It is ignored","It is paid by the issuer"],a:1,x:"Ex-interest, the seller receives the next coupon even though the buyer owns the bond for part of that period, so the seller compensates the buyer by deducting rebate interest. (Ch 4 §6.7.5)"},
+{t:6,c:1,q:"A 10-year corporate bond yields 5.4% and the 10-year government bond yields 3.9%. What is the spread?",o:["15 basis points","150 basis points","1,500 basis points","9.3%"],a:1,x:"5.4% − 3.9% = 1.5% = 150 basis points. (Ch 4 §6.6.1)"},
+{t:6,c:0,q:"In which environment is the flat yield the most useful measure of a bond's return?",o:["A steep normal yield curve","An inverted yield curve","A flat yield curve, where little change in rates is expected","During a period of high inflation"],a:2,x:"With a flat curve, little change in rates is expected and the coupon is the main source of return. With normal or inverted curves, GRY and NRY give a fuller picture. (Ch 4 §6.4.5)"},
+// 7 Hybrids (3)
+{t:7,c:1,q:"A convertible bond is priced at £112 per £100 nominal and converts into 25 shares. The share price is £4.00. What is the conversion premium?",o:["8%","10.7%","12%","28%"],a:2,x:"Conversion value = 25 × £4 = £100. Premium = 112 ÷ 100 − 1 = 12%. (Ch 4 §7.1)"},
+{t:7,c:0,q:"A bank's contingent convertible bond (CoCo) is most likely to convert into equity when:",o:["The share price doubles","The bank's CET1 capital ratio falls below a set threshold","Interest rates rise","The bondholder chooses"],a:1,x:"CoCos convert automatically on a trigger, typically a breach of the CET1 ratio. That recapitalises the bank in times of stress. (Ch 4 §7.1.1)"},
+{t:7,c:0,q:"Which statement about mezzanine finance is correct?",o:["It ranks ahead of senior secured debt","It ranks between senior debt and equity, often with warrants or conversion rights, and targets roughly 10–30% returns","It is always secured on fixed assets","It never pays interest in kind"],a:1,x:"Mezzanine is usually unsecured and subordinated to senior debt but senior to equity. Investors expect high returns and often an equity kicker; payment-in-kind interest is common. (Ch 4 §7.2)"},
+// 8 Derivatives & swaps (6)
+{t:8,c:1,q:"A call option with a strike of 450p costs 42p when the share price is 480p. What are its intrinsic value and time value?",o:["30p and 12p","42p and 0p","12p and 30p","30p and 42p"],a:0,x:"Intrinsic value = 480 − 450 = 30p (the call is in the money). Time value = 42 − 30 = 12p. (Ch 4 §8.1.1)"},
+{t:8,c:0,q:"Compared with futures, forwards are:",o:["Standardised and exchange-traded","Customisable and OTC, usually not marked to market daily, with more counterparty risk","Always cash-settled","More liquid"],a:1,x:"Forwards are tailored OTC contracts with less liquidity, more counterparty and default risk, and less regulation. Futures are standardised, exchange-traded and margined daily. (Ch 4 §8.4)"},
+{t:8,c:0,q:"How does a warrant attached to a bond differ from a convertible bond?",o:["When a warrant is exercised, the bond stays in issue","Warrants pay dividends before exercise","Convertibles are always issued by third parties","There is no difference"],a:0,x:"Exercising a warrant means paying cash for shares while keeping the bond. Converting a convertible gives up the bond in exchange for shares. Warrant holders receive no dividends until they exercise. (Ch 4 §8.2)"},
+{t:8,c:1,q:"An investor is short one at-the-money put. What is the position's delta, and what happens if the underlying rises?",o:["−0.5; the position loses","+0.5; the position gains","−1; the position loses","0; no effect"],a:1,x:"Position delta = (−1 for short) × (−0.5 for an ATM put) = +0.5. If the underlying rises, the put falls in value, which benefits the short. (Ch 4 §8.4.3)"},
+{t:8,c:0,q:"How is implied volatility obtained?",o:["From the standard deviation of past prices","By working backwards from an option's market price through a pricing model such as Black-Scholes","From the VIX only","From the dividend yield"],a:1,x:"Implied volatility is reverse-engineered: the model's other inputs are held fixed and volatility is adjusted until the model price matches the market price. Historic volatility uses past prices. (Ch 4 §8.5.1)"},
+{t:8,c:0,q:"Which statement best distinguishes a currency swap from an interest rate swap?",o:["Currency swaps never involve interest","In a currency swap, principal is exchanged at the start and end, which raises credit risk","Interest rate swaps exchange principal","Currency swaps are exchange-traded"],a:1,x:"Interest rate swaps use a notional principal that is never exchanged. Currency swaps exchange principal at the start and end at an agreed rate, so credit risk is higher. They are used mainly for hedging. (Ch 4 §9.2)"}
+];
+
+// Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
+(function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+    q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
+try{ans=JSON.parse(localStorage.getItem("s4-ans")||"{}")}catch(e){ans={}}
+function save(){try{localStorage.setItem("s4-ans",JSON.stringify(ans))}catch(e){}}
+const topicSel=document.getElementById("topic");
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v+" ("+Q.filter(q=>q.t==k).length+")";topicSel.appendChild(o)});
+function list(){const t=topicSel.value;return order.filter(i=>t==="all"||String(Q[i].t)===t)}
+function tbl(rows){
+  const head=rows[0][0]===""||rows[0].length>2;
+  if(rows[0].length===2&&rows[0][0]!==""){return `<div class="table-wrap"><table><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<div class="table-wrap"><table><thead><tr>${rows[0].map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r=>`<tr>${r.map((c,j)=>`<td${j?' class="num"':""}>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function show(i){return mode==="practice"?ans[i]!==undefined:marked}
+function render(){
+  const ids=list();
+  document.getElementById("qlist").innerHTML=ids.map((i,k)=>{
+    const q=Q[i],a=ans[i],rev=show(i);
+    const opts=q.o.map((t,j)=>{let c="opt";
+      if(rev){if(j===q.a)c+=" right";else if(j===a)c+=" wrong"}else if(j===a)c+=" picked";
+      const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
+      return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
+    const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+  stats();
+}
+function stats(){
+  let html="",n=0,c=0;
+  Object.keys(T).forEach(k=>{let tn=0,tc=0;Q.forEach((q,i)=>{if(q.t==k&&ans[i]!==undefined&&(mode==="practice"||marked)){tn++;if(ans[i]===q.a)tc++}});n+=tn;c+=tc;
+    html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
+  document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
+  const answered=Object.keys(ans).length;
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+}
+function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+  const tEl=document.getElementById("timer");tEl.hidden=false;
+  tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
+  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
+  const c=Q.filter((q,i)=>ans[i]===q.a).length;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
+document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
+  ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
+document.getElementById("mode").addEventListener("change",e=>{mode=e.target.value;
+  if(mode==="mock"){topicSel.value="all";topicSel.disabled=true;startMock()}
+  else{clearInterval(tick);marked=false;topicSel.disabled=false;document.getElementById("timer").hidden=true;document.getElementById("finish").hidden=true;document.getElementById("result").innerHTML="";
+    try{ans=JSON.parse(localStorage.getItem("s4-ans")||"{}")}catch(e){ans={}}render()}});
+topicSel.addEventListener("change",render);
+document.getElementById("finish").addEventListener("click",finish);
+document.getElementById("shuffle").addEventListener("click",()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()});
+document.getElementById("reset").addEventListener("click",()=>{if(mode==="mock"){startMock();return}ans={};save();render()});
+const VIEWS=["concepts","learn","practice","method"];
+function route(){const h=(location.hash||"#concepts").slice(1);
+  const lesson=/^c\d+$/.test(h)?document.getElementById(h):null;
+  const v=lesson?"concepts":(VIEWS.includes(h)?h:"concepts");
+  document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  return lesson}
+window.addEventListener("hashchange",()=>{const l=route();if(l)l.scrollIntoView();else window.scrollTo(0,0)});
+route();render();
+</script>
