@@ -109,18 +109,18 @@ a{color:var(--accent)}
 
 <header class="top wrap">
   <h1>Section 3: Valuation (company accounts &amp; ratios)</h1>
-  <p class="lede">A module for Element 3 of the CISI Investment Management exam, built from Chapter 3 of the Edition 4 workbook. It covers only what the book's own questions actually test, plus 50 practice questions.</p>
+  <p class="lede">A module for Element 3 of the CISI Investment Management exam, built from Chapter 3 of the Edition 4 workbook. It covers only what the book's own questions actually test, plus 76 practice questions.</p>
   <div class="facts">
     <span class="chip">About <b>14</b> of 80 exam questions</span>
     <span class="chip">Roughly <b>2 in 3</b> are calculations</span>
-    <span class="chip"><b>50</b> practice questions</span>
+    <span class="chip"><b>76</b> practice questions</span>
   </div>
 </header>
 
 <nav class="tabs" aria-label="Sections"><div class="wrap">
   <a href="#concepts">Concepts</a>
   <a href="#learn">Formulas &amp; traps</a>
-  <a href="#practice">50 questions</a>
+  <a href="#practice">76 questions</a>
   <a href="#method">How this was built</a>
 </div></nav>
 
@@ -380,7 +380,8 @@ a{color:var(--accent)}
     <details class="check"><summary>Check: an investor wants to know which ESG issues matter financially for a bank. Which framework is designed for that?</summary><div>SASB, using its industry-by-industry Materiality Map.</div></details>
   </article>
 
-  <p>Once these make sense, go to <a href="#learn">Formulas &amp; traps</a> to lock in the calculations, then test yourself with the <a href="#practice">50 questions</a>.</p>
+  <p>Once these make sense, go to <a href="#learn">Formulas &amp; traps</a> to lock in the calculations, then test yourself with the <a href="#practice">76 questions</a>.</p>
+
 </section>
 
 <section data-view="learn" hidden>
@@ -566,11 +567,12 @@ a{color:var(--accent)}
     <li><b>Check units:</b> £000 vs £m, and days vs times.</li>
     <li><b>Budget about 90 seconds a question.</b> If a table question runs over 2 minutes, flag it and come back.</li>
   </ul>
+
 </section>
 
 <section data-view="practice" hidden>
-  <h2>50 practice questions</h2>
-  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <h2>76 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 114 minutes (90 seconds a question) and marks everything at the end.</p>
   <div class="controls">
     <select id="mode" aria-label="Mode">
       <option value="practice">Practice: instant feedback</option>
@@ -595,10 +597,11 @@ a{color:var(--accent)}
   <ul>
     <li>I read all of Chapter 3 of the Edition 4 workbook (June 2025) and the Element 3 learning objectives in its syllabus map.</li>
     <li>I went through the book's 80 practice questions and the Chapter 3 end-of-chapter questions, and recorded which Element 3 objectives each one tests. The priority labels in Learn come from that count.</li>
-    <li>Real CISI exam questions are confidential and are not published, so no one can give you "real" questions. The 50 here are original and follow the book's style: short extracts, four-company tables, and "which statement is correct".</li>
+    <li>Real CISI exam questions are confidential and are not published, so no one can give you "real" questions. The 76 here are original and follow the book's style: short extracts, four-company tables, and "which statement is correct".</li>
     <li>Every calculation was worked through by hand. Each explanation names the workbook section so you can check it.</li>
     <li>EPS, P/E, dividend yield and Gordon growth are taught in Chapter 3, but the syllabus counts them under Element 4. Only EPS appears here, because it is part of building the income statement.</li>
   </ul>
+
 </section>
 </main>
 
@@ -663,12 +666,43 @@ const Q=[
 {t:9,c:0,q:"When comparing two companies in the same industry, why can ratio analysis mislead?",o:["They always use different currencies","They may be at different stages of development, such as a young firm with high debt","Ratios cannot be calculated for the same industry","Accounting standards forbid it"],a:1,x:"A new company may show high debt and weak cash flow but still be the better long-term investment. Ratios are historic, can be window-dressed and are of limited use on their own. (Ch 3 §3.9)"},
 {t:9,c:0,q:"What does the SASB Materiality Map show?",o:["Sovereign ESG ratings by country","Which sustainability issues are likely to be financially material in each industry","Carbon prices across exchanges","The TCFD's four pillars"],a:1,x:"SASB standards are industry-specific (about 80 industries). The map shows how sustainability issues apply across sectors, for example GHG emissions for oil and gas. (Ch 3 §2.1.3)"},
 {t:9,c:0,q:"Which regime introduced an anti-greenwashing rule requiring sustainability claims to be clear, fair and not misleading?",o:["The EU's SFDR","The UK's Sustainability Disclosure Requirements (SDR)","The US Climate Disclosure Rule","The GRI Standards"],a:1,x:"The UK SDR brought in product labels and an anti-greenwashing rule for all regulated firms. The EU SFDR works on a comply-or-explain basis. (Ch 3 §2.3)"},
-{t:9,c:0,q:"What happens to a firm's average costs beyond its minimum efficient scale (MES)?",o:["They keep falling (economies of scale)","Diseconomies of scale set in, for example through management bureaucracy, so unit costs rise","They become zero","Marginal cost falls below average cost"],a:1,x:"Costs are lowest at the MES. Beyond it, diseconomies of scale raise unit costs. (Ch 1 §7)"}
+{t:9,c:0,q:"What happens to a firm's average costs beyond its minimum efficient scale (MES)?",o:["They keep falling (economies of scale)","Diseconomies of scale set in, for example through management bureaucracy, so unit costs rise","They become zero","Marginal cost falls below average cost"],a:1,x:"Costs are lowest at the MES. Beyond it, diseconomies of scale raise unit costs. (Ch 1 §7)"},
+// Lesson checks from the Concepts tab, not already covered above
+{t:7,c:0,k:1,q:"A company reports a healthy profit, yet its cash balance fell during the year. Which explanation is consistent with this?",o:["It must have made an accounting error","It sold heavily on credit, built up stock or bought fixed assets, so cash went out while profit was earned on an accruals basis","Profit and cash must always be equal","Depreciation increased its cash outflow"],a:1,x:"Profit is measured on an accruals basis; cash is not. Rising receivables or stock, or buying fixed assets, uses cash without reducing profit. (Ch 3 §1.3–1.4)"},
+{t:5,c:0,k:1,q:"Which financial statement shows a company's assets and liabilities at a single date, such as 31 December?",o:["Statement of comprehensive income","Statement of financial position (balance sheet)","Statement of cash flows","Statement of changes in equity"],a:1,x:"The balance sheet is a snapshot at one date. The income and cash flow statements cover a period. (Ch 3 §1.2)"},
+{t:5,c:0,k:1,q:"A company writes down the value of its patents. Which part of the statement of financial position falls?",o:["Current assets: inventory","Current assets: receivables","Tangible non-current assets","Intangible non-current assets"],a:3,x:"Patents, licences, brands and purchased goodwill are intangible non-current (fixed) assets. (Ch 3 §1.2.1)"},
+{t:2,c:0,k:1,q:"Two companies have the same gross margin but very different operating margins. What does this most likely indicate?",o:["One has a much higher cost of sales","They produce equally efficiently, but one has much higher running costs such as distribution and administration","One pays more tax","One has more debt"],a:1,x:"Gross margin reflects cost of sales only. Operating margin also deducts selling, general and administrative costs. (Ch 3 §3.3.3)"},
+{t:7,c:0,k:1,q:"Where do the proceeds of a share issue appear in the statement of cash flows?",o:["Operating activities","Investing activities","Financing activities","They do not appear"],a:2,x:"Financing activities include share issues, borrowing and repayments, and dividends paid. (Ch 3 §1.4)"},
+{t:6,c:0,k:1,q:"Company X owns 25% of Company Y and has significant influence over it. How should X account for Y?",o:["As a simple investment at cost","As an associate, using the equity method","As a subsidiary, fully consolidated with minority interests","As a current asset at market value"],a:1,x:"20–50% or significant influence makes Y an associate: X includes its 25% share of Y's profits and net assets. (Ch 3 §1.5.4)"},
+{t:1,c:0,k:1,q:"A company's ROCE is 18% and it can borrow at 6%. What does this suggest?",o:["Borrowing to expand should add value, because each pound of capital earns well above what it costs, provided risk stays manageable","The company should repay all its debt immediately","ROCE cannot be compared with the cost of borrowing","The company is destroying value"],a:0,x:"ROCE is compared with the cost of borrowing. Returns well above the borrowing cost mean extra capital should add value. (Ch 3 §3.3.1)"},
+{t:3,c:0,k:1,q:"A builder's merchant has a current ratio of 2.0 but a quick ratio of 0.6. What does this tell you?",o:["It holds too much cash","Most of its current assets are stock, so it can only meet short-term bills comfortably if it sells that stock","It is certainly insolvent","Its receivables are too high"],a:1,x:"The quick ratio excludes stock. A large gap between the two ratios shows reliance on stock to cover liabilities. (Ch 3 §3.4)"},
+{t:8,c:1,k:1,q:"A company earns NOPAT of £5m on invested capital of £100m. Its WACC is 8%. What is its EVA?",o:["+£3m, value created","−£3m, value destroyed","+£5m, value created","−£8m, value destroyed"],a:1,x:"EVA = 5 − (100 × 8%) = −£3m. It earned 5% on capital that costs 8%. (Ch 3 §3.3.3)"},
+{t:8,c:0,k:1,q:"A project's NPV is exactly zero when its cash flows are discounted at 12%. What is its IRR?",o:["0%","6%","12%","It cannot be determined"],a:2,x:"The IRR is, by definition, the discount rate at which NPV is zero. (Ch 3 §4.1.1)"},
+// The workbook's own 80-question paper (pages 411-446), questions for this section, in the book's A-D order
+{t:99,b:1,c:1,q:"Analyse this income statement to determine the gross profit margin of this company:",tb:[["Sales/revenue", "332,000"], ["Cost of goods sold", "(202,000)"], ["Gross profit", "130,000"], ["Operating expenses", "(78,000)"], ["Operating profit", "52,000"], ["Finance costs", "(14,000)"], ["Profit before tax", "38,000"], ["Tax", "(9,120)"], ["Net profit", "28,880"]],o:["29%", "30%", "39%", "40%"],a:2,x:"Gross margin = 130,000 ÷ 332,000 = 39%. (Ch 3 §3.3.3)"},
+{t:99,b:7,c:1,q:"If a company's share price is £1.10 and its net asset value per share is £1.00, then 1.1 will represent the company's:",o:["Price/earnings ratio", "Price-to-book ratio", "Earnings per share", "Z-score analysis"],a:1,x:"Price-to-book = share price ÷ net asset value per share = 1.10 ÷ 1.00 = 1.1. (Ch 3 §3.6.4)"},
+{t:99,b:12,c:0,q:"Company X owns 25% of the shares in Company Y and is able to exert influence over Company Y's management. How should Company X recognise this investment in its financial statements?",o:["A fixed asset investment at the current market value", "A current liability at the higher of cost or net realizable value", "As a combined entity in its balance sheet and income statement", "As separate entities in its statement of changes in equity and cash flow statement"],a:2,x:"A holding of 20% or more, or significant influence, makes Y an associate. X shows its share of the combined position in its balance sheet and income statement (the equity method). (Ch 3 §1.5)"},
+{t:99,b:14,c:1,q:"The following extracts have been taken from Z plc's statement of comprehensive income for the period ending 31 December. With reference to this statement, what are Z plc's operating profit and profit attributable to its shareholders respectively?",tb:[["Revenue", "15,410"], ["Cost of sales", "11,375"], ["Net operating expenses", "1,675"], ["Exceptional loss", "1,308"], ["Interest receivable", "989"], ["Tax", "602"]],o:["£4,035,000 and £1,439,000", "£2,360,000 and £1,439,000", "£4,035,000 and £646,000", "£2,360,000 and £646,000"],a:1,x:"Operating profit = 15,410 − 11,375 − 1,675 = 2,360. Profit attributable to shareholders = 2,360 + 989 − 1,308 − 602 = 1,439 (£000). (Ch 3 §1.3)"},
+{t:99,b:16,c:0,q:"If a company's Z-score analysis is negative, this is likely to indicate that the company:",o:["Has a volatile profit performance", "Is heading for imminent insolvency", "Has a low level of gearing", "Is relying too heavily on a limited customer base"],a:1,x:"A negative Z-score indicates that insolvency is imminent. Above 3.0 is safe; below 1.8 means failure is likely. (Ch 3 §3.4.3)"},
+{t:99,b:18,c:1,q:"This table summarises the financial position of four companies. Which company has the highest equity multiplier?",tb:[["", "Company 1", "Company 2", "Company 3", "Company 4"], ["Total assets", "150,665", "180,000", "325,000", "260,000"], ["Total liabilities", "56,858", "75,000", "186,520", "90,000"]],o:["Company 1", "Company 2", "Company 3", "Company 4"],a:2,x:"Equity multiplier = total assets ÷ (assets − liabilities): 1.61, 1.71, 2.35, 1.53. Company 3 is highest. (Ch 3 §3.3.3)"},
+{t:99,b:23,c:1,q:"This table summarises the financial position of four companies. Which company has the highest return on equity (ROE)?",tb:[["", "Company 1", "Company 2", "Company 3", "Company 4"], ["Net profit margin", "0.2", "0.25", "0.1", "0.3"], ["Asset turnover", "1.4", "0.85", "1.8", "1.3"], ["Equity multiplier", "1.5", "1.6", "2.2", "1.5"]],o:["Company 1", "Company 2", "Company 3", "Company 4"],a:3,x:"ROE = net margin × asset turnover × equity multiplier: 42%, 34%, 39.6%, 58.5%. Company 4 is highest. (Ch 3 §3.8)"},
+{t:99,b:35,c:1,q:"Analyse the data below to determine how much interest cover this company has:",tb:[["Revenue", "500,000"], ["Cost of goods sold", "248,000"], ["Operating expenses", "124,000"], ["Finance costs", "6,120"], ["Tax", "23,347"]],o:["16.13", "20.91", "41.17", "81.69"],a:1,x:"PBT = 500,000 − 248,000 − 124,000 − 6,120 = 121,880. PBIT = 121,880 + 6,120 = 128,000. Interest cover = 128,000 ÷ 6,120 = 20.91×. (Ch 3 §3.7.2)"},
+{t:99,b:36,c:0,q:"As part of a review, the value of a company's patents was significantly reduced. This directly caused a fall in the value of which section of the company's statement of financial position?",o:["Current assets – inventory", "Current assets – trade and other receivables", "Tangible fixed assets", "Intangible fixed assets"],a:3,x:"Patents are intangible fixed (non-current) assets, along with brands, trademarks and purchased goodwill. (Ch 3 §1.2.1)"},
+{t:99,b:39,c:0,q:"If a share price falls, which of the following is true?",o:["P/E ratio rises; dividend yield falls", "P/E ratio falls; dividend yield rises", "P/E ratio rises; dividend yield rises", "P/E ratio falls; dividend yield falls"],a:1,x:"P/E = price ÷ EPS falls when the price falls. Dividend yield = dividend ÷ price rises. (Ch 3 §3.6.2–3.6.3)"},
+{t:99,b:46,c:0,q:"Which type of company may be required to publish a special auditors' report?",o:["A small private company", "A medium-sized private limited company", "A public limited company", "A public listed company"],a:1,x:"Medium-sized companies, if audited, may need to publish an abridged 'special auditors' report'. (Ch 3 §1.1)"},
+{t:99,b:47,c:1,q:"A company's statement of financial position shows share capital of £2 million, reserves of £8 million, loans of £1.5 million, overdraft of £0.5 million and sales of £6 million. What is its asset turnover?",o:["0.10", "0.20", "0.25", "0.50"],a:3,x:"Asset turnover = sales ÷ capital employed = 6 ÷ (2 + 8 + 1.5 + 0.5) = 0.5. The overdraft counts as capital employed. (Ch 3 §3.3.2)"},
+{t:99,b:59,c:0,q:"Which of the following is the formula to calculate debt-to-equity ratio?",o:["(Interest-bearing debt + Preference shares) / Ordinary shareholders’ equity", "(Total Assets - Total Liabilities) / Total Equity", "Net Income / Total Debt", "Profit after interest / interest payable"],a:0,x:"Debt-to-equity = (interest-bearing debt + preference shares) ÷ ordinary shareholders' equity. (Ch 3 §3.7.1)"},
+{t:99,b:72,c:0,q:"Why would an investor analyse a cash flow statement?",o:["To calculate the size of the next dividend", "To establish the level of depreciation within the company", "To calculate their level of accrued expenses", "To establish if the company is reliant on fixed asset sales and borrowing"],a:3,x:"The cash flow statement shows whether operations generate cash, or whether the company relies on selling fixed assets and borrowing. (Ch 3 §1.4)"},
+{t:99,b:73,c:1,q:"During which quarter was liquidity at its highest?",tb:[["", "Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"], ["Current assets", "£540,000", "£560,000", "£500,000", "£520,000"], ["Stock", "£86,100", "£70,000", "£70,000", "£85,000"], ["Current liabilities", "£520,000", "£500,000", "£560,000", "£540,000"]],o:["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"],a:1,x:"Current ratios: 1.04, 1.12, 0.89, 0.96. Quick ratios: 0.87, 0.98, 0.77, 0.81. Both are highest in Quarter 2. (Ch 3 §3.4)"},
+{t:99,b:78,c:0,q:"If the payment of an operating-related liability is expected on a certain date but there is no certainty of the actual amount, how is this categorised for accounting purposes?",o:["Payable", "Provision", "Current liability", "Accrual"],a:3,x:"The workbook defines accruals as liabilities whose timing is generally known but whose amount is uncertain. (Ch 3 §1.2.2)"}
 ];
+T[99]="Workbook question paper";
+
 // Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
 (function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
-  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+  Q.forEach(q=>{if(q.b)return;const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
     q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+const NQ=Q.length, MIN=Math.round(NQ*1.5), PASS=Math.ceil(NQ*0.7);
 let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
 try{ans=JSON.parse(localStorage.getItem("s3-ans")||"{}")}catch(e){ans={}}
 function save(){try{localStorage.setItem("s3-ans",JSON.stringify(ans))}catch(e){}}
@@ -690,7 +724,7 @@ function render(){
       const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
       return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
     const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
-    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}${q.k?" · Lesson check":""}${q.b?" · Book Q"+q.b:""}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
   stats();
 }
 function stats(){
@@ -699,16 +733,16 @@ function stats(){
     html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
   document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
   const answered=Object.keys(ans).length;
-  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/${NQ} answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
 }
 function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
-function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+function startMock(){ans={};marked=false;deadline=Date.now()+MIN*60*1000;clearInterval(tick);
   const tEl=document.getElementById("timer");tEl.hidden=false;
   tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
-  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+  tEl.textContent=MIN+":00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
 function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
   const c=Q.filter((q,i)=>ans[i]===q.a).length;
-  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/${NQ} (${Math.round(100*c/NQ)}%).</b> ${c>=PASS?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (${PASS}/${NQ}). Review the topics with the lowest scores below."}</div>`;
   render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
 document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
   ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});

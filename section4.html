@@ -113,14 +113,14 @@ a{color:var(--accent)}
   <div class="facts">
     <span class="chip">About <b>21</b> of 80 exam questions</span>
     <span class="chip"><b>12</b> concept lessons</span>
-    <span class="chip"><b>50</b> practice questions</span>
+    <span class="chip"><b>74</b> practice questions</span>
   </div>
 </header>
 
 <nav class="tabs" aria-label="Sections"><div class="wrap">
   <a href="#concepts">Concepts</a>
   <a href="#learn">Formulas &amp; traps</a>
-  <a href="#practice">50 questions</a>
+  <a href="#practice">74 questions</a>
   <a href="#method">How this was built</a>
 </div></nav>
 
@@ -453,7 +453,7 @@ a{color:var(--accent)}
     <details class="check"><summary>Check: what is exchanged in a currency swap that is not exchanged in an interest rate swap?</summary><div>The principal, at the start and at the end.</div></details>
   </article>
 
-  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">74 questions</a>.</p>
 
 </section>
 
@@ -556,8 +556,8 @@ Time value = Premium − IV</code></div>
 </section>
 
 <section data-view="practice" hidden>
-  <h2>50 practice questions</h2>
-  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <h2>74 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 111 minutes (90 seconds a question) and marks everything at the end.</p>
   <div class="controls">
     <select id="mode" aria-label="Mode">
       <option value="practice">Practice: instant feedback</option>
@@ -582,7 +582,7 @@ Time value = Premium − IV</code></div>
   <ul>
     <li>I read Chapter 4 of the Edition 4 workbook (June 2025) and the investor-ratio sections of Chapter 3 (3.6), which the syllabus counts under Element 4.</li>
     <li>I matched each Element 4 learning objective against the book's 80 practice questions and the Chapter 4 end-of-chapter questions to set the priority labels.</li>
-    <li>Real CISI exam questions are confidential and not published. These 50 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
+    <li>Real CISI exam questions are confidential and not published. These 74 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
     <li>Market-activity topics such as exchanges, VWAP and FX risk are printed at the end of Chapter 4, but the syllabus counts them under Element 2, so they are in the Section 2 module.</li>
   </ul>
 
@@ -649,13 +649,41 @@ const Q=[
 {t:8,c:0,q:"How does a warrant attached to a bond differ from a convertible bond?",o:["When a warrant is exercised, the bond stays in issue","Warrants pay dividends before exercise","Convertibles are always issued by third parties","There is no difference"],a:0,x:"Exercising a warrant means paying cash for shares while keeping the bond. Converting a convertible gives up the bond in exchange for shares. Warrant holders receive no dividends until they exercise. (Ch 4 §8.2)"},
 {t:8,c:1,q:"An investor is short one at-the-money put. What is the position's delta, and what happens if the underlying rises?",o:["−0.5; the position loses","+0.5; the position gains","−1; the position loses","0; no effect"],a:1,x:"Position delta = (−1 for short) × (−0.5 for an ATM put) = +0.5. If the underlying rises, the put falls in value, which benefits the short. (Ch 4 §8.4.3)"},
 {t:8,c:0,q:"How is implied volatility obtained?",o:["From the standard deviation of past prices","By working backwards from an option's market price through a pricing model such as Black-Scholes","From the VIX only","From the dividend yield"],a:1,x:"Implied volatility is reverse-engineered: the model's other inputs are held fixed and volatility is adjusted until the model price matches the market price. Historic volatility uses past prices. (Ch 4 §8.5.1)"},
-{t:8,c:0,q:"Which statement best distinguishes a currency swap from an interest rate swap?",o:["Currency swaps never involve interest","In a currency swap, principal is exchanged at the start and end, which raises credit risk","Interest rate swaps exchange principal","Currency swaps are exchange-traded"],a:1,x:"Interest rate swaps use a notional principal that is never exchanged. Currency swaps exchange principal at the start and end at an agreed rate, so credit risk is higher. They are used mainly for hedging. (Ch 4 §9.2)"}
+{t:8,c:0,q:"Which statement best distinguishes a currency swap from an interest rate swap?",o:["Currency swaps never involve interest","In a currency swap, principal is exchanged at the start and end, which raises credit risk","Interest rate swaps exchange principal","Currency swaps are exchange-traded"],a:1,x:"Interest rate swaps use a notional principal that is never exchanged. Currency swaps exchange principal at the start and end at an agreed rate, so credit risk is higher. They are used mainly for hedging. (Ch 4 §9.2)"},
+// Lesson checks from the Concepts tab, not already covered above
+{t:3,c:1,k:1,q:"A share trades at 300p. The company makes a 1-for-3 rights issue at 240p. What is the theoretical ex-rights price?",o:["270p","280p","285p","295p"],a:2,x:"(3 × 300 + 1 × 240) ÷ 4 = 1,140 ÷ 4 = 285p. Each nil-paid right is worth 285 − 240 = 45p. (Ch 4 §10.6.4)"},
+{t:4,c:0,k:1,q:"How is the return on a Treasury bill received?",o:["As a fixed semi-annual coupon","As a capital gain: it is bought at a discount and repaid at par","As a dividend","As an index-linked coupon"],a:1,x:"T-bills pay no coupon. They are discount instruments, so the return is the difference between price paid and par. (Ch 4 §5.2, §5.4)"},
+{t:2,c:0,k:1,q:"A company with an ADR programme announces a rights issue. What normally happens for ADR holders?",o:["They subscribe directly in the home market","The depositary bank sells the rights and distributes the proceeds to them","They automatically receive new ADRs free of charge","Their ADRs are cancelled"],a:1,x:"Because of the DR structure, holders cannot take part in rights issues directly. (Ch 4 §3.4)"},
+{t:6,c:0,k:1,q:"Which bond has the higher duration?",o:["An 8% coupon bond with 5 years to maturity","A 2% coupon bond with 20 years to maturity","They are equal","Duration depends only on credit rating"],a:1,x:"A lower coupon and a longer maturity both increase duration, so the 2% 20-year bond is more price-sensitive. (Ch 4 §6.5.1)"},
+// The workbook's own 80-question paper (pages 411-446), questions for this section, in the book's A-D order
+{t:99,b:9,c:0,q:"Which of the following statements in relation to venture capital trusts (VCTs) is true?",o:["VCTs are unregulated investment vehicles that do not require HMRC approval", "VCTs are only available to institutional investors and not individuals", "VCTs are exempt from corporation tax on gains arising from the disposal of their investments", "VCTs primarily invest in large, low-risk companies listed on major stock exchanges"],a:2,x:"VCTs need HMRC approval and, once approved, are exempt from corporation tax on gains from disposing of their investments. They are listed and open to individuals. (Ch 4 §4.1)"},
+{t:99,b:13,c:0,q:"Private equity funds frequently invest in:",o:["commodities", "derivatives", "government bonds", "mezzanine debt"],a:3,x:"Private equity can take the form of equity, debt or a hybrid of the two (mezzanine financing). (Ch 4 §4.4, §7.2)"},
+{t:99,b:24,c:1,q:"A company's shares are currently trading at £5. If it implements a 1-for-4 rights issue at a discounted market price of £4, what will be the theoretical ex-rights price (TERP)?",o:["£4.50", "£4.70", "£4.75", "£4.80"],a:3,x:"Holding 4 shares at £5 = £20, plus 1 new share at £4 = £24, over 5 shares: TERP = £4.80. (Ch 4 §10.6.4)"},
+{t:99,b:28,c:0,q:"Commercial paper is normally issued with a minimum maturity of:",o:["8 days", "30 days", "6 months", "18 months"],a:0,x:"Commercial paper is issued at a discount with maturities of between 8 and 365 days. (Ch 4 §5.2)"},
+{t:99,b:30,c:0,q:"A company decides to issue shares directly to a broker and selected financial institutions, in order to avoid extensive advertising and underwriting costs. What is this method called?",o:["Placing", "Introduction", "Order for sale", "Order for subscription"],a:0,x:"A placing sells shares to a broker's selected institutions. It is the cheapest method because it needs a lighter prospectus and no underwriting or extensive advertising. (Ch 4 §10.5.3)"},
+{t:99,b:31,c:0,q:"Which statement in relation to STRIPs is correct?",o:["STRIPs are tax-free investments", "STRIPs can be held within an ISA", "It is impossible to strip a fixed coupon gilt", "It is impossible to strip a Treasury bond"],a:1,x:"UK individuals can hold STRIPS in an ISA, on the same basis as conventional and index-linked gilts. Gains are taxed as income. (Ch 4 §6.2.3)"},
+{t:99,b:38,c:1,q:"A company issued 6% cumulative redeemable preference shares at 125p. They are currently priced at 150p and can be converted into ordinary shares at the rate of 4 to 1. If the ordinary shares are priced at 500p, what is the conversion premium?",o:["5%", "10%", "15%", "20%"],a:3,x:"Four preference shares convert into one ordinary share: (4 × 150p) ÷ 500p − 1 = 20% premium. (Ch 4 §2.2.2)"},
+{t:99,b:40,c:0,q:"Following a liquidation, there are sufficient funds to pay preference shareholders. Consequently, they will receive:",o:["The pre-liquidation market price", "The nominal value", "The equitable value decided by the liquidator", "The unpaid net dividends only"],a:1,x:"The workbook's text (section 2.2.6) says preference shareholders receive back the nominal value of their shares if sufficient funds remain. Note: the book's answer key prints A, which contradicts its own text; go with the text. (Ch 4 §2.2.6)"},
+{t:99,b:42,c:0,q:"The FX forward market is widely used to speculate on:",o:["Currency volatility", "Interest rates", "Exchange rates", "Implied volatility"],a:1,x:"Forward rates reflect the interest rate differential between two currencies, so the FX forward market is used to speculate on changes in that differential. (Ch 4 §9.3.1)"},
+{t:99,b:45,c:0,q:"What is a key reason that companies issue global depositary receipts (GDRs)?",o:["To comply with domestic listing regulations", "To avoid foreign exchange risk", "To establish a presence in international markets", "To eliminate the need for a local stock exchange listing"],a:2,x:"GDRs are often issued to establish a presence in new markets, raising visibility and paving the way for future offerings, as well as to raise capital. (Ch 4 §3.1.2)"},
+{t:99,b:49,c:0,q:"What event will cause permanent interest-bearing securities to be reclassified as perpetual subordinated bonds?",o:["A fall in their value below a threshold level", "A series of missed interest payments", "Completion of the prescribed investment holding period", "Demutualisation of the issuer"],a:3,x:"PIBS are issued by mutual building societies. If the society demutualises, its PIBS become perpetual subordinated bonds (PSBs). (Ch 4 §6.3.2)"},
+{t:99,b:52,c:1,q:"This table shows an institution's bond investments over the course of a year and how they changed weightings in each issuer on a quarterly basis. In which quarter is the portfolio most exposed to agency debt?",tb:[["Issuer", "Q1", "Q2", "Q3", "Q4"], ["Fannie Mae (Federal National Mortgage Association)", "40%", "20%", "20%", "20%"], ["Local authority bonds", "20%", "40%", "20%", "20%"], ["Asian Development Bank", "20%", "20%", "40%", "20%"], ["US Government Treasury bills", "20%", "20%", "20%", "40%"]],o:["Q1", "Q2", "Q3", "Q4"],a:0,x:"Fannie Mae is a US government-sponsored agency, so its bonds are agency debt. Exposure peaks at 40% in Q1. (Ch 4 §6.2.2)"},
+{t:99,b:55,c:1,q:"A company has issued a convertible bond that can be converted into 15 ordinary shares per $100 nominal. The convertible is currently priced at $115 and has a 5% coupon. The share price is $7.00. What is the conversion premium?",o:["5%", "9.5%", "11.20%", "15.50%"],a:1,x:"Conversion value = 15 × $7 = $105. Premium = 115 ÷ 105 − 1 = 9.52%. (Ch 4 §7.1)"},
+{t:99,b:60,c:0,q:"How is the initial cost of subscribing for shares in a company represented in the shares held?",o:["As a percentage of net present value", "In the nominal value", "From the initial deposit receipt", "(Current Liabilities + Long-term Liabilities) / Total Revenue"],a:1,x:"Each share has a nominal value, which represents the initial subscription for the shareholder's stake. (Ch 4 §2.2.1)"},
+{t:99,b:65,c:0,q:"When assessing country risk, what is the significance of a sovereign bond issuer's credit rating reducing?",o:["A higher yield is required by investors", "Default risk is reducing", "A lower yield is required by investors", "The credit spread is unchanged"],a:0,x:"A lower sovereign rating means higher perceived default risk, so investors demand a higher yield. (Ch 4 §6.1.6; Ch 4 §12.2.1)"},
+{t:99,b:66,c:0,q:"In what way do deferred shares differ from non-voting shares?",o:["Deferred shares always have normal voting rights", "The dividends for deferred shares will not be paid for a period of time", "Non-voting shares never carry an entitlement to rights issues", "Deferred shares cannot be dematerialised"],a:1,x:"Deferred (founders') shares carry enhanced voting rights, but their dividend is deferred for a period or until a condition is met. (Ch 4 §2.2.1)"},
+{t:99,b:67,c:0,q:"What is the main feature of a Bermudan-style option that differentiates it from a European or American option?",o:["It can only be dealt in US dollars", "It can be exercised on pre-determined dates before expiry", "They are not regarded as derivatives", "A position always contains both a put and a call"],a:1,x:"A Bermudan option can be exercised on set dates before expiry (often monthly): a hybrid of American and European styles. (Ch 4 §8.1.1)"},
+{t:99,b:69,c:0,q:"Under US company law, shareholders have limited liability and have no individual liability for any of the company's debts. How is this reflected in the classification of the shares?",o:["They are scripless", "They have no par value", "They are always in bearer form", "Each certificate has its own notation"],a:1,x:"US common stock usually has no par value, reflecting shareholders' limited liability. (Ch 4 §2.2.1)"},
+{t:99,b:75,c:0,q:"Of the following four index-linked gilts, which would have the longest period between the reference inflation rate and the interest payment date?",o:["Issued in May 2001 with a 4.125% coupon, maturing in 2026", "Issued in June 2010 with a 2.25% coupon, maturing in 2060", "Issued in December 2018 with a 3.875% coupon, maturing in 2053", "Issued in July 2024 with a 0.125% coupon, maturing in 2064"],a:0,x:"Index-linked gilts issued before September 2005 have an 8-month indexation lag (3 months otherwise), so the 2001 issue has the longest gap. (Ch 4 §6.1.4, §6.2.1)"},
+{t:99,b:76,c:0,q:"What is a key difference between the Enterprise Investment Scheme (EIS) and the Seed Enterprise Investment Scheme (SEIS)?",o:["SEIS is for start-ups; EIS supports larger companies", "SEIS companies cannot raise funds through EIS or VCT", "SEIS is for early-stage firms; EIS allows larger ones", "SEIS has an employee limit; EIS allows more employees"],a:2,x:"SEIS is for very early-stage companies; EIS supports larger, more established small companies. (Ch 4 §4.3)"}
 ];
+T[99]="Workbook question paper";
 
 // Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
 (function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
-  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+  Q.forEach(q=>{if(q.b)return;const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
     q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+const NQ=Q.length, MIN=Math.round(NQ*1.5), PASS=Math.ceil(NQ*0.7);
 let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
 try{ans=JSON.parse(localStorage.getItem("s4-ans")||"{}")}catch(e){ans={}}
 function save(){try{localStorage.setItem("s4-ans",JSON.stringify(ans))}catch(e){}}
@@ -677,7 +705,7 @@ function render(){
       const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
       return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
     const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
-    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}${q.k?" · Lesson check":""}${q.b?" · Book Q"+q.b:""}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
   stats();
 }
 function stats(){
@@ -686,16 +714,16 @@ function stats(){
     html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
   document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
   const answered=Object.keys(ans).length;
-  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/${NQ} answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
 }
 function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
-function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+function startMock(){ans={};marked=false;deadline=Date.now()+MIN*60*1000;clearInterval(tick);
   const tEl=document.getElementById("timer");tEl.hidden=false;
   tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
-  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+  tEl.textContent=MIN+":00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
 function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
   const c=Q.filter((q,i)=>ans[i]===q.a).length;
-  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/${NQ} (${Math.round(100*c/NQ)}%).</b> ${c>=PASS?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (${PASS}/${NQ}). Review the topics with the lowest scores below."}</div>`;
   render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
 document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
   ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});

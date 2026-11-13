@@ -21,6 +21,7 @@ def build(n):
         f'  <div class="facts">\n{chips}\n  </div>\n</header>'
     )
     page = open(os.path.join(here, "template.html")).read()
+    nq = read("data.js").count("{t:")
     for k, v in {
         "{{TITLE}}": meta["title"], "{{HEADER}}": header,
         "{{CONCEPTS}}": read("concepts.html"), "{{LEARN}}": read("learn.html"),
@@ -28,6 +29,7 @@ def build(n):
         "{{KEY}}": f"s{n}-ans",
     }.items():
         page = page.replace(k, v)
+    page = page.replace("{{NQ}}", str(nq)).replace("{{MIN}}", str(round(nq * 1.5)))
     out = os.path.join(root, f"section{n}.html")
     open(out, "w").write(page)
     print("wrote", out)

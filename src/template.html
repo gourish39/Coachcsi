@@ -112,7 +112,7 @@ a{color:var(--accent)}
 <nav class="tabs" aria-label="Sections"><div class="wrap">
   <a href="#concepts">Concepts</a>
   <a href="#learn">Formulas &amp; traps</a>
-  <a href="#practice">50 questions</a>
+  <a href="#practice">{{NQ}} questions</a>
   <a href="#method">How this was built</a>
 </div></nav>
 
@@ -127,8 +127,8 @@ a{color:var(--accent)}
 </section>
 
 <section data-view="practice" hidden>
-  <h2>50 practice questions</h2>
-  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <h2>{{NQ}} practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you {{MIN}} minutes (90 seconds a question) and marks everything at the end.</p>
   <div class="controls">
     <select id="mode" aria-label="Mode">
       <option value="practice">Practice: instant feedback</option>
@@ -157,8 +157,9 @@ a{color:var(--accent)}
 {{DATA}}
 // Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
 (function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
-  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+  Q.forEach(q=>{if(q.b)return;const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
     q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+const NQ=Q.length, MIN=Math.round(NQ*1.5), PASS=Math.ceil(NQ*0.7);
 let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
 try{ans=JSON.parse(localStorage.getItem("{{KEY}}")||"{}")}catch(e){ans={}}
 function save(){try{localStorage.setItem("{{KEY}}",JSON.stringify(ans))}catch(e){}}
@@ -180,7 +181,7 @@ function render(){
       const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
       return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
     const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
-    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}${q.k?" · Lesson check":""}${q.b?" · Book Q"+q.b:""}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
   stats();
 }
 function stats(){
@@ -189,16 +190,16 @@ function stats(){
     html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
   document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
   const answered=Object.keys(ans).length;
-  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/${NQ} answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
 }
 function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
-function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+function startMock(){ans={};marked=false;deadline=Date.now()+MIN*60*1000;clearInterval(tick);
   const tEl=document.getElementById("timer");tEl.hidden=false;
   tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
-  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+  tEl.textContent=MIN+":00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
 function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
   const c=Q.filter((q,i)=>ans[i]===q.a).length;
-  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/${NQ} (${Math.round(100*c/NQ)}%).</b> ${c>=PASS?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (${PASS}/${NQ}). Review the topics with the lowest scores below."}</div>`;
   render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
 document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
   ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});

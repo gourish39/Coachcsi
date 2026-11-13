@@ -1,0 +1,10 @@
+{
+ "title": "Section 3 Valuation Module",
+ "h1": "Section 3: Valuation (company accounts &amp; ratios)",
+ "lede": "A module for Element 3 of the CISI Investment Management exam, built from Chapter 3 of the Edition 4 workbook. It covers only what the book's own questions actually test, plus {{NQ}} practice questions.",
+ "chips": [
+  "About <b>14</b> of 80 exam questions",
+  "Roughly <b>2 in 3</b> are calculations",
+  "<b>{{NQ}}</b> practice questions"
+ ]
+}

@@ -113,14 +113,14 @@ a{color:var(--accent)}
   <div class="facts">
     <span class="chip">About <b>10</b> of 80 exam questions</span>
     <span class="chip"><b>11</b> concept lessons</span>
-    <span class="chip"><b>50</b> practice questions</span>
+    <span class="chip"><b>64</b> practice questions</span>
   </div>
 </header>
 
 <nav class="tabs" aria-label="Sections"><div class="wrap">
   <a href="#concepts">Concepts</a>
   <a href="#learn">Formulas &amp; traps</a>
-  <a href="#practice">50 questions</a>
+  <a href="#practice">64 questions</a>
   <a href="#method">How this was built</a>
 </div></nav>
 
@@ -403,7 +403,7 @@ a{color:var(--accent)}
     <details class="check"><summary>Check: why is a closed-ended structure well suited to direct infrastructure?</summary><div>Investors sell shares to each other, so the manager never has to sell illiquid projects at distressed prices to meet redemptions.</div></details>
   </article>
 
-  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">50 questions</a>.</p>
+  <p>Next: <a href="#learn">Formulas &amp; traps</a>, then the <a href="#practice">64 questions</a>.</p>
 
 </section>
 
@@ -474,8 +474,8 @@ negative = discount, positive = premium</code></div>
 </section>
 
 <section data-view="practice" hidden>
-  <h2>50 practice questions</h2>
-  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 75 minutes (90 seconds a question) and marks everything at the end.</p>
+  <h2>64 practice questions</h2>
+  <p>These questions are written for this module to follow the style of the workbook. They are not real CISI exam questions. <b>Practice</b> shows the explanation as soon as you answer. <b>Mock</b> gives you 96 minutes (90 seconds a question) and marks everything at the end.</p>
   <div class="controls">
     <select id="mode" aria-label="Mode">
       <option value="practice">Practice: instant feedback</option>
@@ -500,7 +500,7 @@ negative = discount, positive = premium</code></div>
   <ul>
     <li>I read Chapter 5 of the Edition 4 workbook (June 2025) against the Element 5 learning objectives in its syllabus map.</li>
     <li>I matched each objective against the book's 80 practice questions and the Chapter 5 end-of-chapter questions to set the priority labels.</li>
-    <li>Real CISI exam questions are confidential and not published. These 50 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
+    <li>Real CISI exam questions are confidential and not published. These 64 questions are original and follow the workbook's style. Every calculation was worked through by hand, and each explanation names the workbook section.</li>
   </ul>
 
 </section>
@@ -568,13 +568,31 @@ const Q=[
 {t:9,c:0,q:"Which body sets the 'Red Book' valuation standards, which are mandatory for its registered valuers?",o:["IVSC","RICS","AREF","GRESB"],a:1,x:"RICS (founded 1868) publishes the Red Book, fully compliant with the IVSC's International Valuation Standards. AREF sets a Code of Practice for property funds. GRESB benchmarks the ESG performance of real assets. (Ch 5 §7.3–7.4)"},
 // 10 FX, commodities, infrastructure (2)
 {t:10,c:0,q:"Why are non-dollar investors in most commodities exposed to currency risk?",o:["Commodities only trade in Asia","Most commodities are priced in US dollars","Commodity prices are fixed","Commodities can't be hedged"],a:1,x:"Most commodities are dollar-priced, so exchange rate moves affect returns for other investors. Gold is traditionally a safe haven in turbulent markets. (Ch 5 §9.1.2)"},
-{t:10,c:0,q:"Why is a closed-ended structure well suited to direct infrastructure investment?",o:["Closed-ended funds must hold only cash","Investors trade shares with each other, so the manager doesn't have to sell illiquid projects at distressed prices to meet redemptions","Closed-ended funds can never use gearing","They always trade at NAV"],a:1,x:"Infrastructure's long-term, often inflation-linked cash flows suit closed-ended funds, which often use gearing. The trade-offs are discounts and premiums and possible trading illiquidity. (Ch 5 §10.4.2)"}
+{t:10,c:0,q:"Why is a closed-ended structure well suited to direct infrastructure investment?",o:["Closed-ended funds must hold only cash","Investors trade shares with each other, so the manager doesn't have to sell illiquid projects at distressed prices to meet redemptions","Closed-ended funds can never use gearing","They always trade at NAV"],a:1,x:"Infrastructure's long-term, often inflation-linked cash flows suit closed-ended funds, which often use gearing. The trade-offs are discounts and premiums and possible trading illiquidity. (Ch 5 §10.4.2)"},
+// Lesson checks from the Concepts tab, not already covered above
+{t:2,c:0,k:1,q:"Markets are falling and most unit trust investors are selling. Which pricing basis is the manager most likely to use?",o:["Offer basis","Bid basis","Forward pricing only","It suspends pricing until markets recover"],a:1,x:"On a bid basis the spread moves to the bottom of its permitted range, so sellers receive the minimum. Rising markets with mainly buyers lead to an offer basis. (Ch 5 §2.1.3)"},
+{t:4,c:0,k:1,q:"An investment trust announces that it will be wound up next year. What typically happens to its discount to NAV?",o:["It widens sharply","It narrows, because investors expect to receive close to NAV when the assets are realised","It is unaffected","It becomes a permanent large premium"],a:1,x:"A smaller discount (or even a premium) is typical when a trust is nearing wind-up or corporate activity such as a merger. (Ch 5 §2.8.1)"},
+// The workbook's own 80-question paper (pages 411-446), questions for this section, in the book's A-D order
+{t:99,b:2,c:0,q:"When a collective investment scheme is formed as a unit trust, investors are:",o:["required to become trustees", "beneficiaries of the trust", "given limited levels of legal protection", "in a contract with the investment management company"],a:1,x:"A unit trust is created by a deed between the manager and the trustee. Investors are beneficiaries of the trust and own its units. (Ch 5 §2.7)"},
+{t:99,b:11,c:0,q:"Which type of structured product is designed to increase in value when the underlying index declines?",o:["Accelerated tracker", "Capital-protected tracker", "Reverse tracker", "Structured capital tracker"],a:2,x:"A reverse tracker rises in value when the underlying index falls. (Ch 5 §4.3.4)"},
+{t:99,b:21,c:0,q:"Which type of environmental, social and governance (ESG) bonds are often issued to fund preventative solutions?",o:["Blue bonds", "Green bonds", "Impact bonds", "Social bonds"],a:2,x:"Impact bonds fund prevention and early intervention, responding to the needs of vulnerable groups. (Ch 5 §5.1.1)"},
+{t:99,b:22,c:0,q:"If an investment trust is being wound up, it is usual for it to have:",o:["a large discount", "a small discount", "a low yield", "a high yield"],a:1,x:"Investment trusts usually trade at a discount, but it narrows when the trust is nearing its winding-up (or a merger), because investors expect to receive close to NAV. (Ch 5 §2.8.1)"},
+{t:99,b:33,c:0,q:"Which of the following characteristics is true of hedge funds? Hedge funds usually:",o:["Only use derivatives for efficient portfolio management (EPM)", "Focus on relative investment returns typically against a sector average", "Adopt an unauthorised collective investment scheme (CIS) structure", "Have a high correlation with world equity and bond markets"],a:2,x:"Most hedge funds are US private partnerships or unauthorised collective investment schemes in offshore centres. They target absolute returns and have low correlation with markets. (Ch 5 §6.1.1)"},
+{t:99,b:44,c:0,q:"Which asset class is heterogeneous in nature?",o:["Bonds", "Commodities", "Equity", "Property"],a:3,x:"Property is heterogeneous: every property is unique in location, structure and design. (Ch 5 §7)"},
+{t:99,b:48,c:0,q:"Which one of the following is compared to the current price to determine whether an investment trust share is trading at a discount or premium?",o:["Bid price", "Mid-market price", "Net asset value", "Offer price"],a:2,x:"An investment trust's premium or discount is measured by comparing its share price with its net asset value per share. (Ch 5 §2.8.1)"},
+{t:99,b:53,c:0,q:"Which of the following best describes an investment in an exchange-traded product?",o:["Speculative", "Passive", "Long-term", "Hedge-based"],a:1,x:"Most ETPs are passive investments, replicating a market or benchmark index. (Ch 5 §2.3)"},
+{t:99,b:56,c:0,q:"Which index has been designed to consider the impact of fossil fuel reserves?",o:["Dow Jones Sustainability", "FTSE4Good", "MSCI KLD 400", "MSCI Low Carbon"],a:3,x:"The MSCI Low Carbon indices address carbon emissions and fossil fuel reserves, helping identify risks in the transition to a low-carbon economy. (Ch 5 §5.4)"},
+{t:99,b:58,c:1,q:"Gary purchased a house in 1996 for £250,000. It is now valued at £1,100,000 and he could receive £3,000 monthly rent with monthly expenses of £1,500.What is the net rental yield on this property?",o:["1.64%", "3.27%", "7.2%", "14.4%"],a:0,x:"Net yield = (36,000 − 18,000) ÷ 1,100,000 = 1.64%. Annualise the monthly figures, and use the current value, not the 1996 price. (Ch 5 §7.2.2)"},
+{t:99,b:68,c:0,q:"Which product derives value from the ratio between currency pairs?",o:["Forwards", "Futures", "Options", "Swaps"],a:3,x:"In a currency swap it is the ratio between the two currencies' interest rates that drives gains and losses. (Ch 5 §8.4)"},
+{t:99,b:74,c:0,q:"Which of the following factors is most likely to influence energy prices?",o:["The stock market performance of technology companies", "Changes in fashion trends and consumer preferences", "The availability of precious metals like gold and silver", "Supply restrictions imposed by OPEC"],a:3,x:"Energy prices are heavily influenced by producers restricting supply, such as OPEC. (Ch 5 §9.1.2)"}
 ];
+T[99]="Workbook question paper";
 
 // Spread correct answers across A–D with a fixed seed, so the order is stable between visits.
 (function(){let s=20251;const r=()=>(s=(s*16807)%2147483647)/2147483647;
-  Q.forEach(q=>{const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+  Q.forEach(q=>{if(q.b)return;const idx=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
     q.o=idx.map(k=>q.o[k]);q.a=idx.indexOf(q.a)})})();
+const NQ=Q.length, MIN=Math.round(NQ*1.5), PASS=Math.ceil(NQ*0.7);
 let mode="practice", order=Q.map((_,i)=>i), ans={}, marked=false, deadline=null, tick=null;
 try{ans=JSON.parse(localStorage.getItem("s5-ans")||"{}")}catch(e){ans={}}
 function save(){try{localStorage.setItem("s5-ans",JSON.stringify(ans))}catch(e){}}
@@ -596,7 +614,7 @@ function render(){
       const dis=(mode==="practice"&&a!==undefined)||(mode==="mock"&&marked);
       return `<button type="button" class="${c}" data-q="${i}" data-o="${j}" ${dis?"disabled":""}><span class="l">${"ABCD"[j]}</span><span>${t}</span></button>`}).join("");
     const ex=rev?`<div class="ex"><span class="verdict ${a===q.a?"ok":"no"}">${a===undefined?"Not answered. The answer is "+"ABCD"[q.a]+".":a===q.a?"Correct.":"Not quite. The answer is "+"ABCD"[q.a]+"."}</span> ${q.x}</div>`:"";
-    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
+    return `<article class="q"><div class="meta">Q${k+1} · ${T[q.t]} · ${q.c?"Calculation":"Concept"}${q.k?" · Lesson check":""}${q.b?" · Book Q"+q.b:""}</div><p class="stem">${q.q}</p>${q.tb?tbl(q.tb):""}<div class="opts">${opts}</div>${ex}</article>`}).join("");
   stats();
 }
 function stats(){
@@ -605,16 +623,16 @@ function stats(){
     html+=`<div class="stat">${T[k]}<b>${tn?Math.round(100*tc/tn)+"%":"–"}</b><span class="small">${tc}/${tn}</span></div>`});
   document.getElementById("stats").innerHTML=(mode==="mock"&&!marked)?"":html;
   const answered=Object.keys(ans).length;
-  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/50 answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
+  document.getElementById("score").textContent=mode==="mock"&&!marked?`${answered}/${NQ} answered`:(n?`Score ${c}/${n} (${Math.round(100*c/n)}%). The pass mark is 70%`:"Pick an answer to see the explanation.");
 }
 function fmt(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
-function startMock(){ans={};marked=false;deadline=Date.now()+75*60*1000;clearInterval(tick);
+function startMock(){ans={};marked=false;deadline=Date.now()+MIN*60*1000;clearInterval(tick);
   const tEl=document.getElementById("timer");tEl.hidden=false;
   tick=setInterval(()=>{const left=deadline-Date.now();tEl.textContent=fmt(left)+" left";if(left<=0)finish()},1000);
-  tEl.textContent="75:00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
+  tEl.textContent=MIN+":00 left";document.getElementById("finish").hidden=false;document.getElementById("result").innerHTML="";render()}
 function finish(){if(marked)return;marked=true;clearInterval(tick);document.getElementById("finish").hidden=true;
   const c=Q.filter((q,i)=>ans[i]===q.a).length;
-  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/50 (${Math.round(c*2)}%).</b> ${c>=35?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (35/50). Review the topics with the lowest scores below."}</div>`;
+  document.getElementById("result").innerHTML=`<div class="result"><b>Mock result: ${c}/${NQ} (${Math.round(100*c/NQ)}%).</b> ${c>=PASS?"That is at or above the 70% pass mark.":"That is below the 70% pass mark (${PASS}/${NQ}). Review the topics with the lowest scores below."}</div>`;
   render();window.scrollTo(0,document.getElementById("result").offsetTop-60)}
 document.getElementById("qlist").addEventListener("click",e=>{const b=e.target.closest("button.opt");if(!b||b.disabled)return;
   ans[+b.dataset.q]=+b.dataset.o;if(mode==="practice")save();render()});
